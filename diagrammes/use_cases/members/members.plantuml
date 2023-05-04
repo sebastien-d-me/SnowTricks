@@ -1,0 +1,38 @@
+@startuml use_cases__members
+left to right direction
+skinparam actorStyle Awesome
+!theme bluegray
+skinparam backgroundcolor White
+
+'Titre'
+title Use cases | Members
+
+'Acteur'
+actor "Visitor" as Visitor
+actor "Member" as Member
+
+'Rectangle'
+rectangle {
+    'Authentification'
+    "«Authentication»" as (Authentification)
+
+    'Visiteur'
+    "Register" as (Register)
+
+    'Membre'
+    "Login" as (Login)
+    "Edit his profil" as (EditProfil)
+    "Logout" as (Logout)
+    "Reset his password" as (ResetPassword)
+
+    'Déroulement'
+    :Visitor: -.> (Register)
+    :Member: -.> (Login)
+    :Member: -.> (ResetPassword)
+    :Member: -.> (EditProfil)
+    :Member: -.> (Logout)
+    (EditProfil) -.> (Authentification) : include
+    (Logout) -.> (Authentification) : include
+    (ResetPassword) -.> (Authentification) : include
+}
+@enduml

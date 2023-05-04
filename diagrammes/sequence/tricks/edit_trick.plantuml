@@ -1,0 +1,19 @@
+@startuml sequence__edit_trick
+hide footbox
+skinparam actorStyle awesome
+!theme aws-orange
+skinparam backgroundcolor White
+
+'Titre'
+title Sequence | Edit a trick
+
+'Déroulement'
+System -> System : Checks if the person is connected
+Member -> System : Click on the pen icon
+System --> Member : Redirects the user to an edit form
+Member -> Member : Fills in the form
+Member -> System : Click on "Save"
+System -> System : Checks the form fields
+System -> System : Save the new values in the database
+System --> Member: Displays an action confirmation message
+@enduml

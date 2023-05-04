@@ -1,0 +1,14 @@
+@startuml sequence__view_comments
+hide footbox
+skinparam actorStyle awesome
+!theme aws-orange
+skinparam backgroundcolor White
+
+'Titre'
+title Sequence | View the comments
+
+'Déroulement'
+System -> System : Checks if the person is connected
+System --> Visistor : Displays comments
+System --> Member : Displays comments and a form to leave a comment
+@enduml

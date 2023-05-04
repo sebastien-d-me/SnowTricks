@@ -1,0 +1,40 @@
+@startuml use_cases__tricks
+left to right direction
+skinparam actorStyle Awesome
+!theme bluegray
+skinparam backgroundcolor White
+
+'Titre'
+title Use cases | Tricks
+
+'Acteur'
+actor "Visitor" as Visitor
+actor "Member" as Member
+
+Visitor <|- Member
+
+'Rectangle'
+rectangle {
+    'Authentification'
+    "«Authentication»" as (Authentification)
+
+    'Visiteur'
+    "See the tricks" as (SeeTricks)
+    "See a trick in detail" as (SeeTrickDetails)
+
+    'Membre'
+    "Create a trick" as (CreateTrick)
+    "Edit tricks" as (EditTricks)
+    "Delete tricks" as (DeleteTricks)
+
+    'Déroulement'
+    :Visitor: -.> (SeeTricks)
+    :Visitor: -.> (SeeTrickDetails)
+    :Member: -.> (CreateTrick)
+    :Member: -.> (EditTricks)
+    :Member: -.> (DeleteTricks)
+    (CreateTrick) -.> (Authentification) : include
+    (EditTricks) -.> (Authentification) : include
+    (DeleteTricks) -.> (Authentification) : include
+}
+@enduml
