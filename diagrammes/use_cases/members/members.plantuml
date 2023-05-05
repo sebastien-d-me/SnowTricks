@@ -21,9 +21,10 @@ rectangle {
 
     'Membre'
     "Login" as (Login)
+    "Reset his password" as (ResetPassword)
     "Edit his profil" as (EditProfil)
     "Logout" as (Logout)
-    "Reset his password" as (ResetPassword)
+    
 
     'Déroulement'
     :Visitor: -.> (Register)
@@ -33,6 +34,5 @@ rectangle {
     :Member: -.> (Logout)
     (EditProfil) -.> (Authentification) : include
     (Logout) -.> (Authentification) : include
-    (ResetPassword) -.> (Authentification) : include
 }
 @enduml
