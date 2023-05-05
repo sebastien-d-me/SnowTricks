@@ -1,0 +1,15 @@
+@startuml sequence__delete_trick
+hide footbox
+skinparam actorStyle awesome
+!theme aws-orange
+skinparam backgroundcolor White
+
+'Titre'
+title Sequence | Delete a trick
+
+'Déroulement'
+System -> System : Checks if the person is connected
+Member -> System : Click on the icon of a trash can
+System -> System : Remove the trick from the database
+System --> Member: Displays an action confirmation message
+@enduml

@@ -1,0 +1,19 @@
+@startuml sequence__add_trick
+hide footbox
+skinparam actorStyle awesome
+!theme aws-orange
+skinparam backgroundcolor White
+
+'Titre'
+title Sequence | Add a trick
+
+'Déroulement'
+System -> System : Checks if the person is connected
+Member -> System : Click on "Create a trick"
+System --> Member : Redirects to a form
+Member -> Member : Fills in the form
+Member -> System : Click on "Save"
+System -> System : Checks the form fields
+System -> System : Saves the trick in the database
+System --> Member: Displays an action confirmation message
+@enduml

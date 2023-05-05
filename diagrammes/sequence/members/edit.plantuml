@@ -1,0 +1,18 @@
+@startuml sequence__edit
+hide footbox
+skinparam actorStyle awesome
+!theme aws-orange
+skinparam backgroundcolor White
+
+'Titre'
+title Sequence | Edit the profil
+
+'Déroulement'
+System -> System : Checks if the person is connected
+Member -> Member : Fills in the form correctly
+Member -> System : Click on "Save changes"
+System -> System : Checks the values of the form
+System -> System : Save the new values in the database
+System -> System : Disconnects the user from the site
+System --> Member : Displays a confirmation message
+@enduml

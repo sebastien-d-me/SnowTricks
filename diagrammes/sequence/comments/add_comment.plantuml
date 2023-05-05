@@ -1,0 +1,17 @@
+@startuml sequence__add_comment
+hide footbox
+skinparam actorStyle awesome
+!theme aws-orange
+skinparam backgroundcolor White
+
+'Titre'
+title Sequence | Add a comment
+
+'Déroulement'
+System -> System : Checks if the person is connected
+Member -> Member : Fills in the form
+Member -> System : Click on "Send"
+System -> System : Checks the form fields
+System -> System : Save the comment in the database
+System --> Member : Displays a confirmation message
+@enduml

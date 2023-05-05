@@ -1,0 +1,76 @@
+@startuml classes
+left to right direction
+skinparam actorStyle Awesome
+skinparam ArrowThickness 1
+!theme aws-orange
+skinparam backgroundcolor White
+
+'Titre'
+title Classes
+
+'Comment'
+class Comment {
+    {static} +idComment: int
+    +creationDate: date
+    +content: text
+}
+
+'Trick Group'
+class TrickGroup {
+    {static} +idTrickGroup: int
+    +name: string
+}
+
+'Member'
+class Member {
+    {static} +idMember: int
+    +isActive: bool
+    +firstName: string
+    +lastName: string
+}
+
+'Login Credentials'
+class LoginCredentials {
+    {static} +idLoginCredentials: int
+    +username: string
+    +email: string
+    +password: string
+}
+
+'Trick'
+class Trick {
+    {static} +idTrick: int
+    +name: string
+    +description: text
+}
+
+'Hash'
+class Hash {
+    {static} +idHash: int
+    +hash: string
+    +isActive: bool 
+}
+
+'Illustration'
+class Illustration {
+    {static} +idIllustration: int
+    +type: enum
+    +path: string 
+}
+
+'Avatar'
+class Avatar {
+    {static} +idAvatar: int
+    +path: string
+}
+
+'Déroulement'
+Avatar "1" - "1" Member: $warning("OWN")
+LoginCredentials "1" -- "1" Member: $warning("CONNECT")
+Hash "1..*" -- "1" Member: $warning("SECURE")
+Member "1" -- "*" Trick: $warning("WRITE")
+Member "1" -- "*" Comment: $warning("LEAVE")
+Trick "1" -- "*" Comment: $warning("CONTAIN")
+TrickGroup "1" -- "*" Trick: $warning("HAVE")
+Trick "1" -- "*" Illustration: $warning("ILLUSTRATE")
+@enduml
