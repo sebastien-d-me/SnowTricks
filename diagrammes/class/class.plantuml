@@ -10,57 +10,59 @@ title Classes
 
 'Comment'
 class Comment {
-    {static} +idComment: int
-    +creationDate: date
-    +content: text
+    {static} +id: int
+    +creation_date: date
+    +content: longtext
 }
 
 'Trick Group'
-class TrickGroup {
-    {static} +idTrickGroup: int
+class Trick_Group {
+    {static} +id: int
     +name: string
 }
 
 'Member'
 class Member {
-    {static} +idMember: int
-    +isActive: bool
-    +firstName: string
-    +lastName: string
+    {static} +id: int
+    +first_name: string
+    +last_name: string
 }
 
 'Login Credentials'
 class LoginCredentials {
-    {static} +idLoginCredentials: int
-    +username: string
+    {static} +id: int
     +email: string
+    +roles: longtext
     +password: string
+    +token: string
+    +username: string
+    +is_active: boolean
 }
 
 'Trick'
 class Trick {
-    {static} +idTrick: int
+    {static} +id: int
     +name: string
-    +description: text
+    +description: longtext
 }
 
 'Hash'
 class Hash {
-    {static} +idHash: int
+    {static} +id: int
     +hash: string
-    +isActive: bool 
+    +is_active: bool 
 }
 
 'Illustration'
 class Illustration {
-    {static} +idIllustration: int
-    +type: enum
+    {static} +id: int
+    +type: string
     +path: string 
 }
 
 'Avatar'
 class Avatar {
-    {static} +idAvatar: int
+    {static} +id: int
     +path: string
 }
 
@@ -71,6 +73,6 @@ Hash "1..*" -- "1" Member: $warning("SECURE")
 Member "1" -- "*" Trick: $warning("WRITE")
 Member "1" -- "*" Comment: $warning("LEAVE")
 Trick "1" -- "*" Comment: $warning("CONTAIN")
-TrickGroup "1" -- "*" Trick: $warning("HAVE")
+Trick_Group "1" -- "*" Trick: $warning("HAVE")
 Trick "1" -- "*" Illustration: $warning("ILLUSTRATE")
 @enduml
