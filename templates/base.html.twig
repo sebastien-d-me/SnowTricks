@@ -1,19 +1,37 @@
 <!DOCTYPE html>
 <html>
-    <head>
-        <meta charset="UTF-8">
-        <title>{% block title %}Welcome!{% endblock %}</title>
-        <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 128 128%22><text y=%221.2em%22 font-size=%2296%22>⚫️</text></svg>">
-        {# Run `composer require symfony/webpack-encore-bundle` to start using Symfony UX #}
-        {% block stylesheets %}
-            {{ encore_entry_link_tags('app') }}
-        {% endblock %}
+<head>
+    <meta charset="UTF-8">
+    <title>{% block title %}SnowTricks{% endblock %}</title>
+    <link href="{{ asset('assets/node_modules/remixicon/fonts/remixicon.css') }}" rel="stylesheet">
+    <link href="{{ asset('assets/styles/style.css') }}" rel="stylesheet">
+</head>
+<body>
+    <header class="header__block">
+        <img alt="Logo of the website" class="header__logo" loading="lazy" src="{{ asset('assets/images/logo.webp') }}">
+        <nav class="header__nav">
+            <ul class="nav__list">
+                <li class="nav__item">
+                    <a class="nav__link" href="#">Home</a>
+                </li>
+                <li class="nav__item">
+                    <a class="nav__link" href="#">Sign in</a>
+                </li>
+                <li class="nav__item">
+                    <a class="nav__link" href="#">Sign up</a>
+                </li>
+            </ul>
+        </nav>
+    </header>
 
-        {% block javascripts %}
-            {{ encore_entry_script_tags('app') }}
-        {% endblock %}
-    </head>
-    <body>
-        {% block body %}{% endblock %}
-    </body>
+    <main class="main__block">
+        {% block main %}{% endblock %}
+    </main>
+
+    <footer class="footer__block">
+        <span class="footer__copyright">© SnowTricks {{ "now" | date("Y") }}</span>
+    </footer>
+
+    <script src="{{ asset('assets/scripts/script.js') }}" type="module"></script>
+</body>
 </html>
