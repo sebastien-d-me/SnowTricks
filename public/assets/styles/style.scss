@@ -1,26 +1,24 @@
-/* Abstracts */
-@use "./abstracts/variables";
-
 /* Base */
-@use "./base/fonts";
-@use "./base/general";
+@use "base/fonts";
+@use "base/general";
+@use "base/content";
 
 /* Components */
-@use "./components/button";
-@use "./components/divider";
-@use "./components/form";
-@use "./components/link";
+@use "components/button";
+@use "components/divider";
+@use "components/form";
+@use "components/link";
 
 /* Layouts */
-@use "./layouts/footer";
-@use "./layouts/header";
-@use "./layouts/main";
+@use "layouts/footer";
+@use "layouts/header";
+@use "layouts/main";
 
 /* Pages */
-@use "./pages/home";
-@use "./pages/tricks/create";
-@use "./pages/tricks/edit";
-@use "./pages/tricks/presentation";
-@use "./pages/members/login";
-@use "./pages/members/password__recover";
-@use "./pages/members/register";
+@use "pages/home";
+@use "pages/tricks/create";
+@use "pages/tricks/edit";
+@use "pages/tricks/presentation";
+@use "pages/members/login";
+@use "pages/members/password__recover";
+@use "pages/members/register";

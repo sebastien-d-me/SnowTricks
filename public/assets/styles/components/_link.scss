@@ -1,0 +1,12 @@
+@use "../abstracts/colors" as colors;
+
+
+.link {
+    color: colors.$blue;
+    text-decoration: none;
+    transition: 0.5s;
+
+    &:hover {
+        color: colors.$violet;
+    }
+}
