@@ -6,8 +6,9 @@
     background-color: colors.$white;
     display: flex;
     filter: drop-shadow(0px 2.5px 5px colors.$black);
-    height: 100px;
+    flex-wrap: wrap;
     justify-content: space-between;
+    min-height: 100px;
     padding: 10px 100px;
     z-index: 1;
 }
@@ -18,7 +19,7 @@
     margin: 0;
 }
 
-/** List **/
+/** Nav **/
 .nav__list {
     display: flex;
     gap: 15px;
@@ -30,4 +31,18 @@
 .nav__item:not(:last-of-type) {
     border-right: 1px solid colors.$black;
     padding-right: 15px;
+}
+
+/*** Responsive ***/
+@media screen and (max-width: 992px) {
+    .header__block {
+        justify-content: center;
+        min-height: 50px;
+        padding: 10px;
+    }
+
+    /** Nav **/
+    .nav__list {
+        display: none;
+    }
 }

@@ -2,6 +2,7 @@
 <html>
 <head>
     <meta charset="UTF-8">
+    <meta content="width=device-width, initial-scale=1" name="viewport">
     <title>{% block title %}SnowTricks{% endblock %}</title>
     <link href="{{ asset('assets/node_modules/remixicon/fonts/remixicon.css') }}" rel="stylesheet">
     <link href="{{ asset('assets/styles/style.css') }}" rel="stylesheet">
@@ -30,6 +31,14 @@
 
     <footer class="footer__block">
         <span class="footer__copyright">© SnowTricks {{ "now" | date("Y") }}</span>
+        <div class="footer__mobile">
+            <a class="link link--icon" href="#">
+                <i class="ri-home-2-fill"></i>
+            </a>
+            <a class="link link--icon" href="#">
+                <i class="ri-login-box-fill"></i>
+            </a>
+        </div>
     </footer>
 
     <script src="{{ asset('assets/scripts/script.js') }}" type="module"></script>

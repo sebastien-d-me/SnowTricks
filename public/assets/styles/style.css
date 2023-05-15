@@ -200,13 +200,37 @@ body {
   text-align: center;
 }
 
+/** Mobile **/
+.footer__mobile {
+  display: none;
+  font-size: 25px;
+  justify-content: space-evenly;
+  width: 100%;
+}
+
+/*** Responsive ***/
+@media screen and (max-width: 992px) {
+  .footer__block {
+    bottom: 0;
+    padding: 10px;
+    position: fixed;
+    width: calc(100% - 20px);
+  }
+  .footer__copyright {
+    display: none;
+  }
+  .footer__mobile {
+    display: flex;
+  }
+}
 .header__block {
   align-items: center;
   background-color: #FEFEFE;
   display: flex;
   filter: drop-shadow(0px 2.5px 5px #0E0E0E);
-  height: 100px;
+  flex-wrap: wrap;
   justify-content: space-between;
+  min-height: 100px;
   padding: 10px 100px;
   z-index: 1;
 }
@@ -217,7 +241,7 @@ body {
   margin: 0;
 }
 
-/** List **/
+/** Nav **/
 .nav__list {
   display: flex;
   gap: 15px;
@@ -231,10 +255,28 @@ body {
   padding-right: 15px;
 }
 
+/*** Responsive ***/
+@media screen and (max-width: 992px) {
+  .header__block {
+    justify-content: center;
+    min-height: 50px;
+    padding: 10px;
+  }
+  /** Nav **/
+  .nav__list {
+    display: none;
+  }
+}
 .main__block {
   padding-bottom: 20px;
 }
 
+/*** Responsive ***/
+@media screen and (max-width: 992px) {
+  .main__block {
+    padding-bottom: 65px;
+  }
+}
 /** Banner **/
 .home__banner {
   position: relative;
@@ -309,7 +351,7 @@ body {
   border-radius: 0 0 10px 10px;
   display: flex;
   justify-content: space-evenly;
-  padding: 10px 0;
+  padding: 10px;
 }
 
 .trick__action {
@@ -318,6 +360,30 @@ body {
   gap: 10px;
 }
 
+/*** Responsive ***/
+@media screen and (max-width: 992px) {
+  /** Tricks list **/
+  #tricks__list {
+    gap: 25px 0;
+    margin: 15px 20px 0 20px;
+    position: relative;
+    scroll-margin-top: 20px;
+  }
+  .tricks__item {
+    flex-basis: 100%;
+  }
+  .tricks__arrow {
+    bottom: 65px;
+    color: #0E0E0E;
+    display: none;
+    font-size: 35px;
+    position: fixed;
+    right: 0px;
+  }
+  .tricks__arrow > .ri-arrow-up-line {
+    text-shadow: 0 0 0 #FEFEFE;
+  }
+}
 /* Base */
 /* Components */
 /* Layouts */
