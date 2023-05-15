@@ -1,0 +1,18 @@
+@use "../abstracts/colors" as colors;
+
+
+.footer__block {
+    background-color: colors.$black;
+    color: colors.$white;
+    display: flex;
+    justify-content: center;
+    margin: auto;
+    padding: 20px 100px;
+    width: calc(100% - 200px)
+}
+
+/** Copyright **/
+.footer__copyright {
+    font-weight: bold;
+    text-align: center;
+}
