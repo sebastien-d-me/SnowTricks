@@ -17,14 +17,16 @@
                 <a class="link link--secondary" href="#">
                     <span class="trick__name">Ollie</span>
                 </a>
-                <div class="trick__action">
-                    <a class="link link--icon" href="#">
-                        <i class="ri-pencil-line"></i>
-                    </a>
-                    <a class="link link--icon" href="#">
-                        <i class="ri-delete-bin-line"></i>
-                    </a>
-                </div>
+                {% if is_granted("IS_AUTHENTICATED_FULLY") %}
+                    <div class="trick__action">
+                        <a class="link link--icon" href="#">
+                            <i class="ri-pencil-line"></i>
+                        </a>
+                        <a class="link link--icon" href="#">
+                            <i class="ri-delete-bin-line"></i>
+                        </a>
+                    </div>
+                {% endif %}
             </div>
         </div>
         <div class="tricks__item">

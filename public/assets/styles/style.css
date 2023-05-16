@@ -227,7 +227,7 @@ body {
   align-items: center;
   background-color: #FEFEFE;
   display: flex;
-  filter: drop-shadow(0px 2.5px 5px #0E0E0E);
+  filter: drop-shadow(0 2.5px 5px #0E0E0E);
   flex-wrap: wrap;
   justify-content: space-between;
   min-height: 100px;
@@ -283,7 +283,7 @@ body {
 }
 
 .banner__image {
-  filter: brightness(0.65);
+  filter: brightness(0.65) drop-shadow(0 0 2px #0E0E0E);
   height: calc(100vh - 120px);
   -o-object-fit: cover;
      object-fit: cover;
@@ -314,7 +314,7 @@ body {
 #tricks__list {
   display: flex;
   flex-wrap: wrap;
-  gap: 50px;
+  gap: 30px;
   justify-content: center;
   margin: 15px 150px 0 150px;
 }
@@ -322,6 +322,7 @@ body {
 .tricks__item {
   border-radius: 10px 10px 0 0;
   display: flex;
+  filter: drop-shadow(0 0 1px #0E0E0E);
   flex-basis: calc(20% - 50px);
   flex-direction: column;
   text-align: center;
@@ -329,7 +330,9 @@ body {
 }
 .tricks__item:hover {
   cursor: pointer;
-  filter: drop-shadow(0px 5px 3px #0E0E0E);
+}
+.tricks__item:hover > .trick__image {
+  filter: unset;
 }
 
 .tricks__break {
@@ -339,9 +342,11 @@ body {
 /** Trick **/
 .trick__image {
   border-radius: 10px 10px 0 0;
+  filter: brightness(0.85);
   height: 200px;
   -o-object-fit: cover;
      object-fit: cover;
+  transition: 0.5s;
   width: 100%;
 }
 
@@ -350,7 +355,8 @@ body {
   background-color: #0E0E0E;
   border-radius: 0 0 10px 10px;
   display: flex;
-  justify-content: space-evenly;
+  flex-wrap: wrap;
+  justify-content: space-between;
   padding: 10px;
 }
 
