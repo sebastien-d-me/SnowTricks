@@ -30,15 +30,20 @@ class LoginCredentials implements UserInterface, PasswordAuthenticatedUserInterf
     #[ORM\Column(length: 255)]
     private ?string $token = null;
 
-    #[ORM\OneToOne(inversedBy: 'idLoginCredentials', cascade: ['persist', 'remove'])]
-    #[ORM\JoinColumn(nullable: false)]
-    private ?Member $idMember = null;
-
     #[ORM\Column(length: 255)]
     private ?string $username = null;
 
     #[ORM\Column]
     private ?bool $isActive = null;
+
+    #[ORM\Column(length: 50, nullable: true)]
+    private ?string $firstName = null;
+
+    #[ORM\Column(length: 50, nullable: true)]
+    private ?string $lastName = null;
+
+    #[ORM\OneToOne(mappedBy: 'idLoginCredentials', cascade: ['persist', 'remove'])]
+    private ?Avatar $idAvatar = null;
 
     public function getId(): ?int
     {
@@ -122,18 +127,6 @@ class LoginCredentials implements UserInterface, PasswordAuthenticatedUserInterf
         return $this;
     }
 
-    public function getIdMember(): ?Member
-    {
-        return $this->idMember;
-    }
-
-    public function setIdMember(Member $idMember): self
-    {
-        $this->idMember = $idMember;
-
-        return $this;
-    }
-
     public function getUsername(): ?string
     {
         return $this->username;
@@ -154,6 +147,47 @@ class LoginCredentials implements UserInterface, PasswordAuthenticatedUserInterf
     public function setIsActive(bool $isActive): self
     {
         $this->isActive = $isActive;
+
+        return $this;
+    }
+
+    public function getFirstName(): ?string
+    {
+        return $this->firstName;
+    }
+
+    public function setFirstName(string $firstName): self
+    {
+        $this->firstName = $firstName;
+
+        return $this;
+    }
+
+    public function getLastName(): ?string
+    {
+        return $this->lastName;
+    }
+
+    public function setLastName(?string $lastName): self
+    {
+        $this->lastName = $lastName;
+
+        return $this;
+    }
+
+    public function getIdAvatar(): ?Avatar
+    {
+        return $this->idAvatar;
+    }
+
+    public function setIdAvatar(Avatar $idAvatar): self
+    {
+        // set the owning side of the relation if necessary
+        if ($idAvatar->getIdMember() !== $this) {
+            $idAvatar->setIdMember($this);
+        }
+
+        $this->idAvatar = $idAvatar;
 
         return $this;
     }

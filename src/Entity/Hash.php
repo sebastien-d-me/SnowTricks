@@ -21,7 +21,7 @@ class Hash
 
     #[ORM\ManyToOne]
     #[ORM\JoinColumn(nullable: false)]
-    private ?Member $idMember = null;
+    private ?LoginCredentials $idLoginCredentials = null;
 
     public function getId(): ?int
     {
@@ -52,14 +52,14 @@ class Hash
         return $this;
     }
 
-    public function getIdMember(): ?Member
+    public function getIdLoginCredentials(): ?LoginCredentials
     {
-        return $this->idMember;
+        return $this->idLoginCredentials;
     }
 
-    public function setIdMember(?Member $idMember): self
+    public function setIdLoginCredentials(LoginCredentials $idLoginCredentials): self
     {
-        $this->idMember = $idMember;
+        $this->idLoginCredentials = $idLoginCredentials;
 
         return $this;
     }

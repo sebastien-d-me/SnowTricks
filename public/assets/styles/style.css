@@ -328,9 +328,6 @@ body {
   text-align: center;
   transition: 0.5s;
 }
-.tricks__item:hover {
-  cursor: pointer;
-}
 .tricks__item:hover > .trick__image {
   filter: unset;
 }

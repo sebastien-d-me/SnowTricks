@@ -22,7 +22,7 @@ class Comment
 
     #[ORM\ManyToOne]
     #[ORM\JoinColumn(nullable: false)]
-    private ?Member $idMember = null;
+    private ?LoginCredentials $idLoginCredentials = null;
 
     #[ORM\ManyToOne]
     #[ORM\JoinColumn(nullable: false)]
@@ -57,14 +57,14 @@ class Comment
         return $this;
     }
 
-    public function getIdMember(): ?Member
+    public function getIdLoginCredentials(): ?LoginCredentials
     {
-        return $this->idMember;
+        return $this->idLoginCredentials;
     }
 
-    public function setIdMember(?Member $idMember): self
+    public function setIdLoginCredentials(LoginCredentials $idLoginCredentials): self
     {
-        $this->idMember = $idMember;
+        $this->idLoginCredentials = $idLoginCredentials;
 
         return $this;
     }
