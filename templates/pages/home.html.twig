@@ -11,274 +11,39 @@
     </div>
 
     <div id="tricks__list">
-        <div class="tricks__item">
-            <img alt="" class="trick__image" loading="lazy" src="{{ asset('assets/images/tricks/placeholder/1.jpg') }}">
-            <div class="trick__informations">
-                <a class="link link--secondary" href="#">
-                    <span class="trick__name">Ollie</span>
-                </a>
-                {% if is_granted("IS_AUTHENTICATED_FULLY") %}
+        {% for trick in tricks | slice(0, 15) %}
+            <div class="tricks__item">
+                <img alt="" class="trick__image" loading="lazy" src="{{ asset('assets/images/tricks/placeholder/tail press.webp') }}">
+                <div class="trick__informations">
+                    <a class="link link--secondary" href="/trick/{{ trick.id }}">
+                        <span class="trick__name">{{ trick.name }}</span>
+                    </a>
                     <div class="trick__action">
-                        <a class="link link--icon" href="#">
+                        <a class="link link--icon" href="/trick/edit/{{ trick.id }}">
                             <i class="ri-pencil-line"></i>
                         </a>
-                        <a class="link link--icon" href="#">
+                        <a class="link link--icon" href="/trick/delete/{{ trick.id }}">
                             <i class="ri-delete-bin-line"></i>
                         </a>
                     </div>
-                {% endif %}
-            </div>
-        </div>
-        <div class="tricks__item">
-            <img alt="" class="trick__image" loading="lazy" src="{{ asset('assets/images/tricks/placeholder/2.jpg') }}">
-            <div class="trick__informations">
-                <a class="link link--secondary" href="#">
-                    <span class="trick__name">Nollie</span>
-                </a>
-                <div class="trick__action">
-                    <a class="link link--icon" href="#">
-                        <i class="ri-pencil-line"></i>
-                    </a>
-                    <a class="link link--icon" href="#">
-                        <i class="ri-delete-bin-line"></i>
-                    </a>
                 </div>
             </div>
-        </div>
-        <div class="tricks__item">
-            <img alt="" class="trick__image" loading="lazy" src="{{ asset('assets/images/tricks/placeholder/3.jpg') }}">
-            <div class="trick__informations">
-                <a class="link link--secondary" href="#">
-                    <span class="trick__name">Tail Press</span>
-                </a>
-                <div class="trick__action">
-                    <a class="link link--icon" href="#">
-                        <i class="ri-pencil-line"></i>
-                    </a>
-                    <a class="link link--icon" href="#">
-                        <i class="ri-delete-bin-line"></i>
-                    </a>
-                </div>
-            </div>
-        </div>
-        <div class="tricks__item">
-            <img alt="" class="trick__image" loading="lazy" src="{{ asset('assets/images/tricks/placeholder/4.jpg') }}">
-            <div class="trick__informations">
-                <a class="link link--secondary" href="#">
-                    <span class="trick__name">Nose Press</span>
-                </a>
-                <div class="trick__action">
-                    <a class="link link--icon" href="#">
-                        <i class="ri-pencil-line"></i>
-                    </a>
-                    <a class="link link--icon" href="#">
-                        <i class="ri-delete-bin-line"></i>
-                    </a>
-                </div>
-            </div>
-        </div>
-        <div class="tricks__item">
-            <img alt="" class="trick__image" loading="lazy" src="{{ asset('assets/images/tricks/placeholder/5.jpg') }}">
-            <div class="trick__informations">
-                <a class="link link--secondary" href="#">
-                    <span class="trick__name">Tripod</span>
-                </a>
-                <div class="trick__action">
-                    <a class="link link--icon" href="#">
-                        <i class="ri-pencil-line"></i>
-                    </a>
-                    <a class="link link--icon" href="#">
-                        <i class="ri-delete-bin-line"></i>
-                    </a>
-                </div>
-            </div>
-        </div>
-        <div class="tricks__item">
-            <img alt="" class="trick__image" loading="lazy" src="{{ asset('assets/images/tricks/placeholder/6.jpg') }}">
-            <div class="trick__informations">
-                <a class="link link--secondary" href="#">
-                    <span class="trick__name">Tail-Drag 180</span>
-                </a>
-                <div class="trick__action">
-                    <a class="link link--icon" href="#">
-                        <i class="ri-pencil-line"></i>
-                    </a>
-                    <a class="link link--icon" href="#">
-                        <i class="ri-delete-bin-line"></i>
-                    </a>
-                </div>
-            </div>
-        </div>
-        <div class="tricks__item">
-            <img alt="" class="trick__image" loading="lazy" src="{{ asset('assets/images/tricks/placeholder/7.jpg') }}">
-            <div class="trick__informations">
-                <a class="link link--secondary" href="#">
-                    <span class="trick__name">Nose-Roll 360</span>
-                </a>
-                <div class="trick__action">
-                    <a class="link link--icon" href="#">
-                        <i class="ri-pencil-line"></i>
-                    </a>
-                    <a class="link link--icon" href="#">
-                        <i class="ri-delete-bin-line"></i>
-                    </a>
-                </div>
-            </div>
-        </div>
-        <div class="tricks__item">
-            <img alt="" class="trick__image" loading="lazy" src="{{ asset('assets/images/tricks/placeholder/8.jpg') }}">
-            <div class="trick__informations">
-                <a class="link link--secondary" href="#">
-                    <span class="trick__name">Tail-Drag 360</span>
-                </a>
-                <div class="trick__action">
-                    <a class="link link--icon" href="#">
-                        <i class="ri-pencil-line"></i>
-                    </a>
-                    <a class="link link--icon" href="#">
-                        <i class="ri-delete-bin-line"></i>
-                    </a>
-                </div>
-            </div>
-        </div>
-        <div class="tricks__item">
-            <img alt="" class="trick__image" loading="lazy" src="{{ asset('assets/images/tricks/placeholder/9.jpg') }}">
-            <div class="trick__informations">
-                <a class="link link--secondary" href="#">
-                    <span class="trick__name">Corked Spin</span>
-                </a>
-                <div class="trick__action">
-                    <a class="link link--icon" href="#">
-                        <i class="ri-pencil-line"></i>
-                    </a>
-                    <a class="link link--icon" href="#">
-                        <i class="ri-delete-bin-line"></i>
-                    </a>
-                </div>
-            </div>
-        </div>
-        <div class="tricks__item">
-            <img alt="" class="trick__image" loading="lazy" src="{{ asset('assets/images/tricks/placeholder/10.jpg') }}">
-            <div class="trick__informations">
-                <a class="link link--secondary" href="#">
-                    <span class="trick__name">Indy</span>
-                </a>
-                <div class="trick__action">
-                    <a class="link link--icon" href="#">
-                        <i class="ri-pencil-line"></i>
-                    </a>
-                    <a class="link link--icon" href="#">
-                        <i class="ri-delete-bin-line"></i>
-                    </a>
-                </div>
-            </div>
-        </div>
-        <div class="tricks__item">
-            <img alt="" class="trick__image" loading="lazy" src="{{ asset('assets/images/tricks/placeholder/11.jpg') }}">
-            <div class="trick__informations">
-                <a class="link link--secondary" href="#">
-                    <span class="trick__name">Stalefish</span>
-                </a>
-                <div class="trick__action">
-                    <a class="link link--icon" href="#">
-                        <i class="ri-pencil-line"></i>
-                    </a>
-                    <a class="link link--icon" href="#">
-                        <i class="ri-delete-bin-line"></i>
-                    </a>
-                </div>
-            </div>
-        </div>
-        <div class="tricks__item">
-            <img alt="" class="trick__image" loading="lazy" src="{{ asset('assets/images/tricks/placeholder/12.jpg') }}">
-            <div class="trick__informations">
-                <a class="link link--secondary" href="#">
-                    <span class="trick__name">Tail</span>
-                </a>
-                <div class="trick__action">
-                    <a class="link link--icon" href="#">
-                        <i class="ri-pencil-line"></i>
-                    </a>
-                    <a class="link link--icon" href="#">
-                        <i class="ri-delete-bin-line"></i>
-                    </a>
-                </div>
-            </div>
-        </div>
-        <div class="tricks__item">
-            <img alt="" class="trick__image" loading="lazy" src="{{ asset('assets/images/tricks/placeholder/13.jpg') }}">
-            <div class="trick__informations">
-                <a class="link link--secondary" href="#">
-                    <span class="trick__name">Weddle</span>
-                </a>
-                <div class="trick__action">
-                    <a class="link link--icon" href="#">
-                        <i class="ri-pencil-line"></i>
-                    </a>
-                    <a class="link link--icon" href="#">
-                        <i class="ri-delete-bin-line"></i>
-                    </a>
-                </div>
-            </div>
-        </div>
-        <div class="tricks__item">
-            <img alt="" class="trick__image" loading="lazy" src="{{ asset('assets/images/tricks/placeholder/14.jpg') }}">
-            <div class="trick__informations">
-                <a class="link link--secondary" href="#">
-                    <span class="trick__name">Melon</span>
-                </a>
-                <div class="trick__action">
-                    <a class="link link--icon" href="#">
-                        <i class="ri-pencil-line"></i>
-                    </a>
-                    <a class="link link--icon" href="#">
-                        <i class="ri-delete-bin-line"></i>
-                    </a>
-                </div>
-            </div>
-        </div>
-        <div class="tricks__item">
-            <img alt="" class="trick__image" loading="lazy" src="{{ asset('assets/images/tricks/placeholder/15.jpg') }}">
-            <div class="trick__informations">
-                <a class="link link--secondary" href="#">
-                    <span class="trick__name">Method</span>
-                </a>
-                <div class="trick__action">
-                    <a class="link link--icon" href="#">
-                        <i class="ri-pencil-line"></i>
-                    </a>
-                    <a class="link link--icon" href="#">
-                        <i class="ri-delete-bin-line"></i>
-                    </a>
-                </div>
-            </div>
-        </div>
-        <div class="tricks__item">
-            <img alt="" class="trick__image" loading="lazy" src="{{ asset('assets/images/tricks/placeholder/16.jpg') }}">
-            <div class="trick__informations">
-                <a class="link link--secondary" href="#">
-                    <span class="trick__name">Nose</span>
-                </a>
-                <div class="trick__action">
-                    <a class="link link--icon" href="#">
-                        <i class="ri-pencil-line"></i>
-                    </a>
-                    <a class="link link--icon" href="#">
-                        <i class="ri-delete-bin-line"></i>
-                    </a>
-                </div>
-            </div>
-        </div>
+        {% endfor %}
 
-        <div class="tricks__break"></div>
-
-        <button class="btn btn__tricks">
-            <i class="ri-refresh-line"></i>
-            <span>Charger plus</span>
-        </button>
-
-        <a class="tricks__arrow link" href="#tricks__list">
-            <i class="ri-arrow-up-line"></i>
-        </a>
+        {% if tricks is empty %}
+            <span>Aucun trick n'a été écrit pour le moment...</span>
+        {% elseif tricks | length > 15 %}
+            <div class="tricks__break"></div>
+            <button class="btn btn__tricks">
+                <i class="ri-refresh-line"></i>
+                <span>Charger plus</span>
+            </button>
+        {% else %}
+            <div class="tricks__break"></div>
+        {% endif %}        
     </div>
+
+    <a class="tricks__arrow link" href="#tricks__list">
+        <i class="ri-arrow-up-line"></i>
+    </a>
 {% endblock %}

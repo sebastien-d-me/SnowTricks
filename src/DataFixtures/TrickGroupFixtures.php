@@ -10,7 +10,12 @@ class TrickGroupFixtures extends Fixture
 {
     public function load(ObjectManager $manager): void
     {
-        $trickGroupsName = ["grabs", "rotations", "flips", "rotations désaxées", "slides", "one foot tricks", "old school"];
+        $trickGroupsName = [
+            "butter",
+            "grabs",
+            "spins, flips and corks",
+            "rails and boxes"
+        ];
 
         foreach($trickGroupsName as $trickGroupName) {
             $trickGroup = new TrickGroup();
