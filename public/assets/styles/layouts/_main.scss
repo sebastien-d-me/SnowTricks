@@ -1,0 +1,10 @@
+.main__block {
+    padding-bottom: 20px;
+}
+
+/*** Responsive ***/
+@media screen and (max-width: 992px) {
+    .main__block {
+        padding-bottom: 65px;
+    }
+}

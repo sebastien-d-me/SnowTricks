@@ -1,0 +1,44 @@
+@use "../abstracts/colors" as colors;
+
+
+.footer__block {
+    background-color: colors.$black;
+    color: colors.$white;
+    display: flex;
+    justify-content: center;
+    margin: auto;
+    padding: 20px 100px;
+    width: calc(100% - 200px);
+}
+
+/** Copyright **/
+.footer__copyright {
+    font-weight: bold;
+    text-align: center;
+}
+
+/** Mobile **/
+.footer__mobile {
+    display: none;
+    font-size: 25px;
+    justify-content: space-evenly;
+    width: 100%;
+}
+
+/*** Responsive ***/
+@media screen and (max-width: 992px) {
+    .footer__block {
+        bottom: 0;
+        padding: 10px;
+        position: fixed;
+        width: calc(100% - 20px);
+    }
+
+    .footer__copyright {
+        display: none;
+    }
+
+    .footer__mobile {
+        display: flex;
+    }
+}

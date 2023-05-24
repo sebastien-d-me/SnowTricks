@@ -2,26 +2,26 @@
 
 namespace App\Repository;
 
-use App\Entity\Illustration;
+use App\Entity\Media;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
- * @extends ServiceEntityRepository<Illustration>
+ * @extends ServiceEntityRepository<Media>
  *
- * @method Illustration|null find($id, $lockMode = null, $lockVersion = null)
- * @method Illustration|null findOneBy(array $criteria, array $orderBy = null)
- * @method Illustration[]    findAll()
- * @method Illustration[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
+ * @method Media|null find($id, $lockMode = null, $lockVersion = null)
+ * @method Media|null findOneBy(array $criteria, array $orderBy = null)
+ * @method Media[]    findAll()
+ * @method Media[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
  */
-class IllustrationRepository extends ServiceEntityRepository
+class MediaRepository extends ServiceEntityRepository
 {
     public function __construct(ManagerRegistry $registry)
     {
-        parent::__construct($registry, Illustration::class);
+        parent::__construct($registry, Media::class);
     }
 
-    public function save(Illustration $entity, bool $flush = false): void
+    public function save(Media $entity, bool $flush = false): void
     {
         $this->getEntityManager()->persist($entity);
 
@@ -30,7 +30,7 @@ class IllustrationRepository extends ServiceEntityRepository
         }
     }
 
-    public function remove(Illustration $entity, bool $flush = false): void
+    public function remove(Media $entity, bool $flush = false): void
     {
         $this->getEntityManager()->remove($entity);
 
@@ -40,7 +40,7 @@ class IllustrationRepository extends ServiceEntityRepository
     }
 
 //    /**
-//     * @return Illustration[] Returns an array of Illustration objects
+//     * @return Media[] Returns an array of Media objects
 //     */
 //    public function findByExampleField($value): array
 //    {
@@ -54,7 +54,7 @@ class IllustrationRepository extends ServiceEntityRepository
 //        ;
 //    }
 
-//    public function findOneBySomeField($value): ?Illustration
+//    public function findOneBySomeField($value): ?Media
 //    {
 //        return $this->createQueryBuilder('i')
 //            ->andWhere('i.exampleField = :val')

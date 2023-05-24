@@ -1,0 +1,125 @@
+@use "../abstracts/colors" as colors;
+
+
+/** Banner **/
+.home__banner {
+    position: relative;
+}
+
+.banner__image {
+    filter: brightness(0.65) drop-shadow(0 0 2px colors.$black);
+    height: calc(100vh - 120px);
+    object-fit: cover;
+    width: 100%;
+}
+
+.banner__text {
+    color: colors.$white;
+    font-size: 24px;
+    left: 50%;
+    position: absolute;
+    top: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.banner__arrow {
+    bottom: 20px;
+    color: colors.$white;
+    font-size: 48px;
+    position: absolute;
+    right: 20px;
+
+    &:hover {
+        color: colors.$white;
+    }
+}
+
+/** Tricks list **/
+#tricks__list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 30px;
+    justify-content: center;
+    margin: 15px 150px 0 150px;
+
+    > .tricks__item:nth-child(n+16) {
+        display: none;
+    }
+}
+
+.tricks__item {
+    border-radius: 10px 10px 0 0;
+    display: flex;
+    filter: drop-shadow(0 0 1px colors.$black);
+    flex-basis: calc(20% - 50px);
+    flex-direction: column;
+    text-align: center;
+    transition: 0.5s;
+
+    &:hover > .trick__image {
+        filter: unset;
+    }
+}
+
+.tricks__break {
+    flex-basis: 100%;
+}
+
+/** Trick **/
+.trick__image {
+    border-radius: 10px 10px 0 0;
+    filter: brightness(0.85);
+    height: 200px;
+    object-fit: cover;
+    transition: 0.5s;
+    width: 100%;
+}
+
+.trick__informations {
+    align-items: center;
+    background-color: colors.$black;
+    border-radius: 0 0 10px 10px;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    padding: 10px;
+}
+
+.trick__name {
+    text-transform: capitalize;
+}
+
+.trick__action {
+    display: flex;
+    font-size: 20px;
+    gap: 10px;
+}
+
+/*** Responsive ***/
+@media screen and (max-width: 992px) {
+
+    /** Tricks list **/
+    #tricks__list {
+        gap: 25px 0;
+        margin: 15px 20px 0 20px;
+        position: relative;
+        scroll-margin-top: 20px;
+    }
+
+    .tricks__item {
+        flex-basis: 100%;
+    }
+
+    .tricks__arrow {
+        bottom: 65px;
+        color: colors.$black;
+        display: none;
+        font-size: 35px;
+        position: fixed;
+        right: 0px;
+
+        & > .ri-arrow-up-line {
+            text-shadow: 0 0 0 colors.$white;
+        }
+    }
+}

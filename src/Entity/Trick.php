@@ -24,10 +24,6 @@ class Trick
     #[ORM\JoinColumn(nullable: false)]
     private ?TrickGroup $idTrickGroup = null;
 
-    #[ORM\ManyToOne]
-    #[ORM\JoinColumn(nullable: false)]
-    private ?Member $idMember = null;
-
     public function getId(): ?int
     {
         return $this->id;
@@ -65,18 +61,6 @@ class Trick
     public function setIdTrickGroup(?TrickGroup $idTrickGroup): self
     {
         $this->idTrickGroup = $idTrickGroup;
-
-        return $this;
-    }
-
-    public function getIdMember(): ?Member
-    {
-        return $this->idMember;
-    }
-
-    public function setIdMember(?Member $idMember): self
-    {
-        $this->idMember = $idMember;
 
         return $this;
     }
