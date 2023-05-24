@@ -360,6 +360,10 @@ body {
   padding: 10px;
 }
 
+.trick__name {
+  text-transform: capitalize;
+}
+
 .trick__action {
   display: flex;
   font-size: 20px;
