@@ -11,7 +11,7 @@
     </div>
 
     <div id="tricks__list">
-        {% for tricks in tricksData | slice(0, 15) %}
+        {% for tricks in tricksData %}
             <div class="tricks__item">
                 <img alt="Illustration of a {{ tricks.trick.name }}" class="trick__image" loading="lazy" src="assets/{{ tricks.cover.path }}">
                 <div class="trick__informations">
