@@ -171,12 +171,47 @@ body {
   width: fit-content;
 }
 
-/** Row **/
-.form__row {
+form {
   display: flex;
-  flex-wrap: wrap;
-  gap: 50px;
-  margin-bottom: 30px;
+  flex-direction: column;
+  justify-content: center;
+  margin: 50px auto auto auto;
+  min-height: 400px;
+  min-width: 400px;
+  padding: 10px;
+  text-align: left;
+  width: -moz-fit-content;
+  width: fit-content;
+}
+form > .btn {
+  margin: 20px auto 0 auto;
+}
+
+.form__errors > ul {
+  color: #FF575A;
+  list-style: none;
+  margin: 0 auto 20px auto;
+  padding: 0;
+}
+
+.form__row {
+  margin-bottom: 20px;
+}
+.form__row > div {
+  display: flex;
+  flex-direction: column;
+}
+
+label {
+  font-weight: bold;
+}
+
+input {
+  box-sizing: border-box;
+  border: 0;
+  border-bottom: 1px solid #0E0E0E;
+  height: 30px;
+  width: 100%;
 }
 
 .link {
@@ -411,21 +446,6 @@ body {
 }
 #register {
   text-align: center;
-}
-
-form {
-  border: 1px solid #0E0E0E;
-  display: flex;
-  flex-direction: column;
-  height: 500px;
-  justify-content: center;
-  margin: 50px auto auto auto;
-  padding: 25px;
-  text-align: left;
-  width: 500px;
-}
-form > .btn {
-  margin-top: 20px;
 }
 
 /* Base */

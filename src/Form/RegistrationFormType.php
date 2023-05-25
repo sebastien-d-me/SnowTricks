@@ -18,6 +18,7 @@ class RegistrationFormType extends AbstractType {
     public function buildForm(FormBuilderInterface $builder, array $options): void {
         $builder
             ->add("username", TextType::class, [
+                "error_bubbling" => true,
                 "constraints" => [
                     new NotBlank([
                         "message" => "Veuillez écrire votre nom d'utilisateur.",
@@ -30,6 +31,7 @@ class RegistrationFormType extends AbstractType {
                 ],
             ])
             ->add("email", EmailType::class, [
+                "error_bubbling" => true,
                 "constraints" => [
                     new NotBlank([
                         "message" => "Veuillez écrire votre adresse email.",
@@ -37,6 +39,7 @@ class RegistrationFormType extends AbstractType {
                 ]
             ])
             ->add("password", PasswordType::class, [
+                "error_bubbling" => true,
                 "mapped" => false,
                 "constraints" => [
                     new NotBlank([
@@ -50,6 +53,7 @@ class RegistrationFormType extends AbstractType {
                 ],
             ])
             ->add("confirmPassword", PasswordType::class, [
+                "error_bubbling" => true,
                 "mapped" => false,
                 "constraints" => [
                     new NotBlank([
