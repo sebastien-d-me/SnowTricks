@@ -13,19 +13,19 @@
         <nav class="header__nav">
             <ul class="nav__list">
                 <li class="nav__item">
-                    <a class="link nav__link" href="#">Accueil</a>
+                    <a class="link nav__link" href="/">Accueil</a>
                 </li>
                 <li class="nav__item">
-                    <a class="link nav__link" href="#">Se connecter</a>
+                    <a class="link nav__link" href="/connexion">Se connecter</a>
                 </li>
                 <li class="nav__item">
-                    <a class="link nav__link" href="#">S'inscrire</a>
+                    <a class="link nav__link" href="/inscription">S'inscrire</a>
                 </li>
             </ul>
         </nav>
     </header>
 
-    <main class="main__block">
+    <main class="main__block" id="{{ pageId }}">
         {% block main %}{% endblock %}
     </main>
 

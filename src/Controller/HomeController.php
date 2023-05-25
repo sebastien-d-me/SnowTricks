@@ -8,8 +8,9 @@ use App\Repository\TrickRepository;
 use App\Repository\MediaRepository;
 use Symfony\Component\HttpFoundation\Response;
 
+
 class HomeController extends AbstractController {
-    #[Route("/")]
+    #[Route("/", name: "home")]
     public function index(TrickRepository $trickRepository, MediaRepository $mediaRepository): Response {
         $tricks = $trickRepository->findAll();
         $tricksData = [];
