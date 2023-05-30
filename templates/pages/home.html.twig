@@ -11,6 +11,18 @@
         </a>
     </div>
 
+    <div class="messages" id="home__messages">
+        {% for message in app.flashes("register_ok") %}
+            <span class="message message--success">{{ message }}</span>
+        {% endfor %}
+        {% for message in app.flashes("activation_ok") %}
+            <span class="message message--success">{{ message }}</span>
+        {% endfor %}
+        {% for message in app.flashes("activation_error") %}
+            <span class="message message--error">{{ message }}</span>
+        {% endfor %}
+    </div>
+
     <div id="tricks__list">
         {% for tricks in tricksData %}
             <div class="tricks__item">

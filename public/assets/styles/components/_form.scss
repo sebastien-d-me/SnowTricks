@@ -17,8 +17,8 @@ form {
     }
 }
 
-// Errors
-.form__errors > ul {
+// Status
+.form__status > ul {
     color: colors.$red;
     list-style: none;
     margin: 0 auto 20px auto;

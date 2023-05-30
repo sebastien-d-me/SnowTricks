@@ -50,7 +50,8 @@ class RegistrationController extends AbstractController {
             $mailer->send($email);
 
 
-            return $this->redirectToRoute("home");
+            $this->addFlash("register_ok", "Votre compte a été crée, merci de l'activer !");
+            return $this->redirectToRoute("home", ["_fragment" => "home__messages"]);
         }
 
 
@@ -75,8 +76,13 @@ class RegistrationController extends AbstractController {
             $hash->setIsActive(false);
             $entityManager->persist($hash);
             $entityManager->flush();
+
+            $this->addFlash("activation_ok", "Votre compte a été activée !");
+        } else {
+            $this->addFlash("activation_error", "Une erreur est arrivée lors de l'activation de votre compte.");
         }
 
-        return $this->redirectToRoute("home");
+
+        return $this->redirectToRoute("home", ["_fragment" => "home__messages"]);
     }
 }
