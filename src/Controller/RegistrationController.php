@@ -33,7 +33,7 @@ class RegistrationController extends AbstractController {
             $entityManager->flush();
 
 
-            $token = bin2hex(random_bytes(16));
+            $token = bin2hex(random_bytes(64));
             $hash = new Hash();
             $hash->setIdLoginCredentials($user);
             $hash->setHash($token);
@@ -61,9 +61,22 @@ class RegistrationController extends AbstractController {
 
     #[Route("/activation/{token}", name: "user_activation")]
     public function activate(EntityManagerInterface $entityManager, string $token): Response {
-        $entityManager = $entityManager->getRepository(Hash::class);
-        $hash = $entityManager->findOneBy(["hash" => $token]);
+        $EM = $entityManager->getRepository(Hash::class);
+        $hash = $EM->findOneBy(["hash" => $token]);
 
-        dd($hash);
+        if($hash && $hash->isIsActive() === true) {
+            $EM = $entityManager->getRepository(LoginCredentials::class);
+            $user = $EM->findOneBy(["id" => $hash->getIdLoginCredentials()]);
+            $user->setIsActive(true);
+
+            $entityManager->persist($user);
+            $entityManager->flush();
+
+            $hash->setIsActive(false);
+            $entityManager->persist($hash);
+            $entityManager->flush();
+        }
+
+        return $this->redirectToRoute("home");
     }
 }
