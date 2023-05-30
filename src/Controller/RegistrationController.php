@@ -10,11 +10,15 @@ use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Response;
 use App\Entity\LoginCredentials;
 use App\Form\RegistrationFormType;
+use App\Entity\Hash;
+use Symfony\Component\Mailer\MailerInterface;
+use Symfony\Component\Mime\Email;
+use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 
 
 class RegistrationController extends AbstractController {
     #[Route("/inscription", name: "register")]
-    public function register(Request $request, UserPasswordHasherInterface $userPasswordHasher, EntityManagerInterface $entityManager): Response {
+    public function register(Request $request, UserPasswordHasherInterface $userPasswordHasher, EntityManagerInterface $entityManager, MailerInterface $mailer): Response {
         $user = new LoginCredentials();
         $form = $this->createForm(RegistrationFormType::class, $user);
         $form->handleRequest($request);
@@ -23,9 +27,29 @@ class RegistrationController extends AbstractController {
             $user->setPassword($userPasswordHasher->hashPassword(
                 $user, $form->get("password")->getData()
             ));
+            $user->setIsActive(false);           
 
             $entityManager->persist($user);
             $entityManager->flush();
+
+
+            $token = bin2hex(random_bytes(16));
+            $hash = new Hash();
+            $hash->setIdLoginCredentials($user);
+            $hash->setHash($token);
+            $hash->setIsActive(true);
+
+            $entityManager->persist($hash);
+            $entityManager->flush();
+
+            $email = (new Email())
+                ->from("noreply@snowtricks.com")
+                ->to($form->get("email")->getData())
+                ->subject("Activation de votre compte")
+                ->html("<a href='".$this->generateUrl("user_activation", ["token" => $token], UrlGeneratorInterface::ABSOLUTE_URL)."'>Cliquez ici pour activer votre compte !</a>");
+            $mailer->send($email);
+
+
             return $this->redirectToRoute("home");
         }
 
@@ -33,5 +57,13 @@ class RegistrationController extends AbstractController {
         return $this->render("pages/members/register.html.twig", [
             "form" => $form->createView(),
         ]);
+    }
+
+    #[Route("/activation/{token}", name: "user_activation")]
+    public function activate(EntityManagerInterface $entityManager, string $token): Response {
+        $entityManager = $entityManager->getRepository(Hash::class);
+        $hash = $entityManager->findOneBy(["hash" => $token]);
+
+        dd($hash);
     }
 }

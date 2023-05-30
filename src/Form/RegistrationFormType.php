@@ -52,15 +52,6 @@ class RegistrationFormType extends AbstractType {
                     ])
                 ],
             ])
-            ->add("confirmPassword", PasswordType::class, [
-                "error_bubbling" => true,
-                "mapped" => false,
-                "constraints" => [
-                    new NotBlank([
-                        "message" => "Veuillez confirmer votre mot de passe.",
-                    ])
-                ],
-            ])
         ;
     }
 

@@ -30,9 +30,6 @@ class LoginCredentials implements UserInterface, PasswordAuthenticatedUserInterf
     private ?string $password = null;
 
     #[ORM\Column(length: 255)]
-    private ?string $token = null;
-
-    #[ORM\Column(length: 255)]
     private ?string $username = null;
 
     #[ORM\Column]
@@ -115,18 +112,6 @@ class LoginCredentials implements UserInterface, PasswordAuthenticatedUserInterf
     {
         // If you store any temporary, sensitive data on the user, clear it here
         // $this->plainPassword = null;
-    }
-
-    public function getToken(): ?string
-    {
-        return $this->token;
-    }
-
-    public function setToken(string $token): self
-    {
-        $this->token = $token;
-
-        return $this;
     }
 
     public function getUsername(): ?string
