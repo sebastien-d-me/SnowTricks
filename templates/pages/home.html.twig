@@ -12,14 +12,10 @@
     </div>
 
     <div class="messages__list" id="home__messages">
-        {% for message in app.flashes("register_ok") %}
-            <span class="message message--success">{{ message }}</span>
-        {% endfor %}
-        {% for message in app.flashes("activation_ok") %}
-            <span class="message message--success">{{ message }}</span>
-        {% endfor %}
-        {% for message in app.flashes("activation_error") %}
-            <span class="message message--error">{{ message }}</span>
+        {% for label, messages in app.flashes(["success", "warning"]) %}
+            {% for message in messages %}
+                <span class="message message--{{ label }}">{{ message }}</span>
+            {% endfor %}
         {% endfor %}
     </div>
 
@@ -28,14 +24,14 @@
             <div class="tricks__item">
                 <img alt="Illustration of a {{ tricks.trick.name }}" class="trick__image" loading="lazy" src="assets/{{ tricks.cover.path }}">
                 <div class="trick__informations">
-                    <a class="link link--secondary" href="/trick/{{ tricks.trick.id }}">
+                    <a class="link link--secondary" href="">
                         <span class="trick__name">{{ tricks.trick.name }}</span>
                     </a>
                     <div class="trick__action">
-                        <a class="link link--icon" href="/trick/edit/{{ tricks.trick.id }}">
+                        <a class="link link--icon" href="">
                             <i class="ri-pencil-line"></i>
                         </a>
-                        <a class="link link--icon" href="/trick/delete/{{ tricks.trick.id }}">
+                        <a class="link link--icon" href="">
                             <i class="ri-delete-bin-line"></i>
                         </a>
                     </div>

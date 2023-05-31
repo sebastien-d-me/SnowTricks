@@ -257,12 +257,12 @@ body {
 }
 
 /** Type **/
-.message--error {
-  color: #FF575A;
-}
-
 .message--success {
   color: #4ED516;
+}
+
+.message--warning {
+  color: #FF575A;
 }
 
 /*** Footer ***/

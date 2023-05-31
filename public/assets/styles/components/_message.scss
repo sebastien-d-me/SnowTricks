@@ -12,10 +12,10 @@
 }
 
 /** Type **/
-.message--error {
-    color: colors.$red;
-}
-
 .message--success {
     color: colors.$green;
+}
+
+.message--warning {
+    color: colors.$red;
 }
