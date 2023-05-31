@@ -6,6 +6,10 @@
     text-align: center;
 }
 
+.message {
+    font-weight: bold;
+}
+
 .message--error {
     color: colors.$red;
 }

@@ -244,6 +244,10 @@ input {
   text-align: center;
 }
 
+.message {
+  font-weight: bold;
+}
+
 .message--error {
   color: #FF575A;
 }
