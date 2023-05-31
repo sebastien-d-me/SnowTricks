@@ -14,8 +14,6 @@ use App\Entity\Hash;
 use Symfony\Component\Mailer\MailerInterface;
 use Symfony\Component\Mime\Email;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
-use Symfony\Component\HttpKernel\Exception\HttpException;
-
 
 
 class RegistrationController extends AbstractController {
@@ -67,24 +65,22 @@ class RegistrationController extends AbstractController {
         $EM = $entityManager->getRepository(Hash::class);
         $hash = $EM->findOneBy(["hash" => $token]);
 
-        if(!$hash || $hash->isIsActive() === false) {
-            throw new HttpException(Response::HTTP_BAD_REQUEST, "Une erreur est arrivée lors de l'activation de votre compte.");
-        }
-
         if($hash && $hash->isIsActive() === true) {
             $EM = $entityManager->getRepository(LoginCredentials::class);
             $user = $EM->findOneBy(["id" => $hash->getIdLoginCredentials()]);
-            $user->setIsActive(false);
+            $user->setIsActive(true);
 
             $entityManager->persist($user);
-            $entityManager->flush();
 
-            $hash->setIsActive(true);
+            $hash->setIsActive(false);
             $entityManager->persist($hash);
             $entityManager->flush();
 
             $this->addFlash("activation_ok", "Votre compte a été activée !");
+        } else {
+            $this->addFlash("activation_error", "Une erreur est arrivée lors de l'activation de votre compte.");
         }
+
 
         return $this->redirectToRoute("home", ["_fragment" => "home__messages"]);
     }
