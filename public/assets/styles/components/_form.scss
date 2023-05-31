@@ -1,23 +1,23 @@
 @use "../abstracts/colors" as colors;
 
 
-form {
+/*** Form ***/
+.form__block {
     display: flex;
     flex-direction: column;
     justify-content: center;
     margin: 50px auto auto auto;
-    min-height: 400px;
     min-width: 400px;
     padding: 10px;
     text-align: left;
     width: fit-content;
 
     > .btn {
-        margin: 20px auto 0 auto;
+        margin: 20px auto;
     }
 }
 
-// Status
+/** Status **/
 .form__status > ul {
     color: colors.$red;
     list-style: none;
@@ -25,23 +25,18 @@ form {
     padding: 0;
 }
 
-// Row
+/** Row **/
 .form__row {
     margin-bottom: 20px;
-
-    > div {
-        display: flex;
-        flex-direction: column;
-    }
 }
 
-// Label
-label {
+/** Label **/
+.form__block label {
     font-weight: bold;
 }
 
-// Input
-input {
+/** Input **/
+.form__block input {
     box-sizing: border-box;
     border: 0;
     border-bottom: 1px solid colors.$black;

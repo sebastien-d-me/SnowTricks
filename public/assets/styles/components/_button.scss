@@ -1,6 +1,7 @@
 @use "../abstracts/colors" as colors;
 
 
+/*** Button ***/
 .btn {
     background-color: colors.$blue;
     border: none;
@@ -16,7 +17,7 @@
     }
 }
 
-// Fit
+/** Fit **/
 .btn--fit {
     margin: auto;
     width: fit-content;
