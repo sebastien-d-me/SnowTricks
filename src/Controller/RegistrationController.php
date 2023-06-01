@@ -66,20 +66,19 @@ class RegistrationController extends AbstractController {
         if($hash && $hash->isIsActive() === true) {
             $user = $loginCredentialsRepository->findOneBy(["id" => $hash->getIdLoginCredentials()]);
             $user->setIsActive(true);
-            $entityManager->persist($user);
-
+            
             $hash->setIsActive(false);
+
+            $entityManager->persist($user);
             $entityManager->persist($hash);
+            $entityManager->flush();       
 
-            $entityManager->flush();
+            $this->addFlash("success", "Votre compte est activé !");
 
-            $this->addFlash("success", "Votre compte a été activée !");
         } else {
             $this->addFlash("warning", "Une erreur est arrivée lors de l'activation de votre compte.");
         }
 
         return $this->redirectToRoute("home", ["_fragment" => "home__messages"]);
     }
-
-    // Ajouter page avec bouton pour activer son compte
 }
