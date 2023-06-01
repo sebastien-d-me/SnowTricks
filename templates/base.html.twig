@@ -18,7 +18,7 @@
                     <a {% if route_name == "home" %}class="link link--active"{% else %}class="link"{% endif %} href="{{ path('home') }}">Accueil</a>
                 </li>
                 <li class="nav__item">
-                    <a {% if route_name == "login" %}class="link link--active"{% else %}class="link"{% endif %} href="">Se connecter</a>
+                    <a {% if route_name == "login" %}class="link link--active"{% else %}class="link"{% endif %} href="{{ path('login') }}">Se connecter</a>
                 </li>
                 <li class="nav__item">
                     <a {% if route_name == "register" %}class="link link--active"{% else %}class="link"{% endif %} href="{{ path('register') }}">S'inscrire</a>

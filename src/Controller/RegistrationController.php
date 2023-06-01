@@ -20,7 +20,7 @@ use App\Repository\LoginCredentialsRepository;
 
 class RegistrationController extends AbstractController {
     #[Route("/inscription", name: "register")]
-    public function register(Request $request, UserPasswordHasherInterface $userPasswordHasher, EntityManagerInterface $entityManager, MailerInterface $mailer): Response {
+    public function index(Request $request, UserPasswordHasherInterface $userPasswordHasher, EntityManagerInterface $entityManager, MailerInterface $mailer): Response {
         $form = $this->createForm(RegistrationFormType::class);
         $form->handleRequest($request);
 
