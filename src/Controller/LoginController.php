@@ -7,25 +7,24 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
 
-class LoginController extends AbstractController
-{
-    #[Route(path: '/login', name: 'login')]
-    public function login(AuthenticationUtils $authenticationUtils): Response
-    {
-        // if ($this->getUser()) {
-        //     return $this->redirectToRoute('target_path');
-        // }
 
-        // get the login error if there is one
+class LoginController extends AbstractController {
+    #[Route(path: "/connexion", name: "login")]
+    public function login(AuthenticationUtils $authenticationUtils): Response {
+        if ($this->getUser()) {
+            return $this->redirectToRoute("home");
+        }
+
         $error = $authenticationUtils->getLastAuthenticationError();
-        // last username entered by the user
         $lastUsername = $authenticationUtils->getLastUsername();
 
-        return $this->render('pages/members/login.html.twig', ['last_username' => $lastUsername, 'error' => $error]);
+        return $this->render("pages/members/login.html.twig", [
+            "error" => $error,
+            "last_username" => $lastUsername
+        ]);
     }
 
-    #[Route(path: '/logout', name: 'logout')]
-    public function logout(): Response {
-        return $this->redirectToRoute("home");
-    }
+
+    #[Route(path: "/deconnexion", name: "logout")]
+    public function logout(): void {}
 }

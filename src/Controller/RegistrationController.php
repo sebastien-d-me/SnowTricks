@@ -30,15 +30,15 @@ class RegistrationController extends AbstractController {
                 $user, $form->get("password")->getData()
             ));
             $user->setIsActive(false);
-            $entityManager->persist($user);
 
             $token = bin2hex(random_bytes(64));
             $hash = new Hash();
             $hash->setIdLoginCredentials($user);
             $hash->setHash($token);
             $hash->setIsActive(true);
-            $entityManager->persist($hash);
 
+            $entityManager->persist($user);
+            $entityManager->persist($hash);
             $entityManager->flush();
 
             $email = new Email();
@@ -54,7 +54,7 @@ class RegistrationController extends AbstractController {
         }
 
         return $this->render("pages/members/register.html.twig", [
-            "form" => $form->createView(),
+            "form" => $form->createView()
         ]);
     }
 
@@ -71,10 +71,9 @@ class RegistrationController extends AbstractController {
 
             $entityManager->persist($user);
             $entityManager->persist($hash);
-            $entityManager->flush();       
+            $entityManager->flush(); 
 
             $this->addFlash("success", "Votre compte est activé !");
-
         } else {
             $this->addFlash("warning", "Une erreur est arrivée lors de l'activation de votre compte.");
         }
