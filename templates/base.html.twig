@@ -1,3 +1,5 @@
+{% set route_name = app.request.attributes.get("_route") %}
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -13,19 +15,19 @@
         <nav class="header__nav">
             <ul class="nav__list">
                 <li class="nav__item">
-                    <a class="link nav__link" href="#">Accueil</a>
+                    <a {% if route_name == "home" %}class="link link--active"{% else %}class="link"{% endif %} href="{{ path('home') }}">Accueil</a>
                 </li>
                 <li class="nav__item">
-                    <a class="link nav__link" href="#">Se connecter</a>
+                    <a {% if route_name == "login" %}class="link link--active"{% else %}class="link"{% endif %} href="">Se connecter</a>
                 </li>
                 <li class="nav__item">
-                    <a class="link nav__link" href="#">S'inscrire</a>
+                    <a {% if route_name == "register" %}class="link link--active"{% else %}class="link"{% endif %} href="{{ path('register') }}">S'inscrire</a>
                 </li>
             </ul>
         </nav>
     </header>
 
-    <main class="main__block">
+    <main class="main__block" id="{{ pageId }}">
         {% block main %}{% endblock %}
     </main>
 

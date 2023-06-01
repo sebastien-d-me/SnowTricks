@@ -1,0 +1,36 @@
+{% extends "base.html.twig" %}
+{% set pageId = "register" %}
+
+
+{% block main %}
+    {{ form_start(form) }}
+        <div class="form__status">
+            {{ form_errors(form) }}
+        </div>
+
+        <div class="form__row">
+            {{ form_row(
+                form.username, {
+                    label: "Nom d'utilisateur"
+                }) 
+            }}
+        </div>
+        <div class="form__row">
+            {{ form_row(
+                form.email, {
+                    label: "Adresse email"
+                }) 
+            }}
+        </div>
+        <div class="form__row">
+            {{ form_row(
+                form.password, {
+                    label: "Mot de passe"
+                }) 
+            }}
+        </div>
+        <button class="btn btn--fit" type="submit">Créer mon compte</button>
+    {{ form_end(form) }}
+
+    <a class="link" href="">J'ai déjà un compte</a>
+{% endblock %}

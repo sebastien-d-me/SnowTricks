@@ -1,13 +1,22 @@
 {% extends "base.html.twig" %}
+{% set pageId = "home" %}
 
 
 {% block main %}
     <div class="home__banner">
         <img alt="Banner of the website" class="banner__image" loading="lazy" src="{{ asset('assets/images/home/banner.webp') }}">
-        <span class="banner__text">Lorem, ipsum dolor.</span>
+        <span class="banner__text">Entrainez-vous à devenir le meilleur snowboarder !</span>
         <a class="banner__arrow link" href="#tricks__list">
             <i class="ri-arrow-down-line"></i>
         </a>
+    </div>
+
+    <div class="messages__list" id="home__messages">
+        {% for label, messages in app.flashes(["success", "warning"]) %}
+            {% for message in messages %}
+                <span class="message message--{{ label }}">{{ message }}</span>
+            {% endfor %}
+        {% endfor %}
     </div>
 
     <div id="tricks__list">
@@ -15,14 +24,14 @@
             <div class="tricks__item">
                 <img alt="Illustration of a {{ tricks.trick.name }}" class="trick__image" loading="lazy" src="assets/{{ tricks.cover.path }}">
                 <div class="trick__informations">
-                    <a class="link link--secondary" href="/trick/{{ tricks.trick.id }}">
+                    <a class="link link--secondary" href="">
                         <span class="trick__name">{{ tricks.trick.name }}</span>
                     </a>
                     <div class="trick__action">
-                        <a class="link link--icon" href="/trick/edit/{{ tricks.trick.id }}">
+                        <a class="link link--icon" href="">
                             <i class="ri-pencil-line"></i>
                         </a>
-                        <a class="link link--icon" href="/trick/delete/{{ tricks.trick.id }}">
+                        <a class="link link--icon" href="">
                             <i class="ri-delete-bin-line"></i>
                         </a>
                     </div>

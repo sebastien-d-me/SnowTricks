@@ -1,6 +1,7 @@
 @use "../abstracts/colors" as colors;
 
 
+/*** Link ***/
 .link {
     color: colors.$blue;
     text-decoration: none;
@@ -14,6 +15,11 @@
 /** Secondary **/
 .link--secondary {
     color: colors.$cyan;
+}
+
+/** Active **/
+.link--active {
+    border-bottom: 1px solid colors.$black;
 }
 
 /** Icons **/
