@@ -25,6 +25,26 @@ class LoginController extends AbstractController {
     }
 
 
+    #[Route(path: "/mot-de-passe-oublie", name: "forgot_password")]
+    public function forgotPassword(): Response {
+        if ($this->getUser()) {
+            return $this->redirectToRoute("home");
+        }
+
+        return $this->render("pages/members/forgot_password.html.twig");
+    }
+
+
+    #[Route(path: "/mot-de-passe-oublie-form/{token}", name: "reset_password")]
+    public function resetPassword(): Response {
+        if ($this->getUser()) {
+            return $this->redirectToRoute("home");
+        }
+
+        return $this->render("pages/members/reset_password.html.twig");
+    }
+
+
     #[Route(path: "/deconnexion", name: "logout")]
     public function logout(): void {}
 }
