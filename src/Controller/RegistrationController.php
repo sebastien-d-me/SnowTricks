@@ -60,7 +60,7 @@ class RegistrationController extends AbstractController {
 
 
     #[Route("/activation/{token}", name: "register_activation")]
-    public function activate(HashRepository $hashRepository, LoginCredentialsRepository $loginCredentialsRepository, EntityManagerInterface $entityManager, string $token): Response {
+    public function activate(HashRepository $hashRepository, string $token, LoginCredentialsRepository $loginCredentialsRepository, EntityManagerInterface $entityManager): Response {
         $hash = $hashRepository->findOneBy(["hash" => $token]);
 
         if(!$hash) {
