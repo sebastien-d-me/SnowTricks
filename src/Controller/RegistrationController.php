@@ -20,7 +20,7 @@ use App\Repository\LoginCredentialsRepository;
 
 class RegistrationController extends AbstractController {
     #[Route("/inscription", name: "register")]
-    public function register(Request $request, UserPasswordHasherInterface $userPasswordHasher, EntityManagerInterface $entityManager, MailerInterface $mailer): Response {
+    public function index(Request $request, UserPasswordHasherInterface $userPasswordHasher, EntityManagerInterface $entityManager, MailerInterface $mailer): Response {
         $form = $this->createForm(RegistrationFormType::class);
         $form->handleRequest($request);
 
@@ -30,15 +30,15 @@ class RegistrationController extends AbstractController {
                 $user, $form->get("password")->getData()
             ));
             $user->setIsActive(false);
-            $entityManager->persist($user);
 
             $token = bin2hex(random_bytes(64));
             $hash = new Hash();
             $hash->setIdLoginCredentials($user);
             $hash->setHash($token);
             $hash->setIsActive(true);
-            $entityManager->persist($hash);
 
+            $entityManager->persist($user);
+            $entityManager->persist($hash);
             $entityManager->flush();
 
             $email = new Email();
@@ -54,30 +54,34 @@ class RegistrationController extends AbstractController {
         }
 
         return $this->render("pages/members/register.html.twig", [
-            "form" => $form->createView(),
+            "form" => $form->createView()
         ]);
     }
 
 
     #[Route("/activation/{token}", name: "register_activation")]
-    public function activate(HashRepository $hashRepository, LoginCredentialsRepository $loginCredentialsRepository, EntityManagerInterface $entityManager, string $token): Response {
+    public function activate(HashRepository $hashRepository, string $token, LoginCredentialsRepository $loginCredentialsRepository, EntityManagerInterface $entityManager): Response {
         $hash = $hashRepository->findOneBy(["hash" => $token]);
 
-        if($hash && $hash->isIsActive() === true) {
-            $user = $loginCredentialsRepository->findOneBy(["id" => $hash->getIdLoginCredentials()]);
-            $user->setIsActive(true);
-            
-            $hash->setIsActive(false);
+        if(!$hash) {
+            $this->addFlash("warning", "Une erreur est survenue. Le lien d'activation n'est pas valide.");
+            return $this->redirectToRoute("home", ["_fragment" => "home__messages"]);
+        }
 
+        $user = $loginCredentialsRepository->findOneBy(["id" => $hash->getIdLoginCredentials()]);
+
+        if($user->isIsActive() === true) {
+            $this->addFlash("warning", "Votre compte est déjà actif.");
+        } else {
+            $user->setIsActive(true);
+            $hash->setIsActive(false);
+            
             $entityManager->persist($user);
             $entityManager->persist($hash);
-            $entityManager->flush();       
-
+            $entityManager->flush();
+        
             $this->addFlash("success", "Votre compte est activé !");
-
-        } else {
-            $this->addFlash("warning", "Une erreur est arrivée lors de l'activation de votre compte.");
-        }
+        }        
 
         return $this->redirectToRoute("home", ["_fragment" => "home__messages"]);
     }

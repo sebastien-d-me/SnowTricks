@@ -29,7 +29,7 @@ class LoginCredentials implements UserInterface, PasswordAuthenticatedUserInterf
     #[ORM\Column]
     private ?string $password = null;
 
-    #[ORM\Column(length: 255)]
+    #[ORM\Column(length: 255, unique: true)]
     private ?string $username = null;
 
     #[ORM\Column]
@@ -62,7 +62,7 @@ class LoginCredentials implements UserInterface, PasswordAuthenticatedUserInterf
      */
     public function getUserIdentifier(): string
     {
-        return (string) $this->email;
+        return (string) $this->username;
     }
 
     /**

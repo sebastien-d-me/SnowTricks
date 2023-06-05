@@ -17,12 +17,18 @@
                 <li class="nav__item">
                     <a {% if route_name == "home" %}class="link link--active"{% else %}class="link"{% endif %} href="{{ path('home') }}">Accueil</a>
                 </li>
-                <li class="nav__item">
-                    <a {% if route_name == "login" %}class="link link--active"{% else %}class="link"{% endif %} href="">Se connecter</a>
-                </li>
-                <li class="nav__item">
-                    <a {% if route_name == "register" %}class="link link--active"{% else %}class="link"{% endif %} href="{{ path('register') }}">S'inscrire</a>
-                </li>
+                {% if app.user == false %}
+                    <li class="nav__item">
+                        <a {% if route_name == "login" %}class="link link--active"{% else %}class="link"{% endif %} href="{{ path('login') }}">Se connecter</a>
+                    </li>
+                    <li class="nav__item">
+                        <a {% if route_name == "register" %}class="link link--active"{% else %}class="link"{% endif %} href="{{ path('register') }}">S'inscrire</a>
+                    </li>
+                {% else %}
+                    <li class="nav__item">
+                        <a {% if route_name == "logout" %}class="link link--active"{% else %}class="link"{% endif %} href="{{ path('logout') }}">Se déconnecter</a>
+                    </li>
+                {% endif %}
             </ul>
         </nav>
     </header>
@@ -34,15 +40,21 @@
     <footer class="footer__block">
         <span class="footer__copyright">© SnowTricks {{ "now" | date("Y") }}</span>
         <div class="footer__mobile">
-            <a class="link link--icon" href="#">
+            <a class="link link--icon" href="{{ path('home') }}">
                 <i class="ri-home-2-fill"></i>
             </a>
-            <a class="link link--icon" href="#">
-                <i class="ri-login-box-fill"></i>
-            </a>
-            <a class="link link--icon" href="#">
-                <i class="ri-user-add-line"></i>
-            </a>
+            {% if app.user == false %}
+                <a class="link link--icon" href="{{ path('login') }}">
+                    <i class="ri-login-box-fill"></i>
+                </a>
+                <a class="link link--icon" href="{{ path('register') }}">
+                    <i class="ri-user-add-line"></i>
+                </a>
+            {% else %}
+                <a class="link link--icon" href="{{ path('logout') }}">
+                    <i class="ri-login-box-line"></i>
+                </a>
+            {% endif %}
         </div>
     </footer>
 

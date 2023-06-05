@@ -1,0 +1,34 @@
+{% extends "base.html.twig" %}
+{% set pageId = "login" %}
+
+
+{% block main %}
+    <form class="form__block" method="post">
+        {% if error %}
+            <div class="form__status">
+                <span class="message message--warning">{{ error.messageKey | trans(error.messageData, "security") }}</span>
+            </div>
+        {% endif %}
+
+        <div class="form__row">
+            <div>
+                <label for="login_username">Nom d'utilisateur</label>
+                <input id="login_username" name="login_username" required type="text" value="{{ last_username }}">
+            </div>
+        </div>
+        <div class="form__row">
+            <div>
+                <label for="login_password">Mot de passe</label>
+                <input id="login_password" name="login_password" required type="password">
+            </div>
+        </div>
+        <div class="form__row">
+            <div>
+                <input name="_csrf_token" type="hidden" value="{{ csrf_token('authenticate') }}">
+            </div>
+        </div>
+        <button class="btn" type="submit">Me connecter</button>
+    </form>
+
+    <a class="link" href="">Mot de passe oublié</a>
+{% endblock %}

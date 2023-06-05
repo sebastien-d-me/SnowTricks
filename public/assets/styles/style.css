@@ -479,6 +479,10 @@ body {
     text-shadow: 0 0 0 #FEFEFE;
   }
 }
+#login {
+  text-align: center;
+}
+
 #register {
   text-align: center;
 }
