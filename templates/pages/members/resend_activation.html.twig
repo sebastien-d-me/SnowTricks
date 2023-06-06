@@ -1,0 +1,21 @@
+{% extends "base.html.twig" %}
+{% set pageId = "resend_activation" %}
+
+
+{% block main %}
+    <form class="form__block" method="post">
+        {% for label, messages in app.flashes(["success", "warning"]) %}
+            {% for message in messages %}
+                <span class="message message--{{ label }}">{{ message }}</span>
+            {% endfor %}
+        {% endfor %}
+
+        <div class="form__row">
+            <div>
+                <label for="resend_activation_mail">Adresse email</label>
+                <input id="resend_activation_mail" name="resend_activation_mail" required type="email">
+            </div>
+        </div>
+        <button class="btn" type="submit">Demander un lien d'activation</button>
+    </form>
+{% endblock %}

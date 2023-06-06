@@ -6,7 +6,7 @@
     <form class="form__block" method="post">
         {% if error %}
             <div class="form__status">
-                <span class="message message--warning">{{ error.messageKey | trans(error.messageData, "security") }}</span>
+                <span class="message message--warning">{{ error.messageKey | trans(error.messageData, "security") | raw }}</span>
             </div>
         {% endif %}
 

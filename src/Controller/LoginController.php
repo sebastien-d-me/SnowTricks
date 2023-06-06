@@ -23,7 +23,7 @@ class LoginController extends AbstractController {
         if ($this->getUser()) {
             return $this->redirectToRoute("home");
         }
-
+        
         $error = $authenticationUtils->getLastAuthenticationError();
         $lastUsername = $authenticationUtils->getLastUsername();
 
@@ -94,8 +94,10 @@ class LoginController extends AbstractController {
             $password = $request->get("reset_password_password");
             $hashedPassword = $passwordHasher->hashPassword($user, $password);
             $user->setPassword($hashedPassword);
+            $hash->setIsActive(false);
             
             $entityManager->persist($user);
+            $entityManager->persist($hash);
             $entityManager->flush();
 
             $this->addFlash("success", "Votre mot de passe a été modifié !");
