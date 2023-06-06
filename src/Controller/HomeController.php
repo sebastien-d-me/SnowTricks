@@ -10,7 +10,7 @@ use Symfony\Component\HttpFoundation\Response;
 
 
 class HomeController extends AbstractController {
-    #[Route("/", name: "home")]
+    #[Route(name: "home", path: "/")]
     public function index(TrickRepository $trickRepository, MediaRepository $mediaRepository): Response {
         $tricks = $trickRepository->findAll();
         $tricksData = [];

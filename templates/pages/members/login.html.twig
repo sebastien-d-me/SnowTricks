@@ -6,7 +6,7 @@
     <form class="form__block" method="post">
         {% if error %}
             <div class="form__status">
-                <span class="message message--warning">{{ error.messageKey | trans(error.messageData, "security") }}</span>
+                <span class="message message--warning">{{ error.messageKey | trans(error.messageData, "security") | raw }}</span>
             </div>
         {% endif %}
 
@@ -30,5 +30,5 @@
         <button class="btn" type="submit">Me connecter</button>
     </form>
 
-    <a class="link" href="">Mot de passe oublié</a>
+    <a class="link" href="{{ path('forgot_password') }}">Mot de passe oublié</a>
 {% endblock %}
