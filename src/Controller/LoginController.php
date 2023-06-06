@@ -13,6 +13,8 @@ use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\Mime\Email;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Symfony\Component\Mailer\MailerInterface;
+use App\Repository\HashRepository;
+use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 
 
 class LoginController extends AbstractController {
@@ -74,12 +76,35 @@ class LoginController extends AbstractController {
 
 
     #[Route(name: "reset_password", path: "/mot-de-passe-oublie-form/{token}")]
-    public function resetPassword(Request $request): Response {
+    public function resetPassword(HashRepository $hashRepository, string $token, LoginCredentialsRepository $loginCredentialsRepository, Request $request, UserPasswordHasherInterface $passwordHasher, EntityManagerInterface $entityManager): Response {
         if ($this->getUser()) {
             return $this->redirectToRoute("home");
         }
 
-        return $this->render("pages/members/reset_password.html.twig");
+        $hash = $hashRepository->findOneBy(["hash" => $token]);
+
+        if(!$hash) {
+            $this->addFlash("warning", "Une erreur est survenue. Le lien de changement de mot de passe n'est pas valide.");
+            return $this->redirectToRoute("forgot_password");
+        }
+
+        $user = $loginCredentialsRepository->findOneBy(["id" => $hash->getIdLoginCredentials()]);
+
+        if ($request->isMethod("POST")) {
+            $password = $request->get("reset_password_password");
+            $hashedPassword = $passwordHasher->hashPassword($user, $password);
+            $user->setPassword($hashedPassword);
+            
+            $entityManager->persist($user);
+            $entityManager->flush();
+
+            $this->addFlash("success", "Votre mot de passe a été modifié !");
+            return $this->redirectToRoute("home", ["_fragment" => "home__messages"]);
+        }
+
+        return $this->render("pages/members/reset_password.html.twig", [
+            "reset_password_username" => $user->getUsername()
+        ]);
     }
 
 
