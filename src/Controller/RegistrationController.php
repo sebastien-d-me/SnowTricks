@@ -19,7 +19,7 @@ use App\Repository\LoginCredentialsRepository;
 
 
 class RegistrationController extends AbstractController {
-    #[Route("/inscription", name: "register")]
+    #[Route(name: "register", path: "/inscription")]
     public function index(Request $request, UserPasswordHasherInterface $userPasswordHasher, EntityManagerInterface $entityManager, MailerInterface $mailer): Response {
         $form = $this->createForm(RegistrationFormType::class);
         $form->handleRequest($request);
@@ -59,7 +59,7 @@ class RegistrationController extends AbstractController {
     }
 
 
-    #[Route("/activation/{token}", name: "register_activation")]
+    #[Route(name: "register_activation", path: "/activation/{token}")]
     public function activate(HashRepository $hashRepository, string $token, LoginCredentialsRepository $loginCredentialsRepository, EntityManagerInterface $entityManager): Response {
         $hash = $hashRepository->findOneBy(["hash" => $token]);
 
