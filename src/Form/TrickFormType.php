@@ -27,18 +27,37 @@ class TrickFormType extends AbstractType {
             "class" => TrickGroup::class,
             "label" => "Catégorie"
         ]);
-        $builder->add("brochure", FileType::class, [ 
+        $builder->add("featured", FileType::class, [ 
             "constraints" => [
                 new File([
-                    "maxSize" => "1024k",
+                    "maxSize" => "4096k",
                     "mimeTypes" => [
-                        "application/pdf",
-                        "application/x-pdf",
+                        "image/gif",
+                        "image/jpg",
+                        "image/jpeg",
+                        "image/png"
                     ],
-                    "mimeTypesMessage" => "Please upload a valid PDF document",
+                    "mimeTypesMessage" => "Veuillez importer une image",
                 ])
             ],
-            "label" => "Brochure (PDF file)",
+            "label" => "Image à la une",
+        ]);
+        $builder->add("medias", FileType::class, [ 
+            "constraints" => [
+                new File([
+                    "maxSize" => "4096k",
+                    "mimeTypes" => [
+                        "image/gif",
+                        "image/jpg",
+                        "image/jpeg",
+                        "image/png",
+                        "video/mp4"
+                    ],
+                    "mimeTypesMessage" => "Veuillez importer une image ou une vidéo",
+                ])
+            ],
+            "label" => "Illustrations et vidéos",
+            "multiple" => true
         ]);
     }
 

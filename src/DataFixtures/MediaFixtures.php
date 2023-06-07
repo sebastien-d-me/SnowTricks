@@ -94,6 +94,7 @@ class MediaFixtures extends Fixture implements DependentFixtureInterface
             $media->setPath("images/tricks/placeholder/".$mediaPath["name"].".".$mediaPath["extension"]);
             $media->setType("image");
             $media->setIdTrick($trick);
+            $media->setFeatured(true);
             $manager->persist($media);
         }
 

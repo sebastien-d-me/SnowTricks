@@ -23,6 +23,9 @@ class Media
     #[ORM\Column(length: 255)]
     private ?string $path = null;
 
+    #[ORM\Column]
+    private ?bool $featured = null;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -60,6 +63,18 @@ class Media
     public function setPath(string $path): self
     {
         $this->path = $path;
+
+        return $this;
+    }
+
+    public function isFeatured(): ?bool
+    {
+        return $this->featured;
+    }
+
+    public function setFeatured(bool $featured): self
+    {
+        $this->featured = $featured;
 
         return $this;
     }
