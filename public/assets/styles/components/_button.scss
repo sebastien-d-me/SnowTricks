@@ -17,6 +17,17 @@
     }
 }
 
+/** Secondary **/
+.btn--secondary {
+    background: transparent;
+    border: 1px solid colors.$violet;
+    color: colors.$violet;
+
+    &:hover {
+        color: colors.$white;
+    }
+}
+
 /** Fit **/
 .btn--fit {
     margin: auto;

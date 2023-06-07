@@ -1,10 +1,10 @@
 {% extends "base.html.twig" %}
-{% set pageId = "register" %}
+{% set pageId = "trick_create" %}
 
 
 {% block main %}
-    <h1 class="page__title">Inscription</h1>
-
+    <h1 class="page__title">Création d'une trick</h1>
+    
     {{ form_start(form) }}
         <div class="form__status">
             {{ form_errors(form) }}
@@ -12,27 +12,25 @@
 
         <div class="form__row">
             {{ form_row(
-                form.username, {
-                    label: "Nom d'utilisateur"
+                form.name, {
+                    label: "Nom"
                 }) 
             }}
         </div>
         <div class="form__row">
             {{ form_row(
-                form.email, {
-                    label: "Adresse email"
+                form.description, {
+                    label: "Description"
                 }) 
             }}
         </div>
         <div class="form__row">
             {{ form_row(
-                form.password, {
-                    label: "Mot de passe"
+                form.idTrickGroup, {
+                    label: "Groupe"
                 }) 
             }}
         </div>
-        <button class="btn btn--fit" type="submit">Créer mon compte</button>
+        <button class="btn btn--fit" type="submit">Ajouter le trick</button>
     {{ form_end(form) }}
-
-    <a class="link" href="{{ path('login') }}">J'ai déjà un compte</a>
 {% endblock %}
