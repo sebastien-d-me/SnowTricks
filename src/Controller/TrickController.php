@@ -13,6 +13,10 @@ use App\Form\TrickFormType;
 class TrickController extends AbstractController {
     #[Route("/trick/ajouter", name: "trick_create")]
     public function create(Request $request, EntityManagerInterface $entityManager): Response {
+        if (!$this->getUser()) {
+            return $this->redirectToRoute("home");
+        }
+        
         $form = $this->createForm(TrickFormType::class);
         $form->handleRequest($request);
 

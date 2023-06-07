@@ -249,6 +249,10 @@ body {
   resize: none;
 }
 
+.form__block select {
+  text-transform: capitalize;
+}
+
 /*** Link ***/
 .link {
   color: #194CCE;

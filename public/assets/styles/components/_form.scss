@@ -50,3 +50,7 @@
     min-height: 65px;
     resize: none;
 }
+
+.form__block select {
+    text-transform: capitalize;
+}

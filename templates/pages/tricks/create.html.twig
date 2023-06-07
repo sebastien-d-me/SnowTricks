@@ -4,32 +4,20 @@
 
 {% block main %}
     <h1 class="page__title">Création d'une trick</h1>
-    
+
     {{ form_start(form) }}
         <div class="form__status">
             {{ form_errors(form) }}
         </div>
 
         <div class="form__row">
-            {{ form_row(
-                form.name, {
-                    label: "Nom"
-                }) 
-            }}
+            {{ form_row(form.name) }}
         </div>
         <div class="form__row">
-            {{ form_row(
-                form.description, {
-                    label: "Description"
-                }) 
-            }}
+            {{ form_row(form.description) }}
         </div>
         <div class="form__row">
-            {{ form_row(
-                form.idTrickGroup, {
-                    label: "Groupe"
-                }) 
-            }}
+            {{ form_row(form.idTrickGroup) }}
         </div>
         <button class="btn btn--fit" type="submit">Ajouter le trick</button>
     {{ form_end(form) }}

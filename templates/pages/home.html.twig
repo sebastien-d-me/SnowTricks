@@ -34,14 +34,16 @@
                     <a class="link link--secondary" href="">
                         <span class="trick__name">{{ tricks.trick.name }}</span>
                     </a>
-                    <div class="trick__action">
-                        <a class="link link--icon" href="">
-                            <i class="ri-pencil-line"></i>
-                        </a>
-                        <a class="link link--icon" href="">
-                            <i class="ri-delete-bin-line"></i>
-                        </a>
-                    </div>
+                    {% if app.user == true %}
+                        <div class="trick__action">
+                            <a class="link link--icon" href="">
+                                <i class="ri-pencil-line"></i>
+                            </a>
+                            <a class="link link--icon" href="">
+                                <i class="ri-delete-bin-line"></i>
+                            </a>
+                        </div>
+                    {% endif %}
                 </div>
             </div>
         {% endfor %}
