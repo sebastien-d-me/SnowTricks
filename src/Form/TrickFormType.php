@@ -30,7 +30,7 @@ class TrickFormType extends AbstractType {
         $builder->add("featured", FileType::class, [ 
             "constraints" => [
                 new File([
-                    "maxSize" => "4096k",
+                    "maxSize" => "8192k",
                     "mimeTypes" => [
                         "image/gif",
                         "image/jpg",
@@ -41,11 +41,12 @@ class TrickFormType extends AbstractType {
                 ])
             ],
             "label" => "Image à la une",
+            "mapped" => false
         ]);
         $builder->add("medias", FileType::class, [ 
             "constraints" => [
                 new File([
-                    "maxSize" => "4096k",
+                    "maxSize" => "8192k",
                     "mimeTypes" => [
                         "image/gif",
                         "image/jpg",
@@ -57,6 +58,7 @@ class TrickFormType extends AbstractType {
                 ])
             ],
             "label" => "Illustrations et vidéos",
+            "mapped" => false,
             "multiple" => true
         ]);
     }

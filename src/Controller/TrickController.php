@@ -10,6 +10,7 @@ use Symfony\Component\HttpFoundation\Response;
 use App\Form\TrickFormType;
 use Symfony\Component\String\Slugger\SluggerInterface;
 use App\Repository\TrickRepository;
+use App\Entity\Trick;
 use App\Entity\Media;
 
 
@@ -34,7 +35,6 @@ class TrickController extends AbstractController {
             $trick->setSlug($trickSlug);
 
             $entityManager->persist($trick);
-            $entityManager->flush();
             
             // Sauvegarde de l'image à la une
             $featuredFile = $form->get("featured")->getData();
