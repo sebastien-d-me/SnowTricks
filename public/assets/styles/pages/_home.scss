@@ -98,6 +98,11 @@
 /*** Responsive ***/
 @media screen and (max-width: 992px) {
 
+    /** Banner **/
+    .banner__text {
+        text-align: center;
+    }
+
     /** Tricks list **/
     #tricks__list {
         gap: 25px 0;

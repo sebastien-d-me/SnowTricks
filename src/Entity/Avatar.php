@@ -16,10 +16,6 @@ class Avatar
     #[ORM\Column(length: 255)]
     private ?string $path = null;
 
-    #[ORM\OneToOne(inversedBy: 'idAvatar', cascade: ['persist', 'remove'])]
-    #[ORM\JoinColumn(nullable: false)]
-    private ?LoginCredentials $idLoginCredentials = null;
-
     public function getId(): ?int
     {
         return $this->id;
@@ -33,18 +29,6 @@ class Avatar
     public function setPath(string $path): self
     {
         $this->path = $path;
-
-        return $this;
-    }
-
-    public function getIdLoginCredentials(): ?LoginCredentials
-    {
-        return $this->idLoginCredentials;
-    }
-
-    public function setIdLoginCredentials(LoginCredentials $idLoginCredentials): self
-    {
-        $this->idLoginCredentials = $idLoginCredentials;
 
         return $this;
     }

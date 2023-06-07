@@ -28,6 +28,12 @@ class Comment
     #[ORM\JoinColumn(nullable: false)]
     private ?Trick $idTrick = null;
 
+    #[ORM\Column(length: 255)]
+    private ?string $fullname = null;
+
+    #[ORM\ManyToOne]
+    private ?avatar $avatar = null;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -77,6 +83,30 @@ class Comment
     public function setIdTrick(?Trick $idTrick): self
     {
         $this->idTrick = $idTrick;
+
+        return $this;
+    }
+
+    public function getFullname(): ?string
+    {
+        return $this->fullname;
+    }
+
+    public function setFullname(string $fullname): self
+    {
+        $this->fullname = $fullname;
+
+        return $this;
+    }
+
+    public function getAvatar(): ?avatar
+    {
+        return $this->avatar;
+    }
+
+    public function setAvatar(?avatar $avatar): self
+    {
+        $this->avatar = $avatar;
 
         return $this;
     }

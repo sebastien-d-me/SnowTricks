@@ -35,9 +35,6 @@ class LoginCredentials implements UserInterface, PasswordAuthenticatedUserInterf
     #[ORM\Column]
     private ?bool $isActive = null;
 
-    #[ORM\OneToOne(mappedBy: 'idLoginCredentials', cascade: ['persist', 'remove'])]
-    private ?Avatar $idAvatar = null;
-
     public function getId(): ?int
     {
         return $this->id;
@@ -128,23 +125,6 @@ class LoginCredentials implements UserInterface, PasswordAuthenticatedUserInterf
     public function setIsActive(bool $isActive): self
     {
         $this->isActive = $isActive;
-
-        return $this;
-    }
-
-    public function getIdAvatar(): ?Avatar
-    {
-        return $this->idAvatar;
-    }
-
-    public function setIdAvatar(Avatar $idAvatar): self
-    {
-        // set the owning side of the relation if necessary
-        if ($idAvatar->getIdMember() !== $this) {
-            $idAvatar->setIdMember($this);
-        }
-
-        $this->idAvatar = $idAvatar;
 
         return $this;
     }
