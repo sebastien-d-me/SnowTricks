@@ -12,6 +12,7 @@ use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use App\Entity\TrickGroup;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Validator\Constraints\File;
+use Symfony\Component\Validator\Constraints\All;
 use App\Entity\Trick;
 
 
@@ -27,7 +28,7 @@ class TrickFormType extends AbstractType {
             "class" => TrickGroup::class,
             "label" => "Catégorie"
         ]);
-        $builder->add("featured", FileType::class, [ 
+        $builder->add("featured", FileType::class, [
             "constraints" => [
                 new File([
                     "maxSize" => "8192k",
@@ -45,17 +46,21 @@ class TrickFormType extends AbstractType {
         ]);
         $builder->add("medias", FileType::class, [ 
             "constraints" => [
-                new File([
-                    "maxSize" => "8192k",
-                    "mimeTypes" => [
-                        "image/gif",
-                        "image/jpg",
-                        "image/jpeg",
-                        "image/png",
-                        "video/mp4"
+                new All([
+                    "constraints" => [
+                        new File([
+                            "maxSize" => "8192k",
+                            "mimeTypes" => [
+                                "image/gif",
+                                "image/jpg",
+                                "image/jpeg",
+                                "image/png",
+                                "video/mp4"
+                            ],
+                            "mimeTypesMessage" => "Veuillez importer une image ou une vidéo",
+                        ])
                     ],
-                    "mimeTypesMessage" => "Veuillez importer une image ou une vidéo",
-                ])
+                ]),
             ],
             "label" => "Illustrations et vidéos",
             "mapped" => false,

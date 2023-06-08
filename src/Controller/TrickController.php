@@ -35,6 +35,7 @@ class TrickController extends AbstractController {
             $trick->setSlug($trickSlug);
 
             $entityManager->persist($trick);
+            $entityManager->flush();
             
             // Sauvegarde de l'image à la une
             $featuredFile = $form->get("featured")->getData();
@@ -45,12 +46,39 @@ class TrickController extends AbstractController {
             $media = new Media();
             $media->setIdTrick($trickId);
             $media->setType("image");
-            $media->setPath($featuredFileName);
+            $media->setPath("images/tricks/featured/".$featuredFileName);
             $media->setFeatured(true);
+
             $entityManager->persist($media);
             $entityManager->flush();
 
             // Sauvegarde des autres médias
+            $mediasFile = $form->get("medias")->getData();
+            foreach($mediasFile as $mediaFile) {
+                $mediaExtension = $mediaFile->guessExtension();
+
+                if($mediaExtension === "mp4") {
+                    $mediaRepository = "media_video_directory";
+                    $mediaPath = "videos/tricks/";
+                } else {
+                    $mediaRepository = "media_image_directory";
+                    $mediaPath = "images/tricks/";
+                }
+
+                $mediaFileName = $slugger->slug(pathinfo($mediaFile->getClientOriginalName(), PATHINFO_FILENAME))."-".uniqid().".".$mediaExtension;
+                
+                $mediaFile->move($this->getParameter($mediaRepository), $mediaFileName);
+                $trickId = $trickRepository->findOneBy(["id" => $trick->getId()]);
+
+                $media = new Media();
+                $media->setIdTrick($trickId);
+                $media->setType("image");
+                $media->setPath($mediaPath.$mediaFileName);
+                $media->setFeatured(true);
+
+                $entityManager->persist($media);
+                $entityManager->flush();
+            }
         }
 
         return $this->render("pages/tricks/create.html.twig", [
