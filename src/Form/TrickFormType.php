@@ -49,7 +49,7 @@ class TrickFormType extends AbstractType {
                 new All([
                     "constraints" => [
                         new File([
-                            "maxSize" => "8192k",
+                            "maxSize" => "49152k",
                             "mimeTypes" => [
                                 "image/gif",
                                 "image/jpg",

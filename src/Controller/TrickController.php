@@ -86,11 +86,11 @@ class TrickController extends AbstractController {
 
                 $entityManager->persist($media);
                 $entityManager->flush();
-
-                $this->addFlash("success", "Votre trick a été ajouté !");
-
-                return $this->redirectToRoute("home");
             }
+
+            $this->addFlash("success", "Votre trick a été ajouté !");
+
+            return $this->redirectToRoute("home");
         }
 
         return $this->render("pages/tricks/create.html.twig", [
