@@ -386,6 +386,7 @@ body {
 .main__block {
   flex: 1 0 auto;
   padding-bottom: 20px;
+  text-align: center;
 }
 
 /*** Responsive ***/
@@ -496,6 +497,14 @@ body {
   gap: 10px;
 }
 
+.tricks__arrow {
+  bottom: 0;
+  color: #DD7DFF;
+  font-size: 40px;
+  position: fixed;
+  right: 50px;
+}
+
 /*** Responsive ***/
 @media screen and (max-width: 992px) {
   /** Banner **/
@@ -524,14 +533,6 @@ body {
     text-shadow: 0 0 0 #FEFEFE;
   }
 }
-#login {
-  text-align: center;
-}
-
-#register {
-  text-align: center;
-}
-
 /* Base */
 /* Components */
 /* Layouts */

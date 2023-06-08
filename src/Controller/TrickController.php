@@ -16,7 +16,7 @@ use App\Entity\Media;
 
 class TrickController extends AbstractController {
     #[Route("/trick/ajouter", name: "trick_create")]
-    public function create(Request $request, SluggerInterface $slugger, EntityManagerInterface $entityManager, TrickRepository $trickRepository): Response {
+    public function create(Request $request, TrickRepository $trickRepository, EntityManagerInterface $entityManager, SluggerInterface $slugger): Response {
         if (!$this->getUser()) {
             return $this->redirectToRoute("home");
         }
@@ -25,11 +25,19 @@ class TrickController extends AbstractController {
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            $trickName = $form->get("name")->getData();
+            $checkExist = $trickRepository->findOneBy(["name" => $trickName]);
+
+            if($checkExist) {
+                $this->addFlash("warning", "Un trick du même nom existe déjà.");
+                return $this->redirectToRoute("trick_create");
+            }
+
             // Creation et enregistrement du trick
-            $trickSlug = strtolower(str_replace(" ", "-", $form->get("name")->getData()));
+            $trickSlug = strtolower(str_replace(" ", "-", $trickName));
 
             $trick = new Trick();
-            $trick->setName($form->get("name")->getData());
+            $trick->setName($trickName);
             $trick->setDescription($form->get("description")->getData());
             $trick->setIdTrickGroup($form->get("idTrickGroup")->getData());
             $trick->setSlug($trickSlug);
@@ -78,6 +86,10 @@ class TrickController extends AbstractController {
 
                 $entityManager->persist($media);
                 $entityManager->flush();
+
+                $this->addFlash("success", "Votre trick a été ajouté !");
+
+                return $this->redirectToRoute("home");
             }
         }
 

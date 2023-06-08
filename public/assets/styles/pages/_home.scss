@@ -103,6 +103,14 @@
     gap: 10px;
 }
 
+.tricks__arrow {
+    bottom: 0;
+    color: colors.$violet;
+    font-size: 40px;
+    position: fixed;
+    right: 50px;
+}
+
 /*** Responsive ***/
 @media screen and (max-width: 992px) {
 
