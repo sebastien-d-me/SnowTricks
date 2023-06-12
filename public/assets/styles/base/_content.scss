@@ -15,6 +15,10 @@
     display: block !important;
 }
 
+.show--flex {
+    display: flex !important;
+}
+
 /** Page **/
 .page__title {
     border-bottom: 1px dashed colors.$black;

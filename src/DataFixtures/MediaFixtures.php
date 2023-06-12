@@ -22,59 +22,59 @@ class MediaFixtures extends Fixture implements DependentFixtureInterface
     {
         $mediasPath = [
             [
-                "name" => "tail press",
+                "name" => "Tail Press",
                 "extension" => "webp",
             ],
             [
-                "name" => "nose press",
+                "name" => "Nose Press",
                 "extension" => "webp",
             ],
             [
-                "name" => "tripod",
+                "name" => "Tripod",
                 "extension" => "webp",
             ],
             [
-                "name" => "tail-drag 360",
+                "name" => "Tail-Drag 360",
                 "extension" => "webp",
             ],
             [
-                "name" => "indy",
+                "name" => "Indy",
                 "extension" => "webp",
             ],
             [
-                "name" => "stalefish",
+                "name" => "Stalefish",
                 "extension" => "webp",
             ],
             [
-                "name" => "tail",
+                "name" => "Tail",
                 "extension" => "webp",
             ],
             [
-                "name" => "method",
+                "name" => "Method",
                 "extension" => "webp",
             ],
             [
-                "name" => "wildcat",
+                "name" => "Wildcat",
                 "extension" => "webp",
             ],
             [
-                "name" => "tamedog",
+                "name" => "Tamedog",
                 "extension" => "webp",
             ],
             [
-                "name" => "frontflip",
+                "name" => "Frontflip",
                 "extension" => "webp",
             ],
             [
-                "name" => "corked spin",
+                "name" => "Corked Spin",
                 "extension" => "webp",
             ],
             [
-                "name" => "frontside boardslide",
+                "name" => "Frontside Boardslide",
                 "extension" => "webp",
             ],
             [
-                "name" => "backside boardslide",
+                "name" => "Backside Boardslide",
                 "extension" => "webp",
             ],
             [
@@ -82,7 +82,7 @@ class MediaFixtures extends Fixture implements DependentFixtureInterface
                 "extension" => "webp",
             ],
             [
-                "name" => "bluntslide",
+                "name" => "Bluntslide",
                 "extension" => "webp",
             ],
         ];
@@ -90,8 +90,13 @@ class MediaFixtures extends Fixture implements DependentFixtureInterface
         foreach($mediasPath as $mediaPath) {
             $trick = $manager->getRepository(Trick::class)->findOneBy(["name" => $mediaPath["name"]]);
 
+            $mediaName = strtolower(str_replace(" ", "-", $mediaPath["name"]));
+            $mediaFileName = $mediaName."-".uniqid().".".$mediaPath["extension"];
+
+            copy("public/assets/images/tricks/placeholder/".$mediaPath["name"].".".$mediaPath["extension"], "public/assets/images/tricks/featured/".$mediaFileName);
+            
             $media = new Media();
-            $media->setPath("images/tricks/placeholder/".$mediaPath["name"].".".$mediaPath["extension"]);
+            $media->setPath("images/tricks/placeholder/".$mediaFileName);
             $media->setType("image");
             $media->setIdTrick($trick);
             $media->setFeatured(true);

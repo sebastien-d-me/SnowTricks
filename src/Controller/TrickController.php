@@ -82,7 +82,7 @@ class TrickController extends AbstractController {
                 $media->setIdTrick($trickId);
                 $media->setType("image");
                 $media->setPath($mediaPath.$mediaFileName);
-                $media->setFeatured(true);
+                $media->setFeatured(false);
 
                 $entityManager->persist($media);
                 $entityManager->flush();
