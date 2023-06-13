@@ -31,7 +31,7 @@
             <div class="tricks__item">
                 <img alt="Illustration of a {{ tricks.trick.name }}" class="trick__image" loading="lazy" src="assets/{{ tricks.cover.path }}">
                 <div class="trick__informations">
-                    <a class="link link--secondary" href="">
+                    <a class="link link--secondary" href="{{ path('trick_presentation', {trickSlug: tricks.trick.slug}) }}">
                         <span class="trick__name">{{ tricks.trick.name }}</span>
                     </a>
                     {% if app.user == true %}

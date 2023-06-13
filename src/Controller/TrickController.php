@@ -12,10 +12,11 @@ use Symfony\Component\String\Slugger\SluggerInterface;
 use App\Repository\TrickRepository;
 use App\Entity\Trick;
 use App\Entity\Media;
+use App\Repository\MediaRepository;
 
 
 class TrickController extends AbstractController {
-    #[Route("/trick/ajouter", name: "trick_create")]
+    #[Route(name: "trick_create", path: "/trick/ajouter")]
     public function create(Request $request, TrickRepository $trickRepository, EntityManagerInterface $entityManager, SluggerInterface $slugger): Response {
         if (!$this->getUser()) {
             return $this->redirectToRoute("home");
@@ -110,6 +111,23 @@ class TrickController extends AbstractController {
 
         return $this->render("pages/tricks/create.html.twig", [
             "form" => $form->createView()
+        ]);
+    }
+
+
+    #[Route(name: "trick_presentation", path: "/trick/{trickSlug}")]
+    public function view(TrickRepository $trickRepository, string $trickSlug ,MediaRepository $mediaRepository): Response {        
+        $trick = $trickRepository->findOneBy(["slug" => $trickSlug]);
+        $medias = $mediaRepository->findBy(["idTrick" => $trick->getId()]);
+
+        $data = [
+            "trick" => array($trick),
+            "medias" => $medias
+        ];
+        dd($data);
+
+        return $this->render("pages/tricks/presentation.html.twig", [
+            "data" => $data
         ]);
     }
 }
