@@ -66,6 +66,11 @@ class TrickFormType extends AbstractType {
             "mapped" => false,
             "multiple" => true
         ]);
+        $builder->add("mediasEmbed", TextareaType::class, [
+            "label" => "URL de vos vidéos (Dailymotion, Youtube) une par ligne",
+            "mapped" => false,
+            "required" => false
+        ]);
     }
 
 

@@ -24,7 +24,7 @@ class TrickController extends AbstractController {
         $form = $this->createForm(TrickFormType::class);
         $form->handleRequest($request);
 
-        if ($form->isSubmitted() && $form->isValid()) {
+        if ($form->isSubmitted() && $form->isValid()) {           
             $trickName = $form->get("name")->getData();
             $checkExist = $trickRepository->findOneBy(["name" => $trickName]);
 
@@ -44,13 +44,14 @@ class TrickController extends AbstractController {
 
             $entityManager->persist($trick);
             $entityManager->flush();
+
+            $trickId = $trickRepository->findOneBy(["id" => $trick->getId()]);
             
             // Sauvegarde de l'image à la une
             $featuredFile = $form->get("featured")->getData();
             $featuredFileName = $slugger->slug(pathinfo($featuredFile->getClientOriginalName(), PATHINFO_FILENAME))."-".uniqid().".".$featuredFile->guessExtension();
             $featuredFile->move($this->getParameter("featured_directory"), $featuredFileName);
-            $trickId = $trickRepository->findOneBy(["id" => $trick->getId()]);
-
+            
             $media = new Media();
             $media->setIdTrick($trickId);
             $media->setType("image");
@@ -88,9 +89,23 @@ class TrickController extends AbstractController {
                 $entityManager->flush();
             }
 
+            // Enregistre les embed
+            $mediasEmbed = $form->get("mediasEmbed")->getData();
+            $mediasEmbedList = explode("\n", $mediasEmbed);
+            foreach($mediasEmbedList as $mediaEmbedItem) {
+                $media = new Media();
+                $media->setIdTrick($trickId);
+                $media->setType("embed");
+                $media->setSrc($mediaEmbedItem);
+                $media->setFeatured(false);
+
+                $entityManager->persist($media);
+                $entityManager->flush();
+            }
+
             $this->addFlash("success", "Votre trick a été ajouté !");
 
-            return $this->redirectToRoute("home");
+            return $this->redirectToRoute("home", ["_fragment" => "home__messages"]);
         }
 
         return $this->render("pages/tricks/create.html.twig", [

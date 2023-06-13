@@ -20,11 +20,14 @@ class Media
     #[ORM\JoinColumn(nullable: false)]
     private ?Trick $idTrick = null;
 
-    #[ORM\Column(length: 255)]
+    #[ORM\Column(length: 255, nullable: true)]
     private ?string $path = null;
 
     #[ORM\Column]
     private ?bool $featured = null;
+
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $src = null;
 
     public function getId(): ?int
     {
@@ -75,6 +78,18 @@ class Media
     public function setFeatured(bool $featured): self
     {
         $this->featured = $featured;
+
+        return $this;
+    }
+
+    public function getSrc(): ?string
+    {
+        return $this->src;
+    }
+
+    public function setSrc(?string $src): self
+    {
+        $this->src = $src;
 
         return $this;
     }
