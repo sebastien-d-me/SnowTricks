@@ -34,7 +34,7 @@ if (currentURL === "/") {
 
     tricksButton.addEventListener("click", function () {
         for (let tricksIndex = tricksLoaded; tricksIndex < tricksLoaded + 5 && tricksIndex < tricksNumber; tricksIndex++) {
-            tricks[tricksIndex].classList.add("show");
+            tricks[tricksIndex].classList.add("show--flex");
         }
 
         tricksLoaded += 5;

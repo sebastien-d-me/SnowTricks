@@ -19,6 +19,13 @@
         {% endfor %}
     </div>
 
+    {% if app.user == true %}
+        <a class="btn home__btn__create" href="{{ path('trick_create') }}">
+            <i class="ri-add-line"></i>
+            <span>Ajouter un trick</span>
+        </a>
+    {% endif %}
+
     <div id="tricks__list">
         {% for tricks in tricksData %}
             <div class="tricks__item">
@@ -27,14 +34,16 @@
                     <a class="link link--secondary" href="">
                         <span class="trick__name">{{ tricks.trick.name }}</span>
                     </a>
-                    <div class="trick__action">
-                        <a class="link link--icon" href="">
-                            <i class="ri-pencil-line"></i>
-                        </a>
-                        <a class="link link--icon" href="">
-                            <i class="ri-delete-bin-line"></i>
-                        </a>
-                    </div>
+                    {% if app.user == true %}
+                        <div class="trick__action">
+                            <a class="link link--icon" href="">
+                                <i class="ri-pencil-line"></i>
+                            </a>
+                            <a class="link link--icon" href="">
+                                <i class="ri-delete-bin-line"></i>
+                            </a>
+                        </div>
+                    {% endif %}
                 </div>
             </div>
         {% endfor %}
@@ -43,7 +52,7 @@
             <span>Aucun trick n'a été écrit pour le moment...</span>
         {% elseif tricksData | length > 15 %}
             <div class="tricks__break"></div>
-            <button class="btn btn__tricks">
+            <button class="btn btn--secondary btn__tricks">
                 <i class="ri-refresh-line"></i>
                 <span>Charger plus</span>
             </button>
@@ -52,7 +61,7 @@
         {% endif %}        
     </div>
 
-    <a class="tricks__arrow link" href="#tricks__list">
+    <a class="hide tricks__arrow link" href="#tricks__list">
         <i class="ri-arrow-up-line"></i>
     </a>
 {% endblock %}

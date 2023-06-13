@@ -14,7 +14,7 @@ class Trick
     #[ORM\Column]
     private ?int $id = null;
 
-    #[ORM\Column(length: 50)]
+    #[ORM\Column(length: 50, unique: true)]
     private ?string $name = null;
 
     #[ORM\Column(type: Types::TEXT)]
@@ -23,6 +23,9 @@ class Trick
     #[ORM\ManyToOne]
     #[ORM\JoinColumn(nullable: false)]
     private ?TrickGroup $idTrickGroup = null;
+
+    #[ORM\Column(length: 255)]
+    private ?string $slug = null;
 
     public function getId(): ?int
     {
@@ -61,6 +64,18 @@ class Trick
     public function setIdTrickGroup(?TrickGroup $idTrickGroup): self
     {
         $this->idTrickGroup = $idTrickGroup;
+
+        return $this;
+    }
+
+    public function getSlug(): ?string
+    {
+        return $this->slug;
+    }
+
+    public function setSlug(string $slug): self
+    {
+        $this->slug = $slug;
 
         return $this;
     }

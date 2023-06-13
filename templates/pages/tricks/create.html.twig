@@ -1,0 +1,39 @@
+{% extends "base.html.twig" %}
+{% set pageId = "trick_create" %}
+
+
+{% block main %}
+    <h1 class="page__title">Création d'une trick</h1>
+
+    {% for label, messages in app.flashes(["success", "warning"]) %}
+        {% for message in messages %}
+            <span class="message message--{{ label }}">{{ message }}</span>
+        {% endfor %}
+    {% endfor %}
+
+    {{ form_start(form) }}
+        <div class="form__status">
+            {{ form_errors(form) }}
+        </div>
+
+        <div class="form__row">
+            {{ form_row(form.name) }}
+        </div>
+        <div class="form__row">
+            {{ form_row(form.description) }}
+        </div>
+        <div class="form__row">
+            {{ form_row(form.idTrickGroup) }}
+        </div>
+        <div class="form__row">
+            {{ form_row(form.featured) }}
+        </div>
+        <div class="form__row">
+            {{ form_row(form.medias) }}
+        </div>
+        <div class="form__row">
+            {{ form_row(form.mediasEmbed) }}
+        </div>
+        <button class="btn btn--fit" type="submit">Ajouter le trick</button>
+    {{ form_end(form) }}
+{% endblock %}

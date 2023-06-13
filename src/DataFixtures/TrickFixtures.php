@@ -22,83 +22,83 @@ class TrickFixtures extends Fixture implements DependentFixtureInterface
     {
         $tricksData = [
             [
-                "name" => "tail press",
-                "description" => "",
+                "name" => "Tail Press",
+                "description" => "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
                 "idTrickGroup" => "butter"
             ],
             [
-                "name" => "nose press",
-                "description" => "",
+                "name" => "Nose Press",
+                "description" => "Duis sit amet lacus in libero posuere bibendum.",
                 "idTrickGroup" => "butter"
             ],
             [
-                "name" => "tripod",
-                "description" => "",
+                "name" => "Tripod",
+                "description" => "Nulla vel lorem eu tortor blandit dapibus.",
                 "idTrickGroup" => "butter"
             ],
             [
-                "name" => "tail-drag 360",
-                "description" => "",
+                "name" => "Tail-Drag 360",
+                "description" => "Mauris sit amet nisl eget nulla placerat blandit vitae et dui.",
                 "idTrickGroup" => "butter"
             ],
             [
-                "name" => "indy",
-                "description" => "",
+                "name" => "Indy",
+                "description" => "Donec venenatis est sed porttitor commodo.",
                 "idTrickGroup" => "grabs"
             ],
             [
-                "name" => "stalefish",
-                "description" => "",
+                "name" => "Stalefish",
+                "description" => "Quisque pulvinar purus congue, faucibus nunc sit amet, tincidunt purus.",
                 "idTrickGroup" => "grabs"
             ],
             [
-                "name" => "tail",
-                "description" => "",
+                "name" => "Tail",
+                "description" => "Donec porttitor lacus nec dapibus auctor.",
                 "idTrickGroup" => "grabs"
             ],
             [
-                "name" => "method",
-                "description" => "",
+                "name" => "Method",
+                "description" => "Phasellus vel enim eu nibh vestibulum sodales.",
                 "idTrickGroup" => "grabs"
             ],
             [
-                "name" => "wildcat",
-                "description" => "",
+                "name" => "Wildcat",
+                "description" => "Nunc sed neque euismod, tincidunt est nec, molestie dolor.",
                 "idTrickGroup" => "spins, flips and corks"
             ],
             [
-                "name" => "tamedog",
-                "description" => "",
+                "name" => "Tamedog",
+                "description" => "Nullam quis libero vehicula, hendrerit nulla ut, dictum dolor.",
                 "idTrickGroup" => "spins, flips and corks"
             ],
             [
-                "name" => "frontflip",
-                "description" => "",
+                "name" => "Frontflip",
+                "description" => "Proin ut urna non ante ornare tristique.",
                 "idTrickGroup" => "spins, flips and corks"
             ],
             [
-                "name" => "corked spin",
-                "description" => "",
+                "name" => "Corked Spin",
+                "description" => "Proin porttitor lacus at erat ultrices ornare.",
                 "idTrickGroup" => "spins, flips and corks"
             ],
             [
-                "name" => "frontside boardslide",
-                "description" => "",
+                "name" => "Frontside Boardslide",
+                "description" => "Proin varius mi sed ante pretium volutpat.",
                 "idTrickGroup" => "rails and boxes"
             ],
             [
-                "name" => "backside boardslide",
-                "description" => "",
+                "name" => "Backside Boardslide",
+                "description" => "Maecenas elementum quam ut dolor pharetra mollis.",
                 "idTrickGroup" => "rails and boxes"
             ],
             [
                 "name" => "50-50",
-                "description" => "",
+                "description" => "Duis quis quam non lacus ornare ultrices.",
                 "idTrickGroup" => "rails and boxes"
             ],
             [
-                "name" => "bluntslide",
-                "description" => "",
+                "name" => "Bluntslide",
+                "description" => "Etiam faucibus sapien vitae lobortis aliquam.",
                 "idTrickGroup" => "rails and boxes"
             ],
         ];
@@ -106,10 +106,13 @@ class TrickFixtures extends Fixture implements DependentFixtureInterface
         foreach($tricksData as $trickData) {
             $trickGroup = $manager->getRepository(TrickGroup::class)->findOneBy(["name" => $trickData["idTrickGroup"]]);
 
+            $trickSlug = strtolower(str_replace(" ", "-", $trickData["name"]));
+
             $trick = new Trick();
             $trick->setName($trickData["name"]);
             $trick->setDescription($trickData["description"]);
             $trick->setIdTrickGroup($trickGroup);
+            $trick->setSlug($trickSlug);
             $manager->persist($trick);
         }
 

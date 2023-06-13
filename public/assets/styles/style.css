@@ -141,6 +141,7 @@ body {
   min-height: 100vh;
 }
 
+/*** Colors ***/
 /*** Content ***/
 * {
   font-family: "Poppins";
@@ -155,7 +156,21 @@ body {
   display: block !important;
 }
 
-/*** Colors ***/
+.show--flex {
+  display: flex !important;
+}
+
+/** Page **/
+.page__title {
+  border-bottom: 1px dashed #0E0E0E;
+  font-weight: 300;
+  margin: 20px auto;
+  padding: 2px 20px;
+  text-align: center;
+  width: -moz-fit-content;
+  width: fit-content;
+}
+
 /*** Button ***/
 .btn {
   background-color: #194CCE;
@@ -171,6 +186,16 @@ body {
   cursor: pointer;
 }
 
+/** Secondary **/
+.btn--secondary {
+  background: transparent;
+  border: 1px solid #DD7DFF;
+  color: #DD7DFF;
+}
+.btn--secondary:hover {
+  color: #FEFEFE;
+}
+
 /** Fit **/
 .btn--fit {
   margin: auto;
@@ -183,7 +208,7 @@ body {
   display: flex;
   flex-direction: column;
   justify-content: center;
-  margin: 50px auto auto auto;
+  margin: auto;
   min-width: 400px;
   padding: 10px;
   text-align: left;
@@ -213,12 +238,23 @@ body {
 }
 
 /** Input **/
-.form__block input {
+.form__block input,
+.form__block textarea,
+.form__block select {
   box-sizing: border-box;
   border: 0;
   border-bottom: 1px solid #0E0E0E;
   height: 30px;
   width: 100%;
+}
+
+.form__block textarea {
+  min-height: 65px;
+  resize: none;
+}
+
+.form__block select {
+  text-transform: capitalize;
 }
 
 /*** Link ***/
@@ -354,6 +390,7 @@ body {
 .main__block {
   flex: 1 0 auto;
   padding-bottom: 20px;
+  text-align: center;
 }
 
 /*** Responsive ***/
@@ -393,6 +430,15 @@ body {
 }
 .banner__arrow:hover {
   color: #FEFEFE;
+}
+
+/** Btn **/
+.home__btn__create {
+  display: block;
+  margin: auto;
+  text-decoration: none;
+  width: -moz-fit-content;
+  width: fit-content;
 }
 
 /** Tricks list **/
@@ -455,6 +501,14 @@ body {
   gap: 10px;
 }
 
+.tricks__arrow {
+  bottom: 0;
+  color: #DD7DFF;
+  font-size: 40px;
+  position: fixed;
+  right: 50px;
+}
+
 /*** Responsive ***/
 @media screen and (max-width: 992px) {
   /** Banner **/
@@ -483,14 +537,6 @@ body {
     text-shadow: 0 0 0 #FEFEFE;
   }
 }
-#login {
-  text-align: center;
-}
-
-#register {
-  text-align: center;
-}
-
 /* Base */
 /* Components */
 /* Layouts */

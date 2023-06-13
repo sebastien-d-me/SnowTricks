@@ -1,3 +1,6 @@
+@use "../abstracts/colors" as colors;
+
+
 /*** Content ***/
 * {
     font-family: "Poppins";
@@ -10,4 +13,18 @@
 
 .show {
     display: block !important;
+}
+
+.show--flex {
+    display: flex !important;
+}
+
+/** Page **/
+.page__title {
+    border-bottom: 1px dashed colors.$black;
+    font-weight: 300;
+    margin: 20px auto;
+    padding: 2px 20px;
+    text-align: center;
+    width: fit-content;
 }

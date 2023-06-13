@@ -26,7 +26,8 @@ class RegistrationFormType extends AbstractType {
                     "message" => "Veuillez écrire votre nom d'utilisateur."
                 ])
             ],
-            "error_bubbling" => true
+            "error_bubbling" => true,
+            "label" => "Nom d'utilisateur"
         ]);
 
         $builder->add("email", EmailType::class, [
@@ -35,7 +36,8 @@ class RegistrationFormType extends AbstractType {
                     "message" => "Veuillez écrire votre adresse email.",
                 ])
             ],
-            "error_bubbling" => true
+            "error_bubbling" => true,
+            "label" => "Adresse email"
         ]);
 
         $builder->add("password", PasswordType::class, [
@@ -51,7 +53,8 @@ class RegistrationFormType extends AbstractType {
                 ])
             ],
             "error_bubbling" => true,
-            "mapped" => false
+            "mapped" => false,
+            "label" => "Mot de passe"
         ]);
     }
 
