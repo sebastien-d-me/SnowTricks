@@ -3,4 +3,17 @@
 
 
 {% block main %}
+    {% for media in data.medias %}
+        {% if media.featured %}
+            <img class="trick__media" loading="lazy" src="{{ asset(media.path) }}">
+        {% else %}
+            {% if media.path %}
+                <img class="trick__media" loading="lazy" src="{{ asset(media.path) }}">
+            {% else %}
+                <iframe>
+
+                </iframe>
+            {% endif %}
+        {% endif %}
+    {% endfor %}
 {% endblock %}

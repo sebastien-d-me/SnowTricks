@@ -42,7 +42,8 @@ class TrickFormType extends AbstractType {
                 ])
             ],
             "label" => "Image à la une",
-            "mapped" => false
+            "mapped" => false,
+            "required" => false
         ]);
         $builder->add("medias", FileType::class, [ 
             "constraints" => [

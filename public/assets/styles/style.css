@@ -237,6 +237,11 @@ body {
   font-weight: bold;
 }
 
+.form__block label.required::after {
+  color: #FF575A;
+  content: " *";
+}
+
 /** Input **/
 .form__block input,
 .form__block textarea,
@@ -537,6 +542,11 @@ body {
     text-shadow: 0 0 0 #FEFEFE;
   }
 }
+/** Medias **/
+.trick__media {
+  width: 300px;
+}
+
 /* Base */
 /* Components */
 /* Layouts */

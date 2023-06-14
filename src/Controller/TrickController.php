@@ -56,7 +56,7 @@ class TrickController extends AbstractController {
             $media = new Media();
             $media->setIdTrick($trickId);
             $media->setType("image");
-            $media->setPath("images/tricks/featured/".$featuredFileName);
+            $media->setPath("assets/images/tricks/featured/".$featuredFileName);
             $media->setFeatured(true);
 
             $entityManager->persist($media);
@@ -69,10 +69,10 @@ class TrickController extends AbstractController {
 
                 if($mediaExtension === "mp4") {
                     $mediaRepository = "media_video_directory";
-                    $mediaPath = "videos/tricks/";
+                    $mediaPath = "assets/videos/tricks/";
                 } else {
                     $mediaRepository = "media_image_directory";
-                    $mediaPath = "images/tricks/";
+                    $mediaPath = "assets/images/tricks/";
                 }
 
                 $mediaFileName = $slugger->slug(pathinfo($mediaFile->getClientOriginalName(), PATHINFO_FILENAME))."-".uniqid().".".$mediaExtension;
@@ -124,7 +124,6 @@ class TrickController extends AbstractController {
             "trick" => array($trick),
             "medias" => $medias
         ];
-        dd($data);
 
         return $this->render("pages/tricks/presentation.html.twig", [
             "data" => $data

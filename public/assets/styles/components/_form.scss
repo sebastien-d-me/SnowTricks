@@ -35,6 +35,11 @@
     font-weight: bold;
 }
 
+.form__block label.required::after {
+    color: colors.$red;
+    content: " *";
+}
+
 /** Input **/
 .form__block input,
 .form__block textarea,
