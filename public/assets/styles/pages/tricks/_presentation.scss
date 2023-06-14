@@ -1,3 +1,11 @@
+@use "../../abstracts/colors" as colors;
+
+
+/** Header **/
+.trick__header {
+    position: relative;
+}
+
 /** Featured **/
 .trick__featured {
     display: flex;
@@ -5,6 +13,14 @@
     object-fit: cover;
     width: 100%;
 }
+
+/** Action **/
+.trick__header > .trick__action {
+    position: absolute;
+    right: 50px;
+    top: 50px;
+}
+
 
 /** Medias **/
 .trick__medias {

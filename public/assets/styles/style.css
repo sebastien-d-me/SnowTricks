@@ -542,6 +542,11 @@ body {
     text-shadow: 0 0 0 #FEFEFE;
   }
 }
+/** Header **/
+.trick__header {
+  position: relative;
+}
+
 /** Featured **/
 .trick__featured {
   display: flex;
@@ -549,6 +554,13 @@ body {
   -o-object-fit: cover;
      object-fit: cover;
   width: 100%;
+}
+
+/** Action **/
+.trick__header > .trick__action {
+  position: absolute;
+  right: 50px;
+  top: 50px;
 }
 
 /** Medias **/

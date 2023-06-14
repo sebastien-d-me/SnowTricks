@@ -3,7 +3,19 @@
 {% set featuredMedia = data.medias|filter(media => media.featured)|first %}
 
 {% block main %}
-    <img class="trick__featured" src="{{ asset(featuredMedia.path) }}">
+    <div class="trick__header">
+        <img class="trick__featured" src="{{ asset(featuredMedia.path) }}">
+        {% if app.user == true %}
+            <div class="trick__action">
+                <a class="link" href="">
+                    <i class="ri-pencil-line"></i>
+                </a>
+                <a class="link " href="">
+                    <i class="ri-delete-bin-line"></i>
+                </a>
+            </div>
+        {% endif %}
+    </div>
 
     <div class="trick__medias">
         {% for media in data.medias %}
