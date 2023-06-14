@@ -1,19 +1,21 @@
 {% extends "base.html.twig" %}
 {% set pageId = "trick_presentation" %}
-
+{% set featuredMedia = data.medias|filter(media => media.featured)|first %}
 
 {% block main %}
-    {% for media in data.medias %}
-        {% if media.featured %}
-            <img class="trick__media" loading="lazy" src="{{ asset(media.path) }}">
-        {% else %}
-            {% if media.path %}
-                <img class="trick__media" loading="lazy" src="{{ asset(media.path) }}">
-            {% else %}
-                <iframe>
+    <img class="trick__featured" src="{{ asset(featuredMedia.path) }}">
 
-                </iframe>
+    <div class="trick__medias">
+        {% for media in data.medias %}
+            {% if media.path and media.type == "image" and media.featured == false %}
+                <img class="trick__media" loading="lazy" src="{{ asset(media.path) }}">
+            {% elseif media.path and media.type == "video" and media.featured == false %}
+                <video class="trick__media" controls>
+                    <source src="{{ asset(media.path) }}">
+                </video>
+            {% elseif media.featured == false and media.type == "embed" %}
+                <iframe src="{{ media.src }}"></iframe>
             {% endif %}
-        {% endif %}
-    {% endfor %}
+        {% endfor %}
+    </div>
 {% endblock %}

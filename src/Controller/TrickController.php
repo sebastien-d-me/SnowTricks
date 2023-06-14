@@ -72,13 +72,16 @@ class TrickController extends AbstractController {
             $mediasFile = $form->get("medias")->getData();
             foreach($mediasFile as $mediaFile) {
                 $mediaExtension = $mediaFile->guessExtension();
+                $media = new Media();
 
                 if($mediaExtension === "mp4") {
                     $mediaRepository = "media_video_directory";
                     $mediaPath = "assets/videos/tricks/";
+                    $media->setType("video");
                 } else {
                     $mediaRepository = "media_image_directory";
                     $mediaPath = "assets/images/tricks/";
+                    $media->setType("image");
                 }
 
                 $mediaFileName = $slugger->slug(pathinfo($mediaFile->getClientOriginalName(), PATHINFO_FILENAME))."-".uniqid().".".$mediaExtension;
@@ -86,9 +89,8 @@ class TrickController extends AbstractController {
                 $mediaFile->move($this->getParameter($mediaRepository), $mediaFileName);
                 $trickId = $trickRepository->findOneBy(["id" => $trick->getId()]);
 
-                $media = new Media();
+                
                 $media->setIdTrick($trickId);
-                $media->setType("image");
                 $media->setPath($mediaPath.$mediaFileName);
                 $media->setFeatured(false);
 
