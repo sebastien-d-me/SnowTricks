@@ -105,14 +105,16 @@ class TrickFixtures extends Fixture implements DependentFixtureInterface
 
         foreach($tricksData as $trickData) {
             $trickGroup = $manager->getRepository(TrickGroup::class)->findOneBy(["name" => $trickData["idTrickGroup"]]);
-
             $trickSlug = strtolower(str_replace(" ", "-", $trickData["name"]));
+            $currentDate = date("Y-m-d H:i:s");
 
             $trick = new Trick();
             $trick->setName($trickData["name"]);
             $trick->setDescription($trickData["description"]);
             $trick->setIdTrickGroup($trickGroup);
             $trick->setSlug($trickSlug);
+            $trick->setCreatedAt(\DateTime::createFromFormat("Y-m-d H:i:s", $currentDate));
+            $trick->setupdatedAt(\DateTime::createFromFormat("Y-m-d H:i:s", $currentDate));
             $manager->persist($trick);
         }
 
