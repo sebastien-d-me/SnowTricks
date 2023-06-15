@@ -575,13 +575,17 @@ body {
   top: 50px;
 }
 
+/** Container **/
+.trick__container {
+  margin: 50px 100px;
+  width: calc(100% - 200px);
+}
+
 /** Medias **/
 .trick__medias {
   display: flex;
   flex-wrap: wrap;
   justify-content: space-between;
-  margin: 20px 5% 0;
-  width: 90%;
 }
 
 .trick__media {
@@ -589,6 +593,29 @@ body {
   -o-object-fit: cover;
      object-fit: cover;
   width: 335px;
+}
+
+/** Description **/
+.trick__description {
+  text-align: justify;
+  white-space: pre-line;
+}
+
+/** Badges **/
+.trick__badges {
+  display: flex;
+  justify-content: space-between;
+}
+
+.badge__title {
+  font-weight: bold;
+}
+.badge__title::after {
+  content: ": ";
+}
+
+.badge__value {
+  text-transform: capitalize;
 }
 
 /* Base */

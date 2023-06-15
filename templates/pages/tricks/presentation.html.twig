@@ -18,17 +18,38 @@
         {% endif %}
     </div>
 
-    <div class="trick__medias">
-        {% for media in data.medias %}
-            {% if media.path and media.type == "image" and media.featured == false %}
-                <img class="trick__media" loading="lazy" src="{{ asset(media.path) }}">
-            {% elseif media.path and media.type == "video" and media.featured == false %}
-                <video class="trick__media" controls>
-                    <source src="{{ asset(media.path) }}">
-                </video>
-            {% elseif media.featured == false and media.type == "embed" %}
-                <iframe src="{{ media.src }}"></iframe>
-            {% endif %}
-        {% endfor %}
+    <div class="trick__container">
+        <div class="trick__medias">
+            {% for media in data.medias %}
+                {% if media.path and media.type == "image" and media.featured == false %}
+                    <img class="trick__media" loading="lazy" src="{{ asset(media.path) }}">
+                {% elseif media.path and media.type == "video" and media.featured == false %}
+                    <video class="trick__media" controls>
+                        <source src="{{ asset(media.path) }}">
+                    </video>
+                {% elseif media.featured == false and media.type == "embed" %}
+                    <iframe src="{{ media.src }}"></iframe>
+                {% endif %}
+            {% endfor %}
+        </div>
+
+        <p class="trick__description">
+            {{ data.trick.description }}
+        </p>
+
+        <div class="trick__badges">
+            <div class="trick__badge">
+                <span class="badge__title">Groupe</span>
+                <span class="badge__value">{{ data.trick.idTrickGroup }}</span>
+            </div>
+            <div class="trick__badge">
+                <span class="badge__title">Crée le</span>
+                <span class="badge__value">{{ data.trick.createdAt | date("d/m/Y à h:i:s") }}</span>
+            </div>
+            <div class="trick__badge">
+                <span class="badge__title">Modifié le</span>
+                <span class="badge__value">{{ data.trick.updatedAt | date("d/m/Y à h:i:s") }}</span>
+            </div>
+        </div>
     </div>
 {% endblock %}
