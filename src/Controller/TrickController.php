@@ -36,12 +36,15 @@ class TrickController extends AbstractController {
 
             // Creation et enregistrement du trick
             $trickSlug = strtolower(str_replace(" ", "-", $trickName));
+            $currentDate = date("Y-m-d H:i:s");
 
             $trick = new Trick();
             $trick->setName($trickName);
             $trick->setDescription($form->get("description")->getData());
             $trick->setIdTrickGroup($form->get("idTrickGroup")->getData());
             $trick->setSlug($trickSlug);
+            $trick->setCreatedAt(\DateTime::createFromFormat("Y-m-d H:i:s", $currentDate));
+            $trick->setupdatedAt(\DateTime::createFromFormat("Y-m-d H:i:s", $currentDate));
 
             $entityManager->persist($trick);
             $entityManager->flush();
@@ -143,7 +146,7 @@ class TrickController extends AbstractController {
         $medias = $mediaRepository->findBy(["idTrick" => $trick->getId()]);
 
         $data = [
-            "trick" => array($trick),
+            "trick" => $trick,
             "medias" => $medias
         ];
 

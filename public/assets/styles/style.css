@@ -556,6 +556,18 @@ body {
   width: 100%;
 }
 
+/** Name **/
+.trick__header > .trick__name {
+  background-color: rgba(0, 0, 0, 0.4392156863);
+  color: #FEFEFE;
+  font-size: 25px;
+  left: 50%;
+  padding: 20px 40px;
+  position: absolute;
+  top: 50%;
+  transform: translate(-50%, -50%);
+}
+
 /** Action **/
 .trick__header > .trick__action {
   position: absolute;

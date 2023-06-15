@@ -5,6 +5,7 @@
 {% block main %}
     <div class="trick__header">
         <img class="trick__featured" src="{{ asset(featuredMedia.path) }}">
+        <span class="trick__name">{{ data.trick.name }}</span>
         {% if app.user == true %}
             <div class="trick__action">
                 <a class="link" href="">
