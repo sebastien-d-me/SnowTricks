@@ -8,10 +8,10 @@
         <span class="trick__name">{{ data.trick.name }}</span>
         {% if app.user == true %}
             <div class="trick__action">
-                <a class="link" href="">
+                <a class="link link--icon" href="">
                     <i class="ri-pencil-line"></i>
                 </a>
-                <a class="link " href="">
+                <a class="link link--icon" href="">
                     <i class="ri-delete-bin-line"></i>
                 </a>
             </div>
@@ -21,14 +21,14 @@
     <div class="trick__container">
         <div class="trick__medias">
             {% for media in data.medias %}
-                {% if media.path and media.type == "image" and media.featured == false %}
+                {% if media.path and media.type == "image" %}
                     <img class="trick__media" loading="lazy" src="{{ asset(media.path) }}">
-                {% elseif media.path and media.type == "video" and media.featured == false %}
+                {% elseif media.path and media.type == "video" %}
                     <video class="trick__media" controls>
                         <source src="{{ asset(media.path) }}">
                     </video>
-                {% elseif media.featured == false and media.type == "embed" %}
-                    <iframe src="{{ media.src }}"></iframe>
+                {% elseif media.type == "embed" %}
+                    <iframe class="trick__media" src="{{ media.src }}"></iframe>
                 {% endif %}
             {% endfor %}
         </div>

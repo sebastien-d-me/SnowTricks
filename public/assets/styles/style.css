@@ -570,6 +570,8 @@ body {
 
 /** Action **/
 .trick__header > .trick__action {
+  background-color: rgba(0, 0, 0, 0.4392156863);
+  padding: 20px 40px;
   position: absolute;
   right: 50px;
   top: 50px;
@@ -583,9 +585,11 @@ body {
 
 /** Medias **/
 .trick__medias {
+  border: none;
   display: flex;
   flex-wrap: wrap;
-  justify-content: space-between;
+  gap: 20px;
+  justify-content: center;
 }
 
 .trick__media {
@@ -597,6 +601,7 @@ body {
 
 /** Description **/
 .trick__description {
+  margin: auto auto 50px auto;
   text-align: justify;
   white-space: pre-line;
 }
@@ -604,6 +609,7 @@ body {
 /** Badges **/
 .trick__badges {
   display: flex;
+  flex-wrap: wrap;
   justify-content: space-between;
 }
 
@@ -611,13 +617,37 @@ body {
   font-weight: bold;
 }
 .badge__title::after {
-  content: ": ";
+  content: " : ";
 }
 
 .badge__value {
   text-transform: capitalize;
 }
 
+/*** Responsive ***/
+@media screen and (max-width: 992px) {
+  /** Action **/
+  .trick__header > .trick__action {
+    padding: 10px 20px;
+    right: 10px;
+    top: 10px;
+  }
+  /** Name **/
+  .trick__header > .trick__name {
+    font-size: 20px;
+    padding: 10px 25px;
+  }
+  /** Container **/
+  .trick__container {
+    margin: 50px 20px;
+    width: calc(100% - 40px);
+  }
+  /** Medias **/
+  .trick__media {
+    height: 250px;
+    width: 250px;
+  }
+}
 /* Base */
 /* Components */
 /* Layouts */
