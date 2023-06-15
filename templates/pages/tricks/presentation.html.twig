@@ -1,6 +1,65 @@
 {% extends "base.html.twig" %}
 {% set pageId = "trick_presentation" %}
+{% set featuredMedia = data.medias | filter(media => media.featured) | first %}
+{% set placeholderPath = "assets/images/tricks/placeholder/trick_placeholder.webp" %}
 
 
 {% block main %}
+    <div class="trick__header">
+        <img class="trick__featured" src="{{ asset(featuredMedia.path) }}">
+        <span class="trick__name">{{ data.trick.name }}</span>
+        {% if app.user == true %}
+            <div class="trick__action">
+                <a class="link link--icon" href="">
+                    <i class="ri-pencil-line"></i>
+                </a>
+                <a class="link link--icon" href="">
+                    <i class="ri-delete-bin-line"></i>
+                </a>
+            </div>
+        {% endif %}
+    </div>
+
+    <div class="trick__container">
+        <div class="trick__medias">
+            {% for media in data.medias %}
+                {% if media.path and media.type == "image" and media.path != placeholderPath %}
+                    <img class="trick__media trick__media__modal" loading="lazy" src="{{ asset(media.path) }}">
+                {% elseif media.path and media.type == "video" %}
+                    <video class="trick__media trick__media__modal" controls>
+                        <source src="{{ asset(media.path) }}">
+                    </video>
+                {% elseif media.type == "embed" %}
+                    <iframe class="trick__media" src="{{ media.src }}"></iframe>
+                {% endif %}
+            {% endfor %}
+        </div>
+
+        <p class="trick__description">
+            {{ data.trick.description }}
+        </p>
+
+        <div class="trick__badges">
+            <div class="trick__badge">
+                <span class="badge__title">Groupe</span>
+                <span class="badge__value">{{ data.trick.idTrickGroup }}</span>
+            </div>
+            <div class="trick__badge">
+                <span class="badge__title">Crée le</span>
+                <span class="badge__value">{{ data.trick.createdAt | date("d/m/Y à h:i:s") }}</span>
+            </div>
+            <div class="trick__badge">
+                <span class="badge__title">Modifié le</span>
+                <span class="badge__value">{{ data.trick.updatedAt | date("d/m/Y à h:i:s") }}</span>
+            </div>
+        </div>
+    </div>
+
+    <div class="hide trick__modal">
+        <span class="trick__modal__close">&times;</span>
+        <div class="trick__modal__content">
+            <img class="trick__modal__image">
+            <video autoplay class="trick__modal__video" controls></video>
+        </div>
+    </div>
 {% endblock %}

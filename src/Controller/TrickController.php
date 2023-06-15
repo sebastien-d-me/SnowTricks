@@ -12,10 +12,11 @@ use Symfony\Component\String\Slugger\SluggerInterface;
 use App\Repository\TrickRepository;
 use App\Entity\Trick;
 use App\Entity\Media;
+use App\Repository\MediaRepository;
 
 
 class TrickController extends AbstractController {
-    #[Route("/trick/ajouter", name: "trick_create")]
+    #[Route(name: "trick_create", path: "/trick/ajouter")]
     public function create(Request $request, TrickRepository $trickRepository, EntityManagerInterface $entityManager, SluggerInterface $slugger): Response {
         if (!$this->getUser()) {
             return $this->redirectToRoute("home");
@@ -24,7 +25,7 @@ class TrickController extends AbstractController {
         $form = $this->createForm(TrickFormType::class);
         $form->handleRequest($request);
 
-        if ($form->isSubmitted() && $form->isValid()) {           
+        if ($form->isSubmitted() && $form->isValid()) { 
             $trickName = $form->get("name")->getData();
             $checkExist = $trickRepository->findOneBy(["name" => $trickName]);
 
@@ -35,12 +36,15 @@ class TrickController extends AbstractController {
 
             // Creation et enregistrement du trick
             $trickSlug = strtolower(str_replace(" ", "-", $trickName));
+            $currentDate = date("Y-m-d H:i:s");
 
             $trick = new Trick();
             $trick->setName($trickName);
             $trick->setDescription($form->get("description")->getData());
             $trick->setIdTrickGroup($form->get("idTrickGroup")->getData());
             $trick->setSlug($trickSlug);
+            $trick->setCreatedAt(\DateTime::createFromFormat("Y-m-d H:i:s", $currentDate));
+            $trick->setupdatedAt(\DateTime::createFromFormat("Y-m-d H:i:s", $currentDate));
 
             $entityManager->persist($trick);
             $entityManager->flush();
@@ -49,13 +53,19 @@ class TrickController extends AbstractController {
             
             // Sauvegarde de l'image à la une
             $featuredFile = $form->get("featured")->getData();
-            $featuredFileName = $slugger->slug(pathinfo($featuredFile->getClientOriginalName(), PATHINFO_FILENAME))."-".uniqid().".".$featuredFile->guessExtension();
-            $featuredFile->move($this->getParameter("featured_directory"), $featuredFileName);
-            
+
+            if($featuredFile) {
+                $featuredFileName = $slugger->slug(pathinfo($featuredFile->getClientOriginalName(), PATHINFO_FILENAME))."-".uniqid().".".$featuredFile->guessExtension();
+                $featuredFile->move($this->getParameter("featured_directory"), $featuredFileName);
+                $featuredPath = "assets/images/tricks/featured/".$featuredFileName;
+            } else {
+                $featuredPath = "assets/images/tricks/placeholder/trick_placeholder.webp";
+            }
+
             $media = new Media();
             $media->setIdTrick($trickId);
             $media->setType("image");
-            $media->setPath("images/tricks/featured/".$featuredFileName);
+            $media->setPath($featuredPath);
             $media->setFeatured(true);
 
             $entityManager->persist($media);
@@ -65,13 +75,16 @@ class TrickController extends AbstractController {
             $mediasFile = $form->get("medias")->getData();
             foreach($mediasFile as $mediaFile) {
                 $mediaExtension = $mediaFile->guessExtension();
+                $media = new Media();
 
                 if($mediaExtension === "mp4") {
                     $mediaRepository = "media_video_directory";
-                    $mediaPath = "videos/tricks/";
+                    $mediaPath = "assets/videos/tricks/";
+                    $media->setType("video");
                 } else {
                     $mediaRepository = "media_image_directory";
-                    $mediaPath = "images/tricks/";
+                    $mediaPath = "assets/images/tricks/";
+                    $media->setType("image");
                 }
 
                 $mediaFileName = $slugger->slug(pathinfo($mediaFile->getClientOriginalName(), PATHINFO_FILENAME))."-".uniqid().".".$mediaExtension;
@@ -79,9 +92,8 @@ class TrickController extends AbstractController {
                 $mediaFile->move($this->getParameter($mediaRepository), $mediaFileName);
                 $trickId = $trickRepository->findOneBy(["id" => $trick->getId()]);
 
-                $media = new Media();
+                
                 $media->setIdTrick($trickId);
-                $media->setType("image");
                 $media->setPath($mediaPath.$mediaFileName);
                 $media->setFeatured(false);
 
@@ -91,16 +103,30 @@ class TrickController extends AbstractController {
 
             // Enregistre les embed
             $mediasEmbed = $form->get("mediasEmbed")->getData();
-            $mediasEmbedList = explode("\n", $mediasEmbed);
-            foreach($mediasEmbedList as $mediaEmbedItem) {
-                $media = new Media();
-                $media->setIdTrick($trickId);
-                $media->setType("embed");
-                $media->setSrc($mediaEmbedItem);
-                $media->setFeatured(false);
+            
+            if($mediasEmbed) {
+                $mediasEmbedList = explode("\n", $mediasEmbed);
+                foreach($mediasEmbedList as $mediaEmbedItem) {
+                    if(parse_url($mediaEmbedItem)["host"] === "www.youtube.com") {   
+                        $embedVideo = str_replace("v=", "", parse_url($mediaEmbedItem)["query"]);
+                        $embedUrl = "https://youtube.com/embed/".$embedVideo;
+                    } else if(parse_url($mediaEmbedItem)["host"] === "www.dailymotion.com") {
+                        $embedVideo = str_replace("/video/", "",  parse_url($mediaEmbedItem)["path"]);
+                        $embedUrl = "https://dailymotion.com/embed/video/".$embedVideo;
+                    } else {
+                        $this->addFlash("warning", "Veuillez ne prendre un lien que de Youtube et de Dailymotion.");
+                        return $this->redirectToRoute("trick_create");
+                    }
 
-                $entityManager->persist($media);
-                $entityManager->flush();
+                    $media = new Media();
+                    $media->setIdTrick($trickId);
+                    $media->setType("embed");
+                    $media->setSrc($embedUrl);
+                    $media->setFeatured(false);
+
+                    $entityManager->persist($media);
+                    $entityManager->flush();
+                }
             }
 
             $this->addFlash("success", "Votre trick a été ajouté !");
@@ -110,6 +136,22 @@ class TrickController extends AbstractController {
 
         return $this->render("pages/tricks/create.html.twig", [
             "form" => $form->createView()
+        ]);
+    }
+
+
+    #[Route(name: "trick_presentation", path: "/trick/{trickSlug}")]
+    public function view(TrickRepository $trickRepository, string $trickSlug ,MediaRepository $mediaRepository): Response {        
+        $trick = $trickRepository->findOneBy(["slug" => $trickSlug]);
+        $medias = $mediaRepository->findBy(["idTrick" => $trick->getId()]);
+
+        $data = [
+            "trick" => $trick,
+            "medias" => $medias
+        ];
+
+        return $this->render("pages/tricks/presentation.html.twig", [
+            "data" => $data
         ]);
     }
 }
