@@ -44,3 +44,33 @@ if (currentURL === "/") {
         }
     });
 }
+
+const url = window.location.toString().split("/");
+if (url[3] === "trick") {
+    const trickMediasModal = document.querySelectorAll(".trick__media__modal");
+    const modal = document.querySelector(".trick__modal");
+    const modalClose = document.querySelector(".trick__modal__close");
+    const modalImage = document.querySelector(".trick__modal__image");
+    const modalVideo = document.querySelector(".trick__modal__video");
+
+    trickMediasModal.forEach(function (media) {
+        media.addEventListener("click", function () {
+            modalImage.classList.add("hide");
+            modalVideo.classList.add("hide");
+            if (media.tagName === "IMG") {
+                modalImage.src = media.src;
+                modalImage.classList.remove("hide");
+            } else if (media.tagName === "VIDEO") {
+                modalVideo.src = media.querySelector("source").src;
+                modalVideo.classList.remove("hide");
+            }
+            modal.classList.remove("hide");
+        });
+    });
+
+    modalClose.addEventListener("click", function () {
+        modal.classList.add("hide");
+        modalVideo.pause();
+        modalVideo.currentTime = 0;
+    });
+}
