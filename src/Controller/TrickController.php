@@ -141,7 +141,7 @@ class TrickController extends AbstractController {
 
 
     #[Route(name: "trick_presentation", path: "/trick/{trickSlug}")]
-    public function view(TrickRepository $trickRepository, string $trickSlug ,MediaRepository $mediaRepository): Response {        
+    public function view(TrickRepository $trickRepository, string $trickSlug, MediaRepository $mediaRepository): Response {        
         $trick = $trickRepository->findOneBy(["slug" => $trickSlug]);
         $medias = $mediaRepository->findBy(["idTrick" => $trick->getId()]);
 
@@ -153,5 +153,28 @@ class TrickController extends AbstractController {
         return $this->render("pages/tricks/presentation.html.twig", [
             "data" => $data
         ]);
+    }
+
+
+    #[Route(name: "trick_delete", path: "/trick/delete/{trickSlug}")]
+    public function delete(TrickRepository $trickRepository, string $trickSlug, MediaRepository $mediaRepository, EntityManagerInterface $entityManager): Response {        
+        $trick = $trickRepository->findOneBy(["slug" => $trickSlug]);
+
+        if($trick) {
+            $medias = $mediaRepository->findBy(["idTrick" => $trick->getId()]);
+
+            foreach($medias as $media) {
+                $entityManager->remove($media);
+            }
+
+            $entityManager->remove($trick);
+            $entityManager->flush();
+
+            $this->addFlash("success", "Le trick a été supprimé !");
+            return $this->redirectToRoute("home", ["_fragment" => "home__messages"]);
+        } else {
+            $this->addFlash("warning", "Le trick n'existe pas.");
+            return $this->redirectToRoute("home", ["_fragment" => "home__messages"]);
+        }
     }
 }

@@ -28,7 +28,7 @@
 
     <div id="tricks__list">
         {% for tricks in tricksData %}
-            <div class="tricks__item">
+            <div class="tricks__item" id="{{ tricks.trick.name }}">
                 <img alt="Illustration of a {{ tricks.trick.name }}" class="trick__image" loading="lazy" src="{{ tricks.cover.path }}">
                 <div class="trick__informations">
                     <a class="link link--secondary" href="{{ path('trick_presentation', {trickSlug: tricks.trick.slug}) }}">
@@ -39,7 +39,7 @@
                             <a class="link link--icon" href="">
                                 <i class="ri-pencil-line"></i>
                             </a>
-                            <a class="link link--icon" href="">
+                            <a class="link link--icon trick__delete" data-url="{{ path('trick_delete', {trickSlug: tricks.trick.slug}) }}" href="#{{ tricks.trick.name }}">
                                 <i class="ri-delete-bin-line"></i>
                             </a>
                         </div>

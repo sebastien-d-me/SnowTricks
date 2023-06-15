@@ -1,5 +1,6 @@
 /** Get the URL **/
 const currentURL = window.location.pathname;
+const currentSlash = window.location.toString().split("/");
 
 
 /** Home page **/
@@ -9,14 +10,16 @@ if (currentURL === "/") {
     let tricksArrowDisplayed = false;
     const btnTricks = document.querySelector(".btn__tricks");
 
-    btnTricks.addEventListener("click", function () {
-        const tricksItem = document.querySelectorAll(".tricks__item");
+    if (btnTricks) {
+        btnTricks.addEventListener("click", function () {
+            const tricksItem = document.querySelectorAll(".tricks__item");
 
-        if (tricksItem.length >= 15 && window.scrollY > 200) {
-            tricksArrow.classList.add("show");
-            tricksArrowDisplayed = true;
-        }
-    });
+            if (tricksItem.length >= 15 && window.scrollY > 200) {
+                tricksArrow.classList.add("show");
+                tricksArrowDisplayed = true;
+            }
+        });
+    }
 
     window.addEventListener("scroll", function () {
         if (tricksArrowDisplayed === true && window.scrollY < 200) {
@@ -32,21 +35,24 @@ if (currentURL === "/") {
     const tricksButton = document.querySelector(".btn__tricks");
     let tricksLoaded = 15;
 
-    tricksButton.addEventListener("click", function () {
-        for (let tricksIndex = tricksLoaded; tricksIndex < tricksLoaded + 5 && tricksIndex < tricksNumber; tricksIndex++) {
-            tricks[tricksIndex].classList.add("show--flex");
-        }
+    if (btnTricks) {
+        tricksButton.addEventListener("click", function () {
+            for (let tricksIndex = tricksLoaded; tricksIndex < tricksLoaded + 5 && tricksIndex < tricksNumber; tricksIndex++) {
+                tricks[tricksIndex].classList.add("show--flex");
+            }
 
-        tricksLoaded += 5;
+            tricksLoaded += 5;
 
-        if (tricksLoaded >= tricksNumber) {
-            tricksButton.classList.add("hide");
-        }
-    });
+            if (tricksLoaded >= tricksNumber) {
+                tricksButton.classList.add("hide");
+            }
+        });
+    }
 }
 
-const url = window.location.toString().split("/");
-if (url[3] === "trick") {
+
+/** Trick page **/
+if (currentSlash[3] === "trick") {
     const trickMediasModal = document.querySelectorAll(".trick__media__modal");
     const modal = document.querySelector(".trick__modal");
     const modalClose = document.querySelector(".trick__modal__close");
@@ -72,5 +78,23 @@ if (url[3] === "trick") {
         modal.classList.add("hide");
         modalVideo.pause();
         modalVideo.currentTime = 0;
+    });
+}
+
+
+/** Home / Trick page **/
+if (currentURL === "/" || currentSlash[3] === "trick") {
+    const deleteIcons = document.querySelectorAll(".trick__delete");
+
+    deleteIcons.forEach(function (deleteIcon) {
+        deleteIcon.addEventListener("click", function (event) {
+            event.preventDefault();
+            const deleteURL = deleteIcon.dataset.url;
+
+            const deleteChoice = confirm("Souhaitez-vous supprimer ce trick ?");
+            if (deleteChoice === true) {
+                window.location.replace(window.location.origin + deleteURL);
+            }
+        });
     });
 }
