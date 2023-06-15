@@ -596,7 +596,12 @@ body {
   height: 335px;
   -o-object-fit: cover;
      object-fit: cover;
+  transition: 0.5s;
   width: 335px;
+}
+.trick__media:hover {
+  cursor: pointer;
+  filter: brightness(0.5);
 }
 
 /** Description **/
@@ -662,16 +667,10 @@ body {
   cursor: default;
 }
 
-.trick__modal__image {
-  height: 80%;
-  -o-object-fit: cover;
-     object-fit: cover;
-  width: 80%;
-}
-
+.trick__modal__image,
 .trick__modal__video {
-  height: 80%;
-  width: 80%;
+  max-width: 100%;
+  width: 300px;
 }
 
 /*** Responsive ***/
@@ -698,13 +697,9 @@ body {
     width: 250px;
   }
   /** Modal **/
-  .trick__modal__image {
-    height: 250px;
-    width: 250px;
-  }
+  .trick__modal__image,
   .trick__modal__video {
-    height: 250px;
-    width: 250px;
+    width: 200px;
   }
 }
 /* Base */
