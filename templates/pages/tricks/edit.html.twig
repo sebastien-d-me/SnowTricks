@@ -7,29 +7,23 @@
     <form method="post">
         <div class="trick__header">
             <img class="trick__featured" src="{{ asset(data.featured) }}">
-            {% if data.featured != placeholderPath %}
-                <div class="trick__action">
-                    <a class="link link--icon trick__delete" data-url="{{ path('trick_delete', {trickSlug: data.slug}) }}" href="#">
+            <div class="trick__action">
+                {% if data.featured != placeholderPath %}
+                    <a class="link link--icon" href="#">
                         <i class="ri-delete-bin-line"></i>
                     </a>
-                </div>
-            {% endif %}
+                {% else %}
+                    <div class="form__row">
+                        <div class="form__block">
+                            <label class="required">Image à la une</label>
+                            <input type="file">
+                        </div>
+                    </div>
+                {% endif %}
+            </div>
         </div>
 
         <div class="trick__container">
-            <div class="trick__medias">
-                {% for media in data.medias %}
-                    {% if media.path and media.type == "image" and media.path != placeholderPath %}
-                        <img class="trick__media trick__media__modal" loading="lazy" src="{{ asset(media.path) }}">
-                    {% elseif media.path and media.type == "video" %}
-                        <video class="trick__media" controls>
-                            <source src="{{ asset(media.path) }}">
-                        </video>
-                    {% elseif media.type == "embed" %}
-                        <iframe class="trick__media" src="{{ media.src }}"></iframe>
-                    {% endif %}
-                {% endfor %}
-            </div>
             <div class="form__row">
                 <div class="form__block form__block--full">
                     <label class="required">Nom</label>
