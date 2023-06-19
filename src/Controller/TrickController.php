@@ -165,7 +165,8 @@ class TrickController extends AbstractController {
 
         $trick = $trickRepository->findOneBy(["slug" => $trickSlug]);
         $medias = $mediaRepository->findBy(["idTrick" => $trick->getId()]);
-        
+        $trickGroups = $trickGroupRepository->findAll();
+
         $category = $trickGroupRepository->findOneBy(["id" => $trick->getIdTrickGroup()]);
         $featured = $mediaRepository->findOneBy(["idTrick" => $trick->getId(), "featured" => true]);
         $embed = $mediaRepository->findBy(["idTrick" => $trick->getId(), "type" => "embed"]);
@@ -184,10 +185,6 @@ class TrickController extends AbstractController {
             "embed" => $embed !== null ? $urls : "",
             "slug" => $trick->getSlug()
         ];
-
-        /**/
-        $trickGroups = $trickGroupRepository->findAll();
-
 
         return $this->render("pages/tricks/edit.html.twig", [
             "data" => $data,
@@ -221,6 +218,30 @@ class TrickController extends AbstractController {
         } else {
             $this->addFlash("warning", "Le trick n'existe pas.");
             return $this->redirectToRoute("home", ["_fragment" => "home__messages"]);
+        }
+    }
+
+
+    #[Route(name: "media_delete", path: "/media/delete/{mediaId}")]
+    public function mediaDelete(MediaRepository $mediaRepository, string $mediaId, TrickRepository $trickRepository, EntityManagerInterface $entityManager): Response {        
+        if (!$this->getUser()) {
+            return $this->redirectToRoute("home");
+        }
+
+        $media = $mediaRepository->findOneBy(["id" => $mediaId]);
+        $trick = $trickRepository->findOneBy(["id" => $media->getIdTrick()]);
+
+        if($media) {
+            $mediaPath = $media->getPath();
+            unlink($mediaPath);
+            $entityManager->remove($media);
+            $entityManager->flush();
+
+            $this->addFlash("success", "Le média a été supprimé !");
+            return $this->redirectToRoute("trick_presentation", ["trickSlug" => $trick->getSlug()]);
+        } else {
+            $this->addFlash("warning", "Le média n'existe pas.");
+            return $this->redirectToRoute("trick_presentation", ["trickSlug" => $trick->getSlug()]);
         }
     }
 }

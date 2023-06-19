@@ -10,7 +10,7 @@
             <div class="trick__action">
                 {% if data.featured != placeholderPath %}
                     <a class="link link--icon" href="#">
-                        <i class="ri-delete-bin-line"></i>
+                        <i class="ri-delete-bin-2-line"></i>
                     </a>
                 {% else %}
                     <div class="form__row">
@@ -27,19 +27,19 @@
             <div class="form__row">
                 <div class="form__block form__block--full">
                     <label class="required">Nom</label>
-                    <input class="trick__name" value="{{ data.name }}">
+                    <input class="trick__name" required value="{{ data.name }}">
                 </div>
             </div>
             <div class="form__row">
                 <div class="form__block form__block--full">
                     <label class="required">Description</label>
-                    <textarea>{{ data.description }}</textarea>
+                    <textarea required>{{ data.description }}</textarea>
                 </div>
             </div>
             <div class="form__row">
                 <div class="form__block form__block--full">
                     <label class="required">Groupe</label>
-                    <select>
+                    <select required>
                         {% for group in trickGroups %}
                             {% if group.id == data.category %}
                                 <option selected value="{{ group.id }}">{{ group.name }}</option>
@@ -52,8 +52,14 @@
             </div>
             <div class="form__row">
                 <div class="form__block form__block--full">
-                    <label class="required">URL de vos vidéos (Dailymotion, Youtube) une par ligne</label>
+                    <label>URL de vos vidéos (Dailymotion, Youtube) une par ligne</label>
                     <textarea>{{ data.embed }}</textarea>
+                </div>
+            </div>
+            <div class="form__row">
+                <div class="form__block form__block--full">
+                    <label>Illustrations et vidéos</label>
+                    <input multiple type="file">
                 </div>
             </div>
         </div>

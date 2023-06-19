@@ -62,6 +62,22 @@
     }
 }
 
+.trick__media__card {
+    display: flex;
+    flex-direction: column;
+}
+
+.trick__media__card > .link--icon {
+    color: colors.$black;
+    font-size: 24px;
+    margin: auto;
+    width: fit-content;
+
+    &:hover {
+        color: colors.$violet;
+    }
+}
+
 /** Description **/
 .trick__description {
     margin: auto auto 50px auto;

@@ -79,6 +79,20 @@ if (currentSlash[3] === "trick") {
         modalVideo.pause();
         modalVideo.currentTime = 0;
     });
+
+    const deleteIcons = document.querySelectorAll(".media__delete");
+
+    deleteIcons.forEach(function (deleteIcon) {
+        deleteIcon.addEventListener("click", function (event) {
+            event.preventDefault();
+            const deleteURL = deleteIcon.dataset.url;
+
+            const deleteChoice = confirm("Souhaitez-vous supprimer ce média ?");
+            if (deleteChoice === true) {
+                window.location.replace(window.location.origin + deleteURL);
+            }
+        });
+    });
 }
 
 

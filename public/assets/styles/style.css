@@ -608,6 +608,22 @@ body {
   filter: brightness(0.5);
 }
 
+.trick__media__card {
+  display: flex;
+  flex-direction: column;
+}
+
+.trick__media__card > .link--icon {
+  color: #0E0E0E;
+  font-size: 24px;
+  margin: auto;
+  width: -moz-fit-content;
+  width: fit-content;
+}
+.trick__media__card > .link--icon:hover {
+  color: #DD7DFF;
+}
+
 /** Description **/
 .trick__description {
   margin: auto auto 50px auto;
