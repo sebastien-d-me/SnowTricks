@@ -164,6 +164,8 @@ class TrickController extends AbstractController {
             $medias = $mediaRepository->findBy(["idTrick" => $trick->getId()]);
 
             foreach($medias as $media) {
+                $mediaPath = $media->getPath();
+                unlink($mediaPath);
                 $entityManager->remove($media);
             }
 
