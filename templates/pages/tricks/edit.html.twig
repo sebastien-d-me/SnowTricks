@@ -9,7 +9,7 @@
             <img class="trick__featured" src="{{ asset(data.featured) }}">
             <div class="trick__action">
                 {% if data.featured != placeholderPath %}
-                    <a class="link link--icon" href="#">
+                    <a class="link link--icon featured__delete" data-url="{{ path('featured_delete', {mediaId: data.featuredId}) }}" href="#">
                         <i class="ri-delete-bin-2-line"></i>
                     </a>
                 {% else %}

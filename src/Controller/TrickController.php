@@ -182,6 +182,7 @@ class TrickController extends AbstractController {
             "category" => $category->getId(),
             "medias" => $medias,
             "featured" => $featured->getPath(),
+            "featuredId" => $featured->getId(),
             "embed" => $embed !== null ? $urls : "",
             "slug" => $trick->getSlug()
         ];
@@ -222,6 +223,31 @@ class TrickController extends AbstractController {
     }
 
 
+    #[Route(name: "featured_delete", path: "/media/delete/featured/{mediaId}")]
+    public function featuredDelete(MediaRepository $mediaRepository, string $mediaId, TrickRepository $trickRepository, EntityManagerInterface $entityManager): Response {        
+        if (!$this->getUser()) {
+            return $this->redirectToRoute("home");
+        }
+
+        $media = $mediaRepository->findOneBy(["id" => $mediaId]);
+        $trick = $trickRepository->findOneBy(["id" => $media->getIdTrick()]);
+        $trick->setUpdatedAt(\DateTime::createFromFormat("Y-m-d H:i:s", date("Y-m-d H:i:s")));
+
+        if($media) {
+            $mediaPath = $media->getPath();
+            unlink($mediaPath);
+            $media->setPath("assets/images/tricks/placeholder/trick_placeholder.webp");
+            $entityManager->flush();
+
+            $this->addFlash("success", "L'image à la une a été supprimé !");
+            return $this->redirectToRoute("trick_presentation", ["trickSlug" => $trick->getSlug()]);
+        } else {
+            $this->addFlash("warning", "L'image à la une n'existe pas.");
+            return $this->redirectToRoute("trick_presentation", ["trickSlug" => $trick->getSlug()]);
+        }
+    }
+
+
     #[Route(name: "media_delete", path: "/media/delete/{mediaId}")]
     public function mediaDelete(MediaRepository $mediaRepository, string $mediaId, TrickRepository $trickRepository, EntityManagerInterface $entityManager): Response {        
         if (!$this->getUser()) {
@@ -230,6 +256,7 @@ class TrickController extends AbstractController {
 
         $media = $mediaRepository->findOneBy(["id" => $mediaId]);
         $trick = $trickRepository->findOneBy(["id" => $media->getIdTrick()]);
+        $trick->setUpdatedAt(\DateTime::createFromFormat("Y-m-d H:i:s", date("Y-m-d H:i:s")));
 
         if($media) {
             $mediaPath = $media->getPath();
