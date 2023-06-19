@@ -23,12 +23,12 @@
         </div>
         <div class="form__row">
             {{ form_row(form.description, {
-                'value': "test"
+                'value': data.description
             }) }}
         </div>
         <div class="form__row">
             {{ form_row(form.idTrickGroup, {
-                'value': "test"
+                'value': data.category
             }) }}
         </div>
         <div class="form__row">
@@ -36,6 +36,8 @@
                 'value': "test"
             }) }}
         </div>
+        <div class="form__row"></div>
+        <span>Image actuellement à la une :</span>
         <img alt="Featured" class="trick__featured--edit" loading="lazy" src="{{ asset(data.featured) }}">
         <div class="form__row">
             {{ form_row(form.featured, {

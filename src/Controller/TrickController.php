@@ -13,6 +13,7 @@ use App\Repository\TrickRepository;
 use App\Entity\Trick;
 use App\Entity\Media;
 use App\Repository\MediaRepository;
+use App\Repository\TrickGroupRepository;
 
 
 class TrickController extends AbstractController {
@@ -157,7 +158,7 @@ class TrickController extends AbstractController {
 
 
     #[Route(name: "trick_edit", path: "/trick/edit/{trickSlug}")]
-    public function edit(Request $request, TrickRepository $trickRepository, string $trickSlug, MediaRepository $mediaRepository): Response {
+    public function edit(Request $request, TrickRepository $trickRepository, string $trickSlug, MediaRepository $mediaRepository, TrickGroupRepository $trickGroupRepository): Response {
         if (!$this->getUser()) {
             return $this->redirectToRoute("home");
         }
@@ -168,6 +169,7 @@ class TrickController extends AbstractController {
         $trick = $trickRepository->findOneBy(["slug" => $trickSlug]);
         $medias = $mediaRepository->findBy(["idTrick" => $trick->getId()]);
         
+        $category = $trickGroupRepository->findOneBy(["id" => $trick->getIdTrickGroup()]);
         $featured = $mediaRepository->findOneBy(["idTrick" => $trick->getId(), "featured" => true]);
         $embed = $mediaRepository->findBy(["idTrick" => $trick->getId(), "type" => "embed"]);
         
@@ -178,8 +180,8 @@ class TrickController extends AbstractController {
 
         $data = [
             "name" => $trick->getName(),
-            "description" => "",
-            "category" => "",
+            "description" => $trick->getDescription(),
+            "category" => $category->getId(),
             "medias" => "",
             "featured" => $featured->getPath(),
             "embed" => $embed !== null ? $urls : ""
