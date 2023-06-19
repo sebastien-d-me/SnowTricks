@@ -27,18 +27,7 @@
 
 /** Row **/
 .form__row {
-    margin-bottom: 20px;
-}
-
-.form__row--inline {
-    align-items: center;
-    display: flex;
-    flex-wrap: wrap;
-
-    > input[type="checkbox"] {
-        height: 20px;
-        width: 20px;
-    }
+    margin-bottom: 35px;
 }
 
 /** Label **/

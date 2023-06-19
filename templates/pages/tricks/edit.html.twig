@@ -1,59 +1,64 @@
 {% extends "base.html.twig" %}
 {% set pageId = "trick_edit" %}
+{% set placeholderPath = "assets/images/tricks/placeholder/trick_placeholder.webp" %}
 
 
 {% block main %}
-    <h1 class="page__title">Modification du trick</h1>
-
-    {% for label, messages in app.flashes(["success", "warning"]) %}
-        {% for message in messages %}
-            <span class="message message--{{ label }}">{{ message }}</span>
-        {% endfor %}
-    {% endfor %}
-
-    {{ form_start(form) }}
-        <div class="form__status">
-            {{ form_errors(form) }}
+    <form method="post">
+        <div class="trick__header">
+            <img class="trick__featured" src="{{ asset(data.featured) }}">
+            <input class="trick__name" value="{{ data.name }}">
+            {% if app.user == true %}
+                <div class="trick__action">
+                    <a class="link link--icon trick__delete" data-url="{{ path('trick_delete', {trickSlug: data.slug}) }}" href="#">
+                        <i class="ri-delete-bin-line"></i>
+                    </a>
+                </div>
+            {% endif %}
         </div>
 
-        <div class="form__row">
-            {{ form_row(form.name, {
-                'value': data.name
-            }) }}
-        </div>
-        <div class="form__row">
-            {{ form_row(form.description, {
-                'value': data.description
-            }) }}
-        </div>
-        <div class="form__row">
-            {{ form_row(form.idTrickGroup, {
-                'value': data.category
-            }) }}
-        </div>
-        <div class="form__row">
-            {{ form_row(form.mediasEmbed, {
-                'value': data.embed
-            }) }}
-        </div>
-        <div class="form__row">
-            {{ form_row(form.medias, {
-                'value': "test"
-            }) }}
-        </div>
+        <div class="trick__container">
+            <div class="trick__medias">
+                {% for media in data.medias %}
+                    {% if media.path and media.type == "image" and media.path != placeholderPath %}
+                        <img class="trick__media trick__media__modal" loading="lazy" src="{{ asset(media.path) }}">
+                    {% elseif media.path and media.type == "video" %}
+                        <video class="trick__media" controls>
+                            <source src="{{ asset(media.path) }}">
+                        </video>
+                    {% elseif media.type == "embed" %}
+                        <iframe class="trick__media" src="{{ media.src }}"></iframe>
+                    {% endif %}
+                {% endfor %}
+            </div>
 
-        <img alt="Featured" class="trick__featured--edit" loading="lazy" src="{{ asset(data.featured) }}">
-        {{ form_row(form.featured) }}
-        {% if data.featured != "assets/images/tricks/placeholder/trick_placeholder.webp" %}
             <div class="form__row">
-                <div class="form__row form__row--inline">
-                    <label for="delete_featured">Retirer l'image à la une</label>
-                    <input id="delete_featured" name="delete_featured" type="checkbox">
+                <div class="form__block">
+                    <label class="required">Description</label>
+                    <textarea>{{ data.description }}</textarea>
                 </div>
             </div>
-        {% endif %}
-        
-        <button class="btn btn--fit" type="submit">Sauvegarder les modifications</button>
-        <a class="btn btn--secondary trick__delete" data-url="{{ path('trick_delete', {trickSlug: data.slug}) }}" href="#">Supprimer le trick</a>
-    {{ form_end(form) }}
+
+            <div class="form__row">
+                <div class="form__block">
+                    <label class="required">Groupe</label>
+                    <select>
+                        {% for group in trickGroups %}
+                            {% if group.id == data.category %}
+                                <option selected value="{{ group.id }}">{{ group.name }}</option>
+                            {% else %}
+                                <option value="{{ group.id }}">{{ group.name }}</option>
+                            {% endif %}
+                        {% endfor %}
+                    </select>
+                </div>
+            </div>
+        </div>
+
+        <button class="btn" type="submit">Sauvegarder les modifications</button>
+    </form>
+    
+    <div>
+        <a class="link" href="{{ path('trick_presentation', {trickSlug: data.slug}) }}">Retourner sur le trick</a>
+    </div>
 {% endblock %}

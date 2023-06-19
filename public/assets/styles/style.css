@@ -229,17 +229,7 @@ body {
 
 /** Row **/
 .form__row {
-  margin-bottom: 20px;
-}
-
-.form__row--inline {
-  align-items: center;
-  display: flex;
-  flex-wrap: wrap;
-}
-.form__row--inline > input[type=checkbox] {
-  height: 20px;
-  width: 20px;
+  margin-bottom: 35px;
 }
 
 /** Label **/
@@ -680,7 +670,7 @@ body {
 .trick__modal__image,
 .trick__modal__video {
   max-width: 100%;
-  width: 300px;
+  width: 800px;
 }
 
 /*** Responsive ***/
@@ -712,14 +702,6 @@ body {
     width: 200px;
   }
 }
-.trick__featured--edit {
-  height: 300px;
-  margin: 20px auto auto auto;
-  -o-object-fit: cover;
-     object-fit: cover;
-  width: 300px;
-}
-
 /* Base */
 /* Components */
 /* Layouts */

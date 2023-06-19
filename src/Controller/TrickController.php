@@ -163,9 +163,6 @@ class TrickController extends AbstractController {
             return $this->redirectToRoute("home");
         }
 
-        $form = $this->createForm(TrickFormType::class);
-        $form->handleRequest($request);
-
         $trick = $trickRepository->findOneBy(["slug" => $trickSlug]);
         $medias = $mediaRepository->findBy(["idTrick" => $trick->getId()]);
         
@@ -182,15 +179,19 @@ class TrickController extends AbstractController {
             "name" => $trick->getName(),
             "description" => $trick->getDescription(),
             "category" => $category->getId(),
-            "medias" => "",
+            "medias" => $medias,
             "featured" => $featured->getPath(),
             "embed" => $embed !== null ? $urls : "",
             "slug" => $trick->getSlug()
         ];
 
+        /**/
+        $trickGroups = $trickGroupRepository->findAll();
+
+
         return $this->render("pages/tricks/edit.html.twig", [
-            "form" => $form->createView(),
             "data" => $data,
+            "trickGroups" => $trickGroups
         ]);
     }
 
