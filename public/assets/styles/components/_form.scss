@@ -17,6 +17,10 @@
     }
 }
 
+.form__block--full {
+    width: 100%;
+}
+
 /** Status **/
 .form__status > ul {
     color: colors.$red;
@@ -27,7 +31,7 @@
 
 /** Row **/
 .form__row {
-    margin-bottom: 35px;
+    margin-bottom: 20px;
 }
 
 /** Label **/

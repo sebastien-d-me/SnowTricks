@@ -7,8 +7,7 @@
     <form method="post">
         <div class="trick__header">
             <img class="trick__featured" src="{{ asset(data.featured) }}">
-            <input class="trick__name" value="{{ data.name }}">
-            {% if app.user == true %}
+            {% if data.featured != placeholderPath %}
                 <div class="trick__action">
                     <a class="link link--icon trick__delete" data-url="{{ path('trick_delete', {trickSlug: data.slug}) }}" href="#">
                         <i class="ri-delete-bin-line"></i>
@@ -31,16 +30,20 @@
                     {% endif %}
                 {% endfor %}
             </div>
-
             <div class="form__row">
-                <div class="form__block">
+                <div class="form__block form__block--full">
+                    <label class="required">Nom</label>
+                    <input class="trick__name" value="{{ data.name }}">
+                </div>
+            </div>
+            <div class="form__row">
+                <div class="form__block form__block--full">
                     <label class="required">Description</label>
                     <textarea>{{ data.description }}</textarea>
                 </div>
             </div>
-
             <div class="form__row">
-                <div class="form__block">
+                <div class="form__block form__block--full">
                     <label class="required">Groupe</label>
                     <select>
                         {% for group in trickGroups %}
@@ -53,11 +56,17 @@
                     </select>
                 </div>
             </div>
+            <div class="form__row">
+                <div class="form__block form__block--full">
+                    <label class="required">URL de vos vidéos (Dailymotion, Youtube) une par ligne</label>
+                    <textarea>{{ data.embed }}</textarea>
+                </div>
+            </div>
         </div>
 
         <button class="btn" type="submit">Sauvegarder les modifications</button>
     </form>
-    
+
     <div>
         <a class="link" href="{{ path('trick_presentation', {trickSlug: data.slug}) }}">Retourner sur le trick</a>
     </div>

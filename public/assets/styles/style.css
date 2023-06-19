@@ -219,6 +219,10 @@ body {
   margin: 20px auto;
 }
 
+.form__block--full {
+  width: 100%;
+}
+
 /** Status **/
 .form__status > ul {
   color: #FF575A;
@@ -229,7 +233,7 @@ body {
 
 /** Row **/
 .form__row {
-  margin-bottom: 35px;
+  margin-bottom: 20px;
 }
 
 /** Label **/
