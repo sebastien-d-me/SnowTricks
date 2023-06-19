@@ -36,7 +36,7 @@
                     </a>
                     {% if app.user == true %}
                         <div class="trick__action">
-                            <a class="link link--icon" href="">
+                            <a class="link link--icon" href="{{ path('trick_edit', {trickSlug: tricks.trick.slug}) }}">
                                 <i class="ri-pencil-line"></i>
                             </a>
                             <a class="link link--icon trick__delete" data-url="{{ path('trick_delete', {trickSlug: tricks.trick.slug}) }}" href="#{{ tricks.trick.name }}">

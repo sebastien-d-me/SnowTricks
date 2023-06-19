@@ -1,0 +1,53 @@
+{% extends "base.html.twig" %}
+{% set pageId = "trick_edit" %}
+
+
+{% block main %}
+    <h1 class="page__title">Modification du trick</h1>
+
+    {% for label, messages in app.flashes(["success", "warning"]) %}
+        {% for message in messages %}
+            <span class="message message--{{ label }}">{{ message }}</span>
+        {% endfor %}
+    {% endfor %}
+
+    {{ form_start(form) }}
+        <div class="form__status">
+            {{ form_errors(form) }}
+        </div>
+
+        <div class="form__row">
+            {{ form_row(form.name, {
+                'value': data.name
+            }) }}
+        </div>
+        <div class="form__row">
+            {{ form_row(form.description, {
+                'value': "test"
+            }) }}
+        </div>
+        <div class="form__row">
+            {{ form_row(form.idTrickGroup, {
+                'value': "test"
+            }) }}
+        </div>
+        <div class="form__row">
+            {{ form_row(form.medias, {
+                'value': "test"
+            }) }}
+        </div>
+        <img alt="Featured" class="trick__featured--edit" loading="lazy" src="{{ asset(data.featured) }}">
+        <div class="form__row">
+            {{ form_row(form.featured, {
+                'value': "test"
+            }) }}
+        </div>
+        <div class="form__row">
+            {{ form_row(form.mediasEmbed, {
+                'value': data.embed
+            }) }}
+        </div>
+        <button class="btn btn--fit" type="submit">Sauvegarder les modifications</button>
+        <button class="btn btn--fit btn--secondary" type="button">Supprimer le trick</button>
+    {{ form_end(form) }}
+{% endblock %}

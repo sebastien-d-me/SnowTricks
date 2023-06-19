@@ -702,6 +702,14 @@ body {
     width: 200px;
   }
 }
+.trick__featured--edit {
+  height: 300px;
+  margin: 20px auto auto auto;
+  -o-object-fit: cover;
+     object-fit: cover;
+  width: 300px;
+}
+
 /* Base */
 /* Components */
 /* Layouts */

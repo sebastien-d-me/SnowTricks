@@ -156,8 +156,48 @@ class TrickController extends AbstractController {
     }
 
 
+    #[Route(name: "trick_edit", path: "/trick/edit/{trickSlug}")]
+    public function edit(Request $request, TrickRepository $trickRepository, string $trickSlug, MediaRepository $mediaRepository): Response {
+        if (!$this->getUser()) {
+            return $this->redirectToRoute("home");
+        }
+
+        $form = $this->createForm(TrickFormType::class);
+        $form->handleRequest($request);
+
+        $trick = $trickRepository->findOneBy(["slug" => $trickSlug]);
+        $medias = $mediaRepository->findBy(["idTrick" => $trick->getId()]);
+        
+        $featured = $mediaRepository->findOneBy(["idTrick" => $trick->getId(), "featured" => true]);
+        $embed = $mediaRepository->findBy(["idTrick" => $trick->getId(), "type" => "embed"]);
+        
+        $urls = "";
+        foreach($embed as $embedMedia) {
+            $urls.= $embedMedia->getSrc()."\r\n";
+        }
+
+        $data = [
+            "name" => $trick->getName(),
+            "description" => "",
+            "category" => "",
+            "medias" => "",
+            "featured" => $featured->getPath(),
+            "embed" => $embed !== null ? $urls : ""
+        ];
+
+        return $this->render("pages/tricks/edit.html.twig", [
+            "form" => $form->createView(),
+            "data" => $data,
+        ]);
+    }
+
+
     #[Route(name: "trick_delete", path: "/trick/delete/{trickSlug}")]
     public function delete(TrickRepository $trickRepository, string $trickSlug, MediaRepository $mediaRepository, EntityManagerInterface $entityManager): Response {        
+        if (!$this->getUser()) {
+            return $this->redirectToRoute("home");
+        }
+
         $trick = $trickRepository->findOneBy(["slug" => $trickSlug]);
 
         if($trick) {
