@@ -32,24 +32,28 @@
             }) }}
         </div>
         <div class="form__row">
-            {{ form_row(form.medias, {
-                'value': "test"
-            }) }}
-        </div>
-        <div class="form__row"></div>
-        <span>Image actuellement à la une :</span>
-        <img alt="Featured" class="trick__featured--edit" loading="lazy" src="{{ asset(data.featured) }}">
-        <div class="form__row">
-            {{ form_row(form.featured, {
-                'value': "test"
-            }) }}
-        </div>
-        <div class="form__row">
             {{ form_row(form.mediasEmbed, {
                 'value': data.embed
             }) }}
         </div>
+        <div class="form__row">
+            {{ form_row(form.medias, {
+                'value': "test"
+            }) }}
+        </div>
+
+        <img alt="Featured" class="trick__featured--edit" loading="lazy" src="{{ asset(data.featured) }}">
+        {{ form_row(form.featured) }}
+        {% if data.featured != "assets/images/tricks/placeholder/trick_placeholder.webp" %}
+            <div class="form__row">
+                <div class="form__row form__row--inline">
+                    <label for="delete_featured">Retirer l'image à la une</label>
+                    <input id="delete_featured" name="delete_featured" type="checkbox">
+                </div>
+            </div>
+        {% endif %}
+        
         <button class="btn btn--fit" type="submit">Sauvegarder les modifications</button>
-        <button class="btn btn--fit btn--secondary" type="button">Supprimer le trick</button>
+        <a class="btn btn--secondary trick__delete" data-url="{{ path('trick_delete', {trickSlug: data.slug}) }}" href="#">Supprimer le trick</a>
     {{ form_end(form) }}
 {% endblock %}

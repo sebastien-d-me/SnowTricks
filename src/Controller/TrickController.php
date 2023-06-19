@@ -184,7 +184,8 @@ class TrickController extends AbstractController {
             "category" => $category->getId(),
             "medias" => "",
             "featured" => $featured->getPath(),
-            "embed" => $embed !== null ? $urls : ""
+            "embed" => $embed !== null ? $urls : "",
+            "slug" => $trick->getSlug()
         ];
 
         return $this->render("pages/tricks/edit.html.twig", [

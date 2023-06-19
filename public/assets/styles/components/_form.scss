@@ -30,6 +30,17 @@
     margin-bottom: 20px;
 }
 
+.form__row--inline {
+    align-items: center;
+    display: flex;
+    flex-wrap: wrap;
+
+    > input[type="checkbox"] {
+        height: 20px;
+        width: 20px;
+    }
+}
+
 /** Label **/
 .form__block label {
     font-weight: bold;
