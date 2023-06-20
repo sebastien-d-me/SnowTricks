@@ -1,0 +1,75 @@
+{% extends "base.html.twig" %}
+{% set pageId = "trick_edit" %}
+{% set placeholderPath = "assets/images/tricks/placeholder/trick_placeholder.webp" %}
+
+
+{% block main %}
+    <form method="post" enctype="multipart/form-data">
+        <div class="trick__header">
+            <img class="trick__featured" src="{{ asset(data.featured) }}">
+            <div class="trick__action">
+                <div class="form__block">
+                    <label>Image à la une</label>
+                    <input name="featured_media" type="file">
+                </div>
+                {% if data.featured != placeholderPath %}
+                    <a class="link link--icon featured__delete" data-url="{{ path('featured_delete', {mediaId: data.featuredId}) }}" href="#">
+                        <i class="ri-delete-bin-2-line"></i>
+                    </a>
+                {% endif %}
+            </div>
+        </div>
+
+        <div class="trick__container">
+            {% for label, messages in app.flashes(["success", "warning"]) %}
+                {% for message in messages %}
+                    <span class="message message--{{ label }}">{{ message }}</span>
+                {% endfor %}
+            {% endfor %}
+            <div class="form__row">
+                <div class="form__block form__block--full">
+                    <label class="required">Nom</label>
+                    <input class="trick__name" name="name" required value="{{ data.name }}">
+                </div>
+            </div>
+            <div class="form__row">
+                <div class="form__block form__block--full">
+                    <label class="required">Description</label>
+                    <textarea name="description" required>{{ data.description }}</textarea>
+                </div>
+            </div>
+            <div class="form__row">
+                <div class="form__block form__block--full">
+                    <label class="required">Groupe</label>
+                    <select name="groupe" required>
+                        {% for group in trickGroups %}
+                            {% if group.id == data.category %}
+                                <option selected value="{{ group.id }}">{{ group.name }}</option>
+                            {% else %}
+                                <option value="{{ group.id }}">{{ group.name }}</option>
+                            {% endif %}
+                        {% endfor %}
+                    </select>
+                </div>
+            </div>
+            <div class="form__row">
+                <div class="form__block form__block--full">
+                    <label>URL de vos vidéos (Dailymotion, Youtube) une par ligne</label>
+                    <textarea name="embed"></textarea>
+                </div>
+            </div>
+            <div class="form__row">
+                <div class="form__block form__block--full">
+                    <label>Illustrations et vidéos</label>
+                    <input multiple name="medias[]" type="file">
+                </div>
+            </div>
+        </div>
+
+        <button class="btn" type="submit">Sauvegarder les modifications</button>
+    </form>
+
+    <div>
+        <a class="link" href="{{ path('trick_presentation', {trickSlug: data.slug}) }}">Retourner sur le trick</a>
+    </div>
+{% endblock %}

@@ -1,6 +1,5 @@
 /** Get the URL **/
 const currentURL = window.location.pathname;
-const currentSlash = window.location.toString().split("/");
 
 
 /** Home page **/
@@ -52,7 +51,8 @@ if (currentURL === "/") {
 
 
 /** Trick page **/
-if (currentSlash[3] === "trick") {
+if (currentURL.includes("/trick") && !currentURL.includes("/edit")) {
+    // Modal
     const trickMediasModal = document.querySelectorAll(".trick__media__modal");
     const modal = document.querySelector(".trick__modal");
     const modalClose = document.querySelector(".trick__modal__close");
@@ -79,22 +79,50 @@ if (currentSlash[3] === "trick") {
         modalVideo.pause();
         modalVideo.currentTime = 0;
     });
+
+    // Delete medias
+    const deleteMediasIcons = document.querySelectorAll(".media__delete");
+    deleteMediasIcons.forEach(function (deleteMediaIcon) {
+        deleteMediaIcon.addEventListener("click", function (event) {
+            event.preventDefault();
+            const deleteMediaURL = deleteMediaIcon.dataset.url;
+
+            const deleteMediaChoice = confirm("Souhaitez-vous supprimer ce média ?");
+            if (deleteMediaChoice === true) {
+                window.location.replace(window.location.origin + deleteMediaURL);
+            }
+        });
+    });
 }
 
 
 /** Home / Trick page **/
-if (currentURL === "/" || currentSlash[3] === "trick") {
-    const deleteIcons = document.querySelectorAll(".trick__delete");
-
-    deleteIcons.forEach(function (deleteIcon) {
-        deleteIcon.addEventListener("click", function (event) {
+if (currentURL.includes("/") || currentURL.includes("/trick") && !currentURL.includes("/edit")) {
+    const deleteTrickIcons = document.querySelectorAll(".trick__delete");
+    deleteTrickIcons.forEach(function (deleteTrickIcon) {
+        deleteTrickIcon.addEventListener("click", function (event) {
             event.preventDefault();
-            const deleteURL = deleteIcon.dataset.url;
+            const deleteTrickURL = deleteTrickIcon.dataset.url;
 
-            const deleteChoice = confirm("Souhaitez-vous supprimer ce trick ?");
-            if (deleteChoice === true) {
-                window.location.replace(window.location.origin + deleteURL);
+            const deleteTrickChoice = confirm("Souhaitez-vous supprimer ce trick ?");
+            if (deleteTrickChoice === true) {
+                window.location.replace(window.location.origin + deleteTrickURL);
             }
         });
+    });
+}
+
+
+/** Edit page **/
+if (currentURL.includes("/edit")) {
+    const deleteFeaturedIcon = document.querySelector(".featured__delete");
+    deleteFeaturedIcon.addEventListener("click", function (event) {
+        event.preventDefault();
+        const deleteFeaturedURL = deleteFeaturedIcon.dataset.url;
+
+        const deleteFeaturedChoice = confirm("Souhaitez-vous supprimer cette image mise à la une ?");
+        if (deleteFeaturedChoice === true) {
+            window.location.replace(window.location.origin + deleteFeaturedURL);
+        }
     });
 }

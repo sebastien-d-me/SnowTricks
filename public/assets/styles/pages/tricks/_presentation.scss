@@ -29,6 +29,7 @@
 /** Action **/
 .trick__header > .trick__action {
     background-color: colors.$black-transparent;
+    color: colors.$white;
     padding: 20px 40px;
     position: absolute;
     right: 50px;
@@ -59,6 +60,22 @@
     &:hover {
         cursor: pointer;
         filter: brightness(0.5);
+    }
+}
+
+.trick__media__card {
+    display: flex;
+    flex-direction: column;
+}
+
+.trick__media__card > .link--icon {
+    color: colors.$black;
+    font-size: 24px;
+    margin: auto;
+    width: fit-content;
+
+    &:hover {
+        color: colors.$violet;
     }
 }
 
@@ -131,7 +148,7 @@
 .trick__modal__image,
 .trick__modal__video {
     max-width: 100%;
-    width: 300px;
+    width: 800px;
 }
 
 /*** Responsive ***/

@@ -17,6 +17,10 @@
     }
 }
 
+.form__block--full {
+    width: 100%;
+}
+
 /** Status **/
 .form__status > ul {
     color: colors.$red;

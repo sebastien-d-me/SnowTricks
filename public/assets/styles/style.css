@@ -219,6 +219,10 @@ body {
   margin: 20px auto;
 }
 
+.form__block--full {
+  width: 100%;
+}
+
 /** Status **/
 .form__status > ul {
   color: #FF575A;
@@ -501,6 +505,7 @@ body {
 }
 
 .trick__action {
+  align-items: center;
   display: flex;
   font-size: 20px;
   gap: 10px;
@@ -571,6 +576,7 @@ body {
 /** Action **/
 .trick__header > .trick__action {
   background-color: rgba(0, 0, 0, 0.4392156863);
+  color: #FEFEFE;
   padding: 20px 40px;
   position: absolute;
   right: 50px;
@@ -602,6 +608,22 @@ body {
 .trick__media:hover {
   cursor: pointer;
   filter: brightness(0.5);
+}
+
+.trick__media__card {
+  display: flex;
+  flex-direction: column;
+}
+
+.trick__media__card > .link--icon {
+  color: #0E0E0E;
+  font-size: 24px;
+  margin: auto;
+  width: -moz-fit-content;
+  width: fit-content;
+}
+.trick__media__card > .link--icon:hover {
+  color: #DD7DFF;
 }
 
 /** Description **/
@@ -670,7 +692,7 @@ body {
 .trick__modal__image,
 .trick__modal__video {
   max-width: 100%;
-  width: 300px;
+  width: 800px;
 }
 
 /*** Responsive ***/
