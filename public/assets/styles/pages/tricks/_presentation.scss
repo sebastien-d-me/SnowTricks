@@ -105,6 +105,40 @@
     text-transform: capitalize;
 }
 
+/** Comments **/
+.trick__comments {
+    border-top: 1px solid colors.$black;
+    margin-top: 50px;
+    padding-top: 20px;
+}
+
+.trick__comment {
+    border-bottom: 1px solid colors.$black;
+    margin: auto auto 30px auto;
+    padding: 0 20px;
+    width: fit-content;
+}
+
+.comment__avatar {
+    border-radius: 50%;
+    display: block;
+    margin: auto auto 5px auto;
+    height: 100px;
+    width: 100px;
+}
+
+.comment__name {
+    font-weight: 600;
+
+    &::after {
+        content: " le";
+    }
+}
+
+.comment__date {
+    font-weight: 600;
+}
+
 /** Modal **/
 .trick__modal {
     background-color: colors.$black-transparent;
@@ -156,9 +190,11 @@
 
     /** Action **/
     .trick__header > .trick__action {
+        flex-wrap: wrap;
+        justify-content: center;
         padding: 10px 20px;
-        right: 10px;
-        top: 10px;
+        right: 0;
+        top: 0;
     }
 
     /** Name **/
@@ -169,8 +205,8 @@
 
     /** Container **/
     .trick__container {
-        margin: 50px 20px;
-        width: calc(100% - 40px);
+        margin: 50px 5px;
+        width: calc(100% - 10px);
     }
 
     /** Medias **/

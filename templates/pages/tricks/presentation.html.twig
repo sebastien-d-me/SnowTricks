@@ -79,6 +79,35 @@
                 <span class="badge__value">{{ data.trick.updatedAt | date("d/m/Y à H:i:s") }}</span>
             </div>
         </div>
+
+        <div class="trick__comments">
+            {% if app.user == true %}
+            {% endif %}
+            <div class="trick__comment">
+                <img alt="avatar" class="comment__avatar" loading="lazy" src="https://via.placeholder.com/150">
+                <span class="comment__name">John Doe</span>
+                <span class="comment__date">20/06/2023 à 17:17:05</span>
+                <p class="comment__message">
+                    Lorem ipsum dolor sit, amet consectetur adipisicing elit. Similique, temporibus?
+                </p>
+            </div>
+            <div class="trick__comment">
+                <img alt="avatar" class="comment__avatar" loading="lazy" src="https://via.placeholder.com/150">
+                <span class="comment__name">John Doe</span>
+                <span class="comment__date">20/06/2023 à 17:17:05</span>
+                <p class="comment__message">
+                    Lorem ipsum dolor sit, amet consectetur adipisicing elit. Similique, temporibus?
+                </p>
+            </div>
+            <div class="trick__comment">
+                <img alt="avatar" class="comment__avatar" loading="lazy" src="https://via.placeholder.com/150">
+                <span class="comment__name">John Doe</span>
+                <span class="comment__date">20/06/2023 à 17:17:05</span>
+                <p class="comment__message">
+                    Lorem ipsum dolor sit, amet consectetur adipisicing elit. Similique, temporibus?
+                </p>
+            </div>
+        </div>
     </div>
 
     <div class="hide trick__modal">

@@ -18,7 +18,7 @@
 }
 
 .form__block--full {
-    width: 100%;
+    width: calc(100% - 20px);
 }
 
 /** Status **/
@@ -62,4 +62,13 @@
 
 .form__block select {
     text-transform: capitalize;
+}
+
+/*** Responsive ***/
+@media screen and (max-width: 992px) {
+
+    /** Row **/
+    .form__block {
+        min-width: unset;
+    }
 }
