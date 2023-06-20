@@ -81,9 +81,24 @@
         </div>
 
         <div class="trick__comments">
+            <h1 class="page__title">Commentaires</h1>
             {% if app.user == true %}
-                <form method="post" enctype="multipart/form-data">
-                    
+                <form class="comment__form" method="post" enctype="multipart/form-data">
+                    <div class="form__row">
+                        <div class="form__block">
+                            <label>Avatar</label>
+                            <input name="avatar" type="file">
+                        </div>
+                        <div class="form__block">
+                            <label class="required">Nom complet</label>
+                            <input name="nom">
+                        </div>
+                        <div class="form__block">
+                            <label class="required">Message</label>
+                            <textarea name="message"></textarea>
+                        </div>
+                    </div>
+                    <button class="btn" type="submit">Envoyer le commentaire</button>
                 </form>
             {% endif %}
             <div class="trick__comment">

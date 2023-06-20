@@ -14,6 +14,8 @@ use App\Entity\Trick;
 use App\Entity\Media;
 use App\Repository\MediaRepository;
 use App\Repository\TrickGroupRepository;
+use App\Entity\Avatar;
+use App\Entity\Comment;
 
 
 class TrickController extends AbstractController {
@@ -142,9 +144,42 @@ class TrickController extends AbstractController {
 
 
     #[Route(name: "trick_presentation", path: "/trick/{trickSlug}")]
-    public function view(TrickRepository $trickRepository, string $trickSlug, MediaRepository $mediaRepository): Response {        
+    public function view(TrickRepository $trickRepository, string $trickSlug, MediaRepository $mediaRepository, Request $request, EntityManagerInterface $entityManager): Response {        
         $trick = $trickRepository->findOneBy(["slug" => $trickSlug]);
         $medias = $mediaRepository->findBy(["idTrick" => $trick->getId()]);
+
+        if ($request->isMethod("POST")) {
+            if (!$this->getUser()) {
+                return $this->redirectToRoute("home");
+            }
+
+            $avatar = $request->files->get("avatar");
+            $nom = $request->files->get("nom");
+            $message = $request->files->get("message");
+
+            if($avatar) {
+                $avatarFileName = $slugger->slug(pathinfo($avatar->getClientOriginalName(), PATHINFO_FILENAME))."-".uniqid().".".$avatar->guessExtension();
+                $avatar->move($this->getParameter("avatars_directory"), $avatarFileName);
+                $avatarPath = "assets/images/tricks/avatars/".$avatarFileName;
+            } else {
+                $avatarPath = "assets/images/avatars/placeholder/avatar_placeholder.webp";
+            }
+
+            $avatar = new Avatar();
+            $avatar->setPath($avatarPath);
+            $entityManager->persist($avatar);
+
+            $comment = new Comment();
+            $comment->setIdLoginCredentials();
+            $comment->setIdTrick($trick->getId());
+            $comment->setContent($message);
+            $comment->setFullName($nom);
+            $comment->setAvatar($avatar);
+            $comment->setCreationDate(\DateTime::createFromFormat("Y-m-d H:i:s", date("Y-m-d H:i:s")));
+
+            $entityManager->flush();
+            $this->addFlash("success", "Le commentaire a été ajouté !");
+        }
 
         $data = [
             "trick" => $trick,
