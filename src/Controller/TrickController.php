@@ -158,7 +158,7 @@ class TrickController extends AbstractController {
 
 
     #[Route(name: "trick_edit", path: "/trick/edit/{trickSlug}")]
-    public function edit(Request $request, TrickRepository $trickRepository, string $trickSlug, MediaRepository $mediaRepository, TrickGroupRepository $trickGroupRepository): Response {
+    public function edit(Request $request, TrickRepository $trickRepository, string $trickSlug, MediaRepository $mediaRepository, TrickGroupRepository $trickGroupRepository, EntityManagerInterface $entityManager, SluggerInterface $slugger): Response {
         if (!$this->getUser()) {
             return $this->redirectToRoute("home");
         }
@@ -178,7 +178,7 @@ class TrickController extends AbstractController {
             $descriptionForm = $request->get("description");
             $groupeForm = $request->get("groupe");
             $embedForm = $request->get("embed");
-            $mediasForm = $request->get("medias");
+            $mediasForm = $request->files->get("medias");
 
             $checkExist = $trickRepository->findOneBy(["name" => $nameForm]);
 
@@ -188,27 +188,79 @@ class TrickController extends AbstractController {
             }
             
             if($featuredForm !== null) {
-                $featured->setPath($featuredForm);
+                $featuredFileName = $slugger->slug(pathinfo($featuredForm->getClientOriginalName(), PATHINFO_FILENAME))."-".uniqid().".".$featuredForm->guessExtension();
+                $featuredForm->move($this->getParameter("featured_directory"), $featuredFileName);
+                $featuredPath = "assets/images/tricks/featured/".$featuredFileName;
+                $featured->setPath($featuredPath);
             }
+
+            $selectedGroup = $trickGroupRepository->findOneBy(["id" => $groupeForm]);
             
             $trick->setName($nameForm);
             $trick->setDescription($descriptionForm);
-            $trick->setIdTrickGroup($groupeForm);
-            $trick->setSlug($slugForm);
-            
-            $trick->setupdatedAt(\DateTime::createFromFormat("Y-m-d H:i:s", date("Y-m-d H:i:s")));
+            $trick->setIdTrickGroup($selectedGroup);
+            $trick->setSlug($slugForm);            
+            $trick->setUpdatedAt(\DateTime::createFromFormat("Y-m-d H:i:s", date("Y-m-d H:i:s")));
         
+            $trickId = $trickRepository->findOneBy(["id" => $trick->getId()]);
+
+            // Sauvegarde des autres médias
+            if($mediasForm) {
+                foreach($mediasForm as $mediaFile) {
+                    $mediaExtension = $mediaFile->guessExtension();
+                    $media = new Media();
+
+                    if($mediaExtension === "mp4") {
+                        $mediaRepository = "media_video_directory";
+                        $mediaPath = "assets/videos/tricks/";
+                        $media->setType("video");
+                    } else {
+                        $mediaRepository = "media_image_directory";
+                        $mediaPath = "assets/images/tricks/";
+                        $media->setType("image");
+                    }
+
+                    $mediaFileName = $slugger->slug(pathinfo($mediaFile->getClientOriginalName(), PATHINFO_FILENAME))."-".uniqid().".".$mediaExtension;
+                    
+                    $mediaFile->move($this->getParameter($mediaRepository), $mediaFileName);
+                    
+                    $media->setIdTrick($trickId);
+                    $media->setPath($mediaPath.$mediaFileName);
+                    $media->setFeatured(false);
+                    $entityManager->persist($media);
+                }
+            }
+
+            // Enregistre les embed
+            if($embedForm) {
+                $mediasEmbedList = explode("\n", $embedForm);
+                foreach($mediasEmbedList as $mediaEmbedItem) {
+                    if(parse_url($mediaEmbedItem)["host"] === "www.youtube.com") {   
+                        $embedVideo = rtrim(str_replace("v=", "", parse_url($mediaEmbedItem)["query"]), "_");
+                        $embedUrl = "https://youtube.com/embed/".$embedVideo;
+                    } else if(parse_url($mediaEmbedItem)["host"] === "www.dailymotion.com") {
+                        $embedVideo = str_replace("/video/", "",  parse_url($mediaEmbedItem)["path"]);
+                        $embedUrl = "https://dailymotion.com/embed/video/".$embedVideo;
+                    } else {
+                        $this->addFlash("warning", "Veuillez ne prendre un lien que de Youtube et de Dailymotion.");
+                        return $this->redirectToRoute("trick_edit", ["trickSlug" => $trick->getSlug()]);
+                    }
+
+                    $media = new Media();
+                    $media->setIdTrick($trickId);
+                    $media->setType("embed");
+                    $media->setSrc($embedUrl);
+                    $media->setFeatured(false);
+                    $entityManager->persist($media);
+                }
+            }
+
             $entityManager->flush();
 
             $this->addFlash("success", "Le trick a été modifié !");
             return $this->redirectToRoute("trick_presentation", ["trickSlug" => $trick->getSlug()]);
         }    
         
-        $urls = "";
-        foreach($embed as $embedMedia) {
-            $urls.= $embedMedia->getSrc()."\r\n";
-        }
-
         $data = [
             "name" => $trick->getName(),
             "description" => $trick->getDescription(),
@@ -216,7 +268,6 @@ class TrickController extends AbstractController {
             "medias" => $medias,
             "featured" => $featured->getPath(),
             "featuredId" => $featured->getId(),
-            "embed" => $embed !== null ? $urls : "",
             "slug" => $trick->getSlug()
         ];
 

@@ -4,7 +4,7 @@
 
 
 {% block main %}
-    <form method="post">
+    <form method="post" enctype="multipart/form-data">
         <div class="trick__header">
             <img class="trick__featured" src="{{ asset(data.featured) }}">
             <div class="trick__action">
@@ -55,13 +55,13 @@
             <div class="form__row">
                 <div class="form__block form__block--full">
                     <label>URL de vos vidéos (Dailymotion, Youtube) une par ligne</label>
-                    <textarea name="embed">{{ data.embed }}</textarea>
+                    <textarea name="embed"></textarea>
                 </div>
             </div>
             <div class="form__row">
                 <div class="form__block form__block--full">
                     <label>Illustrations et vidéos</label>
-                    <input multiple name="medias" type="file">
+                    <input multiple name="medias[]" type="file">
                 </div>
             </div>
         </div>
