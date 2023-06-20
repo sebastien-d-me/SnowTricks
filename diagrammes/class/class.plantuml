@@ -13,6 +13,7 @@ class Comment {
     {static} +id: int
     +creation_date: date
     +content: longtext
+    +fullName: string
 }
 
 'Trick Group'
@@ -21,20 +22,12 @@ class Trick_Group {
     +name: string
 }
 
-'Member'
-class Member {
-    {static} +id: int
-    +first_name: string
-    +last_name: string
-}
-
 'Login Credentials'
 class LoginCredentials {
     {static} +id: int
     +email: string
     +roles: longtext
     +password: string
-    +token: string
     +username: string
     +is_active: boolean
 }
@@ -44,6 +37,9 @@ class Trick {
     {static} +id: int
     +name: string
     +description: longtext
+    +slug: string 
+    +created_at: date 
+    +updated_at: date
 }
 
 'Hash'
@@ -67,12 +63,10 @@ class Avatar {
 }
 
 'Déroulement'
-Avatar "1" - "1" Member: $warning("OWN")
-LoginCredentials "1" -- "1" Member: $warning("CONNECT")
-Hash "1..*" -- "1" Member: $warning("SECURE")
-Member "1" -- "*" Trick: $warning("WRITE")
-Member "1" -- "*" Comment: $warning("LEAVE")
+Hash "1..*" -- "1" LoginCredentials: $warning("SECURE")
+Avatar "1" -- "1" Comment : $warning("ILLUSTRATE")
+LoginCredentials "1" -- "*" Comment: $warning("LEAVE")
 Trick "1" -- "*" Comment: $warning("CONTAIN")
 Trick_Group "1" -- "*" Trick: $warning("HAVE")
-Trick "1" -- "*" Media: $warning("DISPLAY")
+Trick "1" -- "1..*" Media: $warning("DISPLAY")
 @enduml
