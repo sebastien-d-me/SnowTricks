@@ -18,6 +18,7 @@ use App\Repository\CommentRepository;
 use App\Repository\AvatarRepository;
 use App\Entity\Avatar;
 use App\Entity\Comment;
+use App\Repository\LoginCredentialsRepository;
 
 
 class TrickController extends AbstractController {
@@ -146,7 +147,7 @@ class TrickController extends AbstractController {
 
 
     #[Route(name: "trick_presentation", path: "/trick/{trickSlug}")]
-    public function view(TrickRepository $trickRepository, string $trickSlug, MediaRepository $mediaRepository, Request $request, EntityManagerInterface $entityManager, CommentRepository $commentRepository, AvatarRepository $avatarRepository, SluggerInterface $slugger): Response {        
+    public function view(TrickRepository $trickRepository, LoginCredentialsRepository $loginCredentialsRepository, string $trickSlug, MediaRepository $mediaRepository, Request $request, EntityManagerInterface $entityManager, CommentRepository $commentRepository, AvatarRepository $avatarRepository, SluggerInterface $slugger): Response {        
         $trick = $trickRepository->findOneBy(["slug" => $trickSlug]);
         $medias = $mediaRepository->findBy(["idTrick" => $trick->getId()]); 
         $comments = $commentRepository->findBy(["idTrick" => $trick->getId()]);
@@ -155,6 +156,8 @@ class TrickController extends AbstractController {
             $idAvatar = $comment->getAvatar();
             $avatarComment = $avatarRepository->findOneBy(["id" => $idAvatar]);
             $comment->{"avatarPath"} = $avatarComment->getPath();
+            $commentAuthor = $loginCredentialsRepository->findOneBy(["id" => $comment->getIdLoginCredentials()])->getUsername();
+            $comment->{"author"} = $commentAuthor;
         }
 
         if ($request->isMethod("POST")) {

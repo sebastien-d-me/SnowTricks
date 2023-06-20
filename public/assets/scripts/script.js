@@ -93,6 +93,24 @@ if (currentURL.includes("/trick") && !currentURL.includes("/edit")) {
             }
         });
     });
+
+    // Manage the button
+    const trickComment = document.querySelectorAll(".trick__comment");
+    const commentNumber = trickComment.length;
+    const commentButton = document.querySelector(".btn__comments");
+    let commentsLoaded = 10;
+
+    commentButton.addEventListener("click", function () {
+        for (let commentIndex = commentsLoaded; commentIndex < commentsLoaded + 10 && commentIndex < commentNumber; commentIndex++) {
+            trickComment[commentIndex].classList.add("show--flex");
+        }
+
+        commentsLoaded += 10;
+
+        if (commentsLoaded >= commentNumber) {
+            commentButton.classList.add("hide");
+        }
+    });
 }
 
 

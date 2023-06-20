@@ -101,14 +101,29 @@
                     <button class="btn" type="submit">Envoyer le commentaire</button>
                 </form>
             {% endif %}
-            {% for comment in data.comments | reverse %} 
-                <div class="trick__comment">
-                    <img alt="avatar" class="comment__avatar" loading="lazy" src="{{ asset(comment.avatarPath) }}">
-                    <span class="comment__name">{{ comment.fullName }}</span>
-                    <span class="comment__date">{{ comment.creationDate | date("d/m/Y à H:i:s") }}</span>
-                    <p class="comment__message">{{ comment.content}}</p>
-                </div>
-            {% endfor %}
+            <div class="trick__comments__list">
+                {% for comment in data.comments | reverse %} 
+                    <div class="trick__comment">
+                        <img alt="avatar" class="comment__avatar" loading="lazy" src="{{ asset(comment.avatarPath) }}">
+                        <p class="comment__name">
+                            Nom complet : {{ comment.fullName }}
+                            <br>
+                            Pseudo : {{ comment.author }}
+                        </p>
+                        <span class="comment__date">Le {{ comment.creationDate | date("d/m/Y à H:i:s") }}</span>
+                        <p class="comment__message">Message : {{ comment.content}}</p>
+                    </div>
+                {% endfor %}
+            </div>
+
+            {% if data.comments is empty %}
+                <span>Aucun commentaire n'a été écrit pour le moment...</span>
+            {% elseif data.comments | length > 3 %}
+                <button class="btn btn--secondary btn__comments">
+                    <i class="ri-refresh-line"></i>
+                    <span>Charger plus</span>
+                </button>
+            {% endif %}  
         </div>
     </div>
 

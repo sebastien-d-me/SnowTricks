@@ -110,10 +110,19 @@
     border-top: 1px solid colors.$black;
     margin-top: 50px;
     padding-top: 20px;
+
+
+}
+
+.trick__comments__list {
+    > .trick__comment:nth-child(n+11) {
+        display: none;
+    }
 }
 
 .trick__comment {
     border-bottom: 1px solid colors.$black;
+    flex-direction: column;
     margin: auto auto 30px auto;
     padding: 0 20px;
     width: fit-content;
@@ -133,10 +142,13 @@
 
 .comment__name {
     display: block;
+    font-size: 15px;
     font-weight: 600;
+    margin: 0 0 10px 0;
 }
 
 .comment__date {
+    font-size: 15px;
     font-weight: 600;
 }
 
