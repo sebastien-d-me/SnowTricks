@@ -14,7 +14,7 @@ class Comment
     #[ORM\Column]
     private ?int $id = null;
 
-    #[ORM\Column(type: Types::DATE_MUTABLE)]
+    #[ORM\Column(type: Types::DATETIME_MUTABLE)]
     private ?\DateTimeInterface $creationDate = null;
 
     #[ORM\Column(type: Types::TEXT)]
@@ -31,8 +31,9 @@ class Comment
     #[ORM\Column(length: 255)]
     private ?string $fullname = null;
 
-    #[ORM\ManyToOne]
-    private ?avatar $avatar = null;
+    #[ORM\OneToOne(cascade: ['persist', 'remove'])]
+    #[ORM\JoinColumn(nullable: false)]
+    private ?Avatar $avatar = null;
 
     public function getId(): ?int
     {
@@ -99,12 +100,12 @@ class Comment
         return $this;
     }
 
-    public function getAvatar(): ?avatar
+    public function getAvatar(): ?Avatar
     {
         return $this->avatar;
     }
 
-    public function setAvatar(?avatar $avatar): self
+    public function setAvatar(Avatar $avatar): self
     {
         $this->avatar = $avatar;
 

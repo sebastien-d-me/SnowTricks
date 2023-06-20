@@ -7,6 +7,7 @@ parameters:
   featured_directory: '%kernel.project_dir%/public/assets/images/tricks/featured'
   media_image_directory: '%kernel.project_dir%/public/assets/images/tricks'
   media_video_directory: '%kernel.project_dir%/public/assets/videos/tricks'
+  avatars_directory: '%kernel.project_dir%/public/assets/images/avatars'
 
 services:
     # default configuration for services in *this* file

@@ -14,6 +14,11 @@ use App\Entity\Trick;
 use App\Entity\Media;
 use App\Repository\MediaRepository;
 use App\Repository\TrickGroupRepository;
+use App\Repository\CommentRepository;
+use App\Repository\AvatarRepository;
+use App\Entity\Avatar;
+use App\Entity\Comment;
+use App\Repository\LoginCredentialsRepository;
 
 
 class TrickController extends AbstractController {
@@ -99,7 +104,6 @@ class TrickController extends AbstractController {
                 $media->setFeatured(false);
 
                 $entityManager->persist($media);
-                $entityManager->flush();
             }
 
             // Enregistre les embed
@@ -126,9 +130,10 @@ class TrickController extends AbstractController {
                     $media->setFeatured(false);
 
                     $entityManager->persist($media);
-                    $entityManager->flush();
                 }
             }
+
+            $entityManager->flush();
 
             $this->addFlash("success", "Votre trick a été ajouté !");
 
@@ -142,13 +147,58 @@ class TrickController extends AbstractController {
 
 
     #[Route(name: "trick_presentation", path: "/trick/{trickSlug}")]
-    public function view(TrickRepository $trickRepository, string $trickSlug, MediaRepository $mediaRepository): Response {        
+    public function view(TrickRepository $trickRepository, LoginCredentialsRepository $loginCredentialsRepository, string $trickSlug, MediaRepository $mediaRepository, Request $request, EntityManagerInterface $entityManager, CommentRepository $commentRepository, AvatarRepository $avatarRepository, SluggerInterface $slugger): Response {        
         $trick = $trickRepository->findOneBy(["slug" => $trickSlug]);
-        $medias = $mediaRepository->findBy(["idTrick" => $trick->getId()]);
+        $medias = $mediaRepository->findBy(["idTrick" => $trick->getId()]); 
+        $comments = $commentRepository->findBy(["idTrick" => $trick->getId()]);
+
+        foreach($comments as $comment) {
+            $idAvatar = $comment->getAvatar();
+            $avatarComment = $avatarRepository->findOneBy(["id" => $idAvatar]);
+            $comment->{"avatarPath"} = $avatarComment->getPath();
+            $commentAuthor = $loginCredentialsRepository->findOneBy(["id" => $comment->getIdLoginCredentials()])->getUsername();
+            $comment->{"author"} = $commentAuthor;
+        }
+
+        if ($request->isMethod("POST")) {
+            if (!$this->getUser()) {
+                return $this->redirectToRoute("home");
+            }
+
+            $avatarForm = $request->files->get("avatar");
+            $nom = $request->get("nom");
+            $message = $request->get("message");
+
+            if($avatarForm) {
+                $avatarFileName = $slugger->slug(pathinfo($avatarForm->getClientOriginalName(), PATHINFO_FILENAME))."-".uniqid().".".$avatarForm->guessExtension();
+                $avatarForm->move($this->getParameter("avatars_directory"), $avatarFileName);
+                $avatarPath = "assets/images/avatars/".$avatarFileName;
+            } else {
+                $avatarPath = "assets/images/avatars/placeholder/avatar_placeholder.webp";
+            }
+
+            $avatar = new Avatar();
+            $avatar->setPath($avatarPath);
+            $entityManager->persist($avatar);
+
+            $comment = new Comment();
+            $comment->setIdLoginCredentials($this->getUser());
+            $comment->setIdTrick($trick);
+            $comment->setContent($message);
+            $comment->setFullName($nom);
+            $comment->setAvatar($avatar);
+            $comment->setCreationDate(\DateTime::createFromFormat("Y-m-d H:i:s", date("Y-m-d H:i:s")));
+            $entityManager->persist($comment);
+
+            $entityManager->flush();
+            $this->addFlash("success", "Le commentaire a été ajouté !");
+            return $this->redirectToRoute("trick_presentation", ["trickSlug" => $trick->getSlug()]);
+        }
 
         $data = [
             "trick" => $trick,
-            "medias" => $medias
+            "medias" => $medias,
+            "comments" => $comments
         ];
 
         return $this->render("pages/tricks/presentation.html.twig", [

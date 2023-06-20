@@ -79,6 +79,52 @@
                 <span class="badge__value">{{ data.trick.updatedAt | date("d/m/Y à H:i:s") }}</span>
             </div>
         </div>
+
+        <div class="trick__comments">
+            <h1 class="page__title">Commentaires</h1>
+            {% if app.user == true %}
+                <form class="comment__form" method="post" enctype="multipart/form-data">
+                    <div class="form__row">
+                        <div class="form__block">
+                            <label>Avatar</label>
+                            <input name="avatar" type="file">
+                        </div>
+                        <div class="form__block">
+                            <label class="required">Nom complet</label>
+                            <input name="nom" required>
+                        </div>
+                        <div class="form__block">
+                            <label class="required">Message</label>
+                            <textarea name="message" required></textarea>
+                        </div>
+                    </div>
+                    <button class="btn" type="submit">Envoyer le commentaire</button>
+                </form>
+            {% endif %}
+            <div class="trick__comments__list">
+                {% for comment in data.comments | reverse %} 
+                    <div class="trick__comment">
+                        <img alt="avatar" class="comment__avatar" loading="lazy" src="{{ asset(comment.avatarPath) }}">
+                        <p class="comment__name">
+                            Nom complet : {{ comment.fullName }}
+                            <br>
+                            Pseudo : {{ comment.author }}
+                        </p>
+                        <span class="comment__date">Le {{ comment.creationDate | date("d/m/Y à H:i:s") }}</span>
+                        <p class="comment__message">Message : {{ comment.content}}</p>
+                    </div>
+                {% endfor %}
+            </div>
+
+            {% if data.comments is empty %}
+                <span>Aucun commentaire n'a été écrit pour le moment...</span>
+            {% elseif data.comments | length > 3 %}
+                <button class="btn btn--secondary btn__comments">
+                    <i class="ri-refresh-line"></i>
+                    <span>Charger plus</span>
+                </button>
+            {% endif %}  
+        </div>
     </div>
 
     <div class="hide trick__modal">

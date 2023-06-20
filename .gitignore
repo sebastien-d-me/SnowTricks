@@ -6,6 +6,8 @@
 /config/secrets/prod/prod.decrypt.private.php
 /public/bundles/
 /public/assets/images/tricks/
+/public/assets/images/avatars/*
+!/public/assets/images/avatars/placeholder/
 !/public/assets/images/tricks/placeholder/
 /public/assets/videos/tricks/
 !/public/assets/videos/tricks/placeholder/

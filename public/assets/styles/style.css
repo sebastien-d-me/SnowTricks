@@ -220,7 +220,7 @@ body {
 }
 
 .form__block--full {
-  width: 100%;
+  width: calc(100% - 20px);
 }
 
 /** Status **/
@@ -266,6 +266,13 @@ body {
   text-transform: capitalize;
 }
 
+/*** Responsive ***/
+@media screen and (max-width: 992px) {
+  /** Row **/
+  .form__block {
+    min-width: unset;
+  }
+}
 /*** Link ***/
 .link {
   color: #194CCE;
@@ -651,6 +658,50 @@ body {
   text-transform: capitalize;
 }
 
+/** Comments **/
+.trick__comments {
+  border-top: 1px solid #0E0E0E;
+  margin-top: 50px;
+  padding-top: 20px;
+}
+
+.trick__comments__list > .trick__comment:nth-child(n+11) {
+  display: none;
+}
+
+.trick__comment {
+  border-bottom: 1px solid #0E0E0E;
+  flex-direction: column;
+  margin: auto auto 30px auto;
+  padding: 0 20px;
+  width: -moz-fit-content;
+  width: fit-content;
+}
+
+.comment__form {
+  margin: 30px 0;
+}
+
+.comment__avatar {
+  border-radius: 50%;
+  display: block;
+  margin: auto auto 5px auto;
+  height: 100px;
+  width: 100px;
+}
+
+.comment__name {
+  display: block;
+  font-size: 15px;
+  font-weight: 600;
+  margin: 0 0 10px 0;
+}
+
+.comment__date {
+  font-size: 15px;
+  font-weight: 600;
+}
+
 /** Modal **/
 .trick__modal {
   background-color: rgba(0, 0, 0, 0.4392156863);
@@ -699,9 +750,11 @@ body {
 @media screen and (max-width: 992px) {
   /** Action **/
   .trick__header > .trick__action {
+    flex-wrap: wrap;
+    justify-content: center;
     padding: 10px 20px;
-    right: 10px;
-    top: 10px;
+    right: 0;
+    top: 0;
   }
   /** Name **/
   .trick__header > .trick__name {
@@ -710,8 +763,8 @@ body {
   }
   /** Container **/
   .trick__container {
-    margin: 50px 20px;
-    width: calc(100% - 40px);
+    margin: 50px 5px;
+    width: calc(100% - 10px);
   }
   /** Medias **/
   .trick__media {
