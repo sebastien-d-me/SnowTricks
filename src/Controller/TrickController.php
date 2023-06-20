@@ -109,7 +109,7 @@ class TrickController extends AbstractController {
                 $mediasEmbedList = explode("\n", $mediasEmbed);
                 foreach($mediasEmbedList as $mediaEmbedItem) {
                     if(parse_url($mediaEmbedItem)["host"] === "www.youtube.com") {   
-                        $embedVideo = str_replace("v=", "", parse_url($mediaEmbedItem)["query"]);
+                        $embedVideo = rtrim(str_replace("v=", "", parse_url($mediaEmbedItem)["query"]), "_");
                         $embedUrl = "https://youtube.com/embed/".$embedVideo;
                     } else if(parse_url($mediaEmbedItem)["host"] === "www.dailymotion.com") {
                         $embedVideo = str_replace("/video/", "",  parse_url($mediaEmbedItem)["path"]);
