@@ -686,10 +686,8 @@ body {
 }
 
 .comment__name {
+  display: block;
   font-weight: 600;
-}
-.comment__name::after {
-  content: " le";
 }
 
 .comment__date {

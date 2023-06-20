@@ -91,40 +91,24 @@
                         </div>
                         <div class="form__block">
                             <label class="required">Nom complet</label>
-                            <input name="nom">
+                            <input name="nom" required>
                         </div>
                         <div class="form__block">
                             <label class="required">Message</label>
-                            <textarea name="message"></textarea>
+                            <textarea name="message" required></textarea>
                         </div>
                     </div>
                     <button class="btn" type="submit">Envoyer le commentaire</button>
                 </form>
             {% endif %}
-            <div class="trick__comment">
-                <img alt="avatar" class="comment__avatar" loading="lazy" src="https://via.placeholder.com/150">
-                <span class="comment__name">John Doe</span>
-                <span class="comment__date">20/06/2023 à 17:17:05</span>
-                <p class="comment__message">
-                    Lorem ipsum dolor sit, amet consectetur adipisicing elit. Similique, temporibus?
-                </p>
-            </div>
-            <div class="trick__comment">
-                <img alt="avatar" class="comment__avatar" loading="lazy" src="https://via.placeholder.com/150">
-                <span class="comment__name">John Doe</span>
-                <span class="comment__date">20/06/2023 à 17:17:05</span>
-                <p class="comment__message">
-                    Lorem ipsum dolor sit, amet consectetur adipisicing elit. Similique, temporibus?
-                </p>
-            </div>
-            <div class="trick__comment">
-                <img alt="avatar" class="comment__avatar" loading="lazy" src="https://via.placeholder.com/150">
-                <span class="comment__name">John Doe</span>
-                <span class="comment__date">20/06/2023 à 17:17:05</span>
-                <p class="comment__message">
-                    Lorem ipsum dolor sit, amet consectetur adipisicing elit. Similique, temporibus?
-                </p>
-            </div>
+            {% for comment in data.comments | reverse %} 
+                <div class="trick__comment">
+                    <img alt="avatar" class="comment__avatar" loading="lazy" src="{{ asset(comment.avatarPath) }}">
+                    <span class="comment__name">{{ comment.fullName }}</span>
+                    <span class="comment__date">{{ comment.creationDate | date("d/m/Y à H:i:s") }}</span>
+                    <p class="comment__message">{{ comment.content}}</p>
+                </div>
+            {% endfor %}
         </div>
     </div>
 

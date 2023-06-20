@@ -132,11 +132,8 @@
 }
 
 .comment__name {
+    display: block;
     font-weight: 600;
-
-    &::after {
-        content: " le";
-    }
 }
 
 .comment__date {
