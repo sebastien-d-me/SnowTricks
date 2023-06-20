@@ -1,6 +1,5 @@
 /** Get the URL **/
 const currentURL = window.location.pathname;
-const currentSlash = window.location.toString().split("/");
 
 
 /** Home page **/
@@ -52,7 +51,7 @@ if (currentURL === "/") {
 
 
 /** Trick page **/
-if (currentSlash[3] === "trick" && currentSlash[4] !== "edit") {
+if (currentURL.includes("/trick") && !currentURL.includes("/edit")) {
     // Modal
     const trickMediasModal = document.querySelectorAll(".trick__media__modal");
     const modal = document.querySelector(".trick__modal");
@@ -98,7 +97,7 @@ if (currentSlash[3] === "trick" && currentSlash[4] !== "edit") {
 
 
 /** Home / Trick page **/
-if (currentURL === "/" || currentSlash[3] === "trick") {
+if (currentURL.includes("/") || currentURL.includes("/trick") && !currentURL.includes("/edit")) {
     const deleteTrickIcons = document.querySelectorAll(".trick__delete");
     deleteTrickIcons.forEach(function (deleteTrickIcon) {
         deleteTrickIcon.addEventListener("click", function (event) {
@@ -115,7 +114,7 @@ if (currentURL === "/" || currentSlash[3] === "trick") {
 
 
 /** Edit page **/
-if (currentSlash[3] === "trick" && currentSlash[4] === "edit") {
+if (currentURL.includes("/edit")) {
     const deleteFeaturedIcon = document.querySelector(".featured__delete");
     deleteFeaturedIcon.addEventListener("click", function (event) {
         event.preventDefault();

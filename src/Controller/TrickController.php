@@ -170,6 +170,36 @@ class TrickController extends AbstractController {
         $category = $trickGroupRepository->findOneBy(["id" => $trick->getIdTrickGroup()]);
         $featured = $mediaRepository->findOneBy(["idTrick" => $trick->getId(), "featured" => true]);
         $embed = $mediaRepository->findBy(["idTrick" => $trick->getId(), "type" => "embed"]);
+
+        if ($request->isMethod("POST")) {
+            $featuredForm = $request->get("featured_media");
+            $nameForm = $request->get("name");
+            $slugForm = strtolower(str_replace(" ", "-", $nameForm));
+            $descriptionForm = $request->get("description");
+            $groupeForm = $request->get("groupe");
+            $embedForm = $request->get("embed");
+            $mediasForm = $request->get("medias");
+
+            $checkExist = $trickRepository->findOneBy(["name" => $nameForm]);
+
+            if($checkExist) {
+                $this->addFlash("warning", "Un trick du même nom existe déjà.");
+                return $this->redirectToRoute("trick_edit", ["trickSlug" => $trick->getSlug()]);
+            }
+            
+            $featured->setPath($featuredForm);
+            $trick->setName($nameForm);
+            $trick->setDescription($descriptionForm);
+            $trick->setIdTrickGroup($groupeForm);
+            $trick->setSlug($slugForm);
+            
+            $trick->setupdatedAt(\DateTime::createFromFormat("Y-m-d H:i:s", date("Y-m-d H:i:s")));
+        
+            $entityManager->flush();
+
+            $this->addFlash("success", "Le trick a été modifié !");
+            return $this->redirectToRoute("trick_presentation", ["trickSlug" => $trick->getSlug()]);
+        }    
         
         $urls = "";
         foreach($embed as $embedMedia) {
