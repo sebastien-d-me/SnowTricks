@@ -8,22 +8,24 @@
         <div class="trick__header">
             <img class="trick__featured" src="{{ asset(data.featured) }}">
             <div class="trick__action">
+                <div class="form__block">
+                    <label name="featured_media">Image à la une</label>
+                    <input type="file">
+                </div>
                 {% if data.featured != placeholderPath %}
                     <a class="link link--icon featured__delete" data-url="{{ path('featured_delete', {mediaId: data.featuredId}) }}" href="#">
                         <i class="ri-delete-bin-2-line"></i>
                     </a>
-                {% else %}
-                    <div class="form__row">
-                        <div class="form__block">
-                            <label class="required" name="featured_media">Image à la une</label>
-                            <input type="file">
-                        </div>
-                    </div>
                 {% endif %}
             </div>
         </div>
 
         <div class="trick__container">
+            {% for label, messages in app.flashes(["success", "warning"]) %}
+                {% for message in messages %}
+                    <span class="message message--{{ label }}">{{ message }}</span>
+                {% endfor %}
+            {% endfor %}
             <div class="form__row">
                 <div class="form__block form__block--full">
                     <label class="required">Nom</label>

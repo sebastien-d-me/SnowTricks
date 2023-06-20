@@ -182,12 +182,15 @@ class TrickController extends AbstractController {
 
             $checkExist = $trickRepository->findOneBy(["name" => $nameForm]);
 
-            if($checkExist) {
+            if($checkExist && $checkExist->getId() !== $trick->getId()) {
                 $this->addFlash("warning", "Un trick du même nom existe déjà.");
                 return $this->redirectToRoute("trick_edit", ["trickSlug" => $trick->getSlug()]);
             }
             
-            $featured->setPath($featuredForm);
+            if($featuredForm !== null) {
+                $featured->setPath($featuredForm);
+            }
+            
             $trick->setName($nameForm);
             $trick->setDescription($descriptionForm);
             $trick->setIdTrickGroup($groupeForm);

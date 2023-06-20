@@ -505,6 +505,7 @@ body {
 }
 
 .trick__action {
+  align-items: center;
   display: flex;
   font-size: 20px;
   gap: 10px;
@@ -575,6 +576,7 @@ body {
 /** Action **/
 .trick__header > .trick__action {
   background-color: rgba(0, 0, 0, 0.4392156863);
+  color: #FEFEFE;
   padding: 20px 40px;
   position: absolute;
   right: 50px;
