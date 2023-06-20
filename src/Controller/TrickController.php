@@ -99,7 +99,6 @@ class TrickController extends AbstractController {
                 $media->setFeatured(false);
 
                 $entityManager->persist($media);
-                $entityManager->flush();
             }
 
             // Enregistre les embed
@@ -126,9 +125,10 @@ class TrickController extends AbstractController {
                     $media->setFeatured(false);
 
                     $entityManager->persist($media);
-                    $entityManager->flush();
                 }
             }
+
+            $entityManager->flush();
 
             $this->addFlash("success", "Votre trick a été ajouté !");
 
