@@ -22,7 +22,6 @@ rectangle {
     'Membre'
     "Login" as (Login)
     "Reset his password" as (ResetPassword)
-    "Edit his profil" as (EditProfil)
     "Logout" as (Logout)
     
 
@@ -30,9 +29,7 @@ rectangle {
     :Visitor: -.> (Register)
     :Member: -.> (Login)
     :Member: -.> (ResetPassword)
-    :Member: -.> (EditProfil)
     :Member: -.> (Logout)
-    (EditProfil) -.> (Authentification) : include
     (Logout) -.> (Authentification) : include
 }
 @enduml
