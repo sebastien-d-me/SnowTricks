@@ -172,7 +172,7 @@ class TrickController extends AbstractController {
         $embed = $mediaRepository->findBy(["idTrick" => $trick->getId(), "type" => "embed"]);
 
         if ($request->isMethod("POST")) {
-            $featuredForm = $request->get("featured_media");
+            $featuredForm = $request->files->get("featured_media");
             $nameForm = $request->get("name");
             $slugForm = strtolower(str_replace(" ", "-", $nameForm));
             $descriptionForm = $request->get("description");

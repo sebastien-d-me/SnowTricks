@@ -9,8 +9,8 @@
             <img class="trick__featured" src="{{ asset(data.featured) }}">
             <div class="trick__action">
                 <div class="form__block">
-                    <label name="featured_media">Image à la une</label>
-                    <input type="file">
+                    <label>Image à la une</label>
+                    <input name="featured_media" type="file">
                 </div>
                 {% if data.featured != placeholderPath %}
                     <a class="link link--icon featured__delete" data-url="{{ path('featured_delete', {mediaId: data.featuredId}) }}" href="#">
