@@ -26,35 +26,40 @@
                 <span class="message message--{{ label }}">{{ message }}</span>
             {% endfor %}
         {% endfor %}
+        <button class="btn btn--show__media hide">Voir les images et vidéos</button>
         <div class="trick__medias">
             {% for media in data.medias %}
-                {% if media.path and media.type == "image" and media.path != placeholderPath and media.featured == false %}
-                    <div class="trick__media__card">
-                        <img class="trick__media trick__media__modal" loading="lazy" src="{{ asset(media.path) }}">
-                        {% if app.user == true %}
-                            <a class="link link--icon media__delete" data-url="{{ path('media_delete', {mediaId: media.id}) }}" href="#">
-                                <i class="ri-delete-bin-line"></i>
-                            </a>
-                        {% endif %}
-                    </div>
-                {% elseif media.path and media.type == "video" %}
-                    <div class="trick__media__card">
-                        <video class="trick__media trick__media__modal" controls>
-                            <source src="{{ asset(media.path) }}">
-                        </video>
-                        {% if app.user == true %}
-                            <a class="link link--icon media__delete" data-url="{{ path('media_delete', {mediaId: media.id}) }}" href="#">
-                                <i class="ri-delete-bin-line"></i>
-                            </a>
-                        {% endif %}
-                    </div>
-                {% elseif media.type == "embed" %}
-                    <div class="trick__media__card">
-                        <iframe class="trick__media" src="{{ media.src }}"></iframe>
-                        {% if app.user == true %}
-                            <a class="link link--icon media__delete" data-url="{{ path('media_delete', {mediaId: media.id}) }}" href="#">
-                                <i class="ri-delete-bin-line"></i>
-                            </a>
+                {% if media.featured == false %}
+                    <div class="trick__media__item">
+                        {% if media.path and media.type == "image" and media.path != placeholderPath %}
+                            <div class="trick__media__card">
+                                <img class="trick__media trick__media__modal" loading="lazy" src="{{ asset(media.path) }}">
+                                {% if app.user == true %}
+                                    <a class="link link--icon media__delete" data-url="{{ path('media_delete', {mediaId: media.id}) }}" href="#">
+                                        <i class="ri-delete-bin-line"></i>
+                                    </a>
+                                {% endif %}
+                            </div>
+                        {% elseif media.path and media.type == "video" %}
+                            <div class="trick__media__card">
+                                <video class="trick__media trick__media__modal" controls>
+                                    <source src="{{ asset(media.path) }}">
+                                </video>
+                                {% if app.user == true %}
+                                    <a class="link link--icon media__delete" data-url="{{ path('media_delete', {mediaId: media.id}) }}" href="#">
+                                        <i class="ri-delete-bin-line"></i>
+                                    </a>
+                                {% endif %}
+                            </div>
+                        {% elseif media.type == "embed" %}
+                            <div class="trick__media__card">
+                                <iframe class="trick__media" src="{{ media.src }}"></iframe>
+                                {% if app.user == true %}
+                                    <a class="link link--icon media__delete" data-url="{{ path('media_delete', {mediaId: media.id}) }}" href="#">
+                                        <i class="ri-delete-bin-line"></i>
+                                    </a>
+                                {% endif %}
+                            </div>
                         {% endif %}
                     </div>
                 {% endif %}
@@ -118,7 +123,7 @@
 
             {% if data.comments is empty %}
                 <span>Aucun commentaire n'a été écrit pour le moment...</span>
-            {% elseif data.comments | length > 3 %}
+            {% elseif data.comments | length > 10 %}
                 <button class="btn btn--secondary btn__comments">
                     <i class="ri-refresh-line"></i>
                     <span>Charger plus</span>

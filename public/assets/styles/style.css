@@ -767,6 +767,9 @@ body {
     width: calc(100% - 10px);
   }
   /** Medias **/
+  .trick__medias {
+    display: none;
+  }
   .trick__media {
     height: 250px;
     width: 250px;
@@ -774,6 +777,9 @@ body {
   /** Modal **/
   .trick__modal__image,
   .trick__modal__video {
+    height: 280px;
+    -o-object-fit: cover;
+       object-fit: cover;
     width: 280px;
   }
 }

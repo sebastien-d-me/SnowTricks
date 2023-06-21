@@ -223,6 +223,10 @@
     }
 
     /** Medias **/
+    .trick__medias {
+        display: none;
+    }
+
     .trick__media {
         height: 250px;
         width: 250px;
@@ -231,6 +235,8 @@
     /** Modal **/
     .trick__modal__image,
     .trick__modal__video {
+        height: 280px;
+        object-fit: cover;
         width: 280px;
     }
 }
