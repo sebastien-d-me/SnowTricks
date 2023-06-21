@@ -8,6 +8,7 @@ if (currentURL === "/") {
     const tricksArrow = document.querySelector(".tricks__arrow");
     let tricksArrowDisplayed = false;
     const btnTricks = document.querySelector(".btn__tricks");
+    const windowWith = window.innerWidth;
 
     if (btnTricks) {
         btnTricks.addEventListener("click", function () {
@@ -18,6 +19,11 @@ if (currentURL === "/") {
                 tricksArrowDisplayed = true;
             }
         });
+    }
+
+    if (windowWith < 992) {
+        tricksArrow.classList.add("show");
+        tricksArrowDisplayed = true;
     }
 
     window.addEventListener("scroll", function () {

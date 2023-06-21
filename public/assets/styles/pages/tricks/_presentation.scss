@@ -199,7 +199,7 @@
 }
 
 /*** Responsive ***/
-@media screen and (max-width: 992px) {
+@media screen and (max-width: 1350px) {
 
     /** Action **/
     .trick__header > .trick__action {
@@ -231,6 +231,6 @@
     /** Modal **/
     .trick__modal__image,
     .trick__modal__video {
-        width: 200px;
+        width: 280px;
     }
 }

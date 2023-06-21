@@ -267,7 +267,7 @@ body {
 }
 
 /*** Responsive ***/
-@media screen and (max-width: 992px) {
+@media screen and (max-width: 1350px) {
   /** Row **/
   .form__block {
     min-width: unset;
@@ -343,7 +343,7 @@ body {
 }
 
 /*** Responsive ***/
-@media screen and (max-width: 992px) {
+@media screen and (max-width: 1350px) {
   .footer__block {
     bottom: 0;
     padding: 10px;
@@ -391,7 +391,7 @@ body {
 }
 
 /*** Responsive ***/
-@media screen and (max-width: 992px) {
+@media screen and (max-width: 1350px) {
   .header__block {
     justify-content: center;
     min-height: 50px;
@@ -410,7 +410,7 @@ body {
 }
 
 /*** Responsive ***/
-@media screen and (max-width: 992px) {
+@media screen and (max-width: 1350px) {
   .main__block {
     padding-bottom: 65px;
   }
@@ -527,7 +527,7 @@ body {
 }
 
 /*** Responsive ***/
-@media screen and (max-width: 992px) {
+@media screen and (max-width: 1480px) {
   /** Banner **/
   .banner__text {
     text-align: center;
@@ -747,7 +747,7 @@ body {
 }
 
 /*** Responsive ***/
-@media screen and (max-width: 992px) {
+@media screen and (max-width: 1350px) {
   /** Action **/
   .trick__header > .trick__action {
     flex-wrap: wrap;
@@ -774,7 +774,7 @@ body {
   /** Modal **/
   .trick__modal__image,
   .trick__modal__video {
-    width: 200px;
+    width: 280px;
   }
 }
 /* Base */
