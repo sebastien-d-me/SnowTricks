@@ -11,6 +11,11 @@
                 <span class="message message--warning">{{ error.messageKey | trans(error.messageData, "security") }}</span>
             </div>
         {% endif %}
+        {% for label, messages in app.flashes(["success", "warning"]) %}
+            {% for message in messages %}
+                <span class="message message--{{ label }}">{{ message }}</span>
+            {% endfor %}
+        {% endfor %}
 
         <div class="form__row">
             <div>
@@ -33,4 +38,6 @@
     </form>
 
     <a class="link" href="{{ path('forgot_password') }}">Mot de passe oublié</a>
+    <span>/</span>
+    <a class="link" href="{{ path('resend_activation') }}">Renvoyer un mail d'activation</a>
 {% endblock %}

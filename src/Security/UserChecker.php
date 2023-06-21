@@ -14,8 +14,7 @@ class UserChecker implements UserCheckerInterface {
 
     public function checkPreAuth(UserInterface $user): void {
         if($user->isIsActive() === false) {
-            $activationLink = $this->urlGenerator->generate("resend_activation");
-            $message = "Votre compte n'est pas activé. Cliquez <a class='link' href='".$activationLink."'>ici</a> pour renvoyer un lien d'activation.";
+            $message = "Votre compte n'est pas activé. Veuillez l'activer.";
             throw new CustomUserMessageAccountStatusException($message);
         }
     }
