@@ -119,21 +119,23 @@ if (currentURL.includes("/trick") && !currentURL.includes("/edit")) {
     const commentButton = document.querySelector(".btn__comments");
     let commentsLoaded = 10;
 
-    if (commentNumber < 11) {
-        commentButton.classList.add("hide");
-    }
-
-    commentButton.addEventListener("click", function () {
-        for (let commentIndex = commentsLoaded; commentIndex < commentsLoaded + 10 && commentIndex < commentNumber; commentIndex++) {
-            trickComment[commentIndex].classList.add("show--flex");
-        }
-
-        commentsLoaded += 10;
-
-        if (commentsLoaded >= commentNumber) {
+    if (commentButton) {
+        if (commentNumber < 11) {
             commentButton.classList.add("hide");
         }
-    });
+
+        commentButton.addEventListener("click", function () {
+            for (let commentIndex = commentsLoaded; commentIndex < commentsLoaded + 10 && commentIndex < commentNumber; commentIndex++) {
+                trickComment[commentIndex].classList.add("show--flex");
+            }
+
+            commentsLoaded += 10;
+
+            if (commentsLoaded >= commentNumber) {
+                commentButton.classList.add("hide");
+            }
+        });
+    }
 }
 
 

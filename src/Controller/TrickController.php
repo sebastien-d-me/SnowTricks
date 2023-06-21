@@ -112,7 +112,7 @@ class TrickController extends AbstractController {
             if($mediasEmbed) {
                 $mediasEmbedList = explode("\n", $mediasEmbed);
                 foreach($mediasEmbedList as $mediaEmbedItem) {
-                    if(!property_exists($mediaEmbedItem, "host")) {
+                    if(!array_key_exists("host", parse_url($mediaEmbedItem))) {
                         $this->addFlash("warning", "Veuillez ne prendre un lien que de Youtube et de Dailymotion.");
                         return $this->redirectToRoute("trick_create");
                     } else {
@@ -218,15 +218,9 @@ class TrickController extends AbstractController {
             return $this->redirectToRoute("home");
         }
 
-        $trick = $trickRepository->findOneBy(["slug" => $trickSlug]);
-        $medias = $mediaRepository->findBy(["idTrick" => $trick->getId()]);
-        $trickGroups = $trickGroupRepository->findAll();
-
-        $category = $trickGroupRepository->findOneBy(["id" => $trick->getIdTrickGroup()]);
-        $featured = $mediaRepository->findOneBy(["idTrick" => $trick->getId(), "featured" => true]);
-        $embed = $mediaRepository->findBy(["idTrick" => $trick->getId(), "type" => "embed"]);
-
         if ($request->isMethod("POST")) {
+            $trick = $trickRepository->findOneBy(["slug" => $trickSlug]);
+
             $featuredForm = $request->files->get("featured_media");
             $nameForm = $request->get("name");
             $slugForm = strtolower(str_replace(" ", "-", $nameForm));
@@ -253,8 +247,7 @@ class TrickController extends AbstractController {
             
             $trick->setName($nameForm);
             $trick->setDescription($descriptionForm);
-            $trick->setIdTrickGroup($selectedGroup);
-            $trick->setSlug($slugForm);            
+            $trick->setIdTrickGroup($selectedGroup);          
             $trick->setUpdatedAt(\DateTime::createFromFormat("Y-m-d H:i:s", date("Y-m-d H:i:s")));
         
             $trickId = $trickRepository->findOneBy(["id" => $trick->getId()]);
@@ -290,7 +283,7 @@ class TrickController extends AbstractController {
             if($embedForm) {
                 $mediasEmbedList = explode("\n", $embedForm);
                 foreach($mediasEmbedList as $mediaEmbedItem) {
-                    if(!property_exists($mediaEmbedItem, "host")) {
+                    if(!array_key_exists("host", parse_url($mediaEmbedItem))) {
                         $this->addFlash("warning", "Veuillez ne prendre un lien que de Youtube et de Dailymotion.");
                         return $this->redirectToRoute("trick_edit", ["trickSlug" => $trick->getSlug()]);
                     } else {
@@ -315,11 +308,20 @@ class TrickController extends AbstractController {
                 }
             }
 
+            $trick->setSlug($slugForm);  
             $entityManager->flush();
 
             $this->addFlash("success", "Le trick a été modifié !");
             return $this->redirectToRoute("trick_presentation", ["trickSlug" => $trick->getSlug()]);
         }    
+
+        $trick = $trickRepository->findOneBy(["slug" => $trickSlug]);
+        $medias = $mediaRepository->findBy(["idTrick" => $trick->getId()]);
+        $trickGroups = $trickGroupRepository->findAll();
+
+        $category = $trickGroupRepository->findOneBy(["id" => $trick->getIdTrickGroup()]);
+        $featured = $mediaRepository->findOneBy(["idTrick" => $trick->getId(), "featured" => true]);
+        $embed = $mediaRepository->findBy(["idTrick" => $trick->getId(), "type" => "embed"]);
         
         $data = [
             "name" => $trick->getName(),
@@ -339,7 +341,7 @@ class TrickController extends AbstractController {
 
 
     #[Route(name: "trick_delete", path: "/trick/delete/{trickSlug}")]
-    public function delete(TrickRepository $trickRepository, string $trickSlug, MediaRepository $mediaRepository, EntityManagerInterface $entityManager): Response {        
+    public function delete(CommentRepository $commentRepository, TrickRepository $trickRepository, string $trickSlug, MediaRepository $mediaRepository, EntityManagerInterface $entityManager): Response {        
         if (!$this->getUser()) {
             return $this->redirectToRoute("home");
         }
@@ -348,13 +350,18 @@ class TrickController extends AbstractController {
 
         if($trick) {
             $medias = $mediaRepository->findBy(["idTrick" => $trick->getId()]);
+            $comments = $commentRepository->findBy(["idTrick" => $trick->getId()]);
 
             foreach($medias as $media) {
                 $mediaPath = $media->getPath();
-                if($mediaPath !== "assets/images/tricks/featured/placeholder/trick_placeholder.webp") {
+                if($media->getType() !== "embed" && $mediaPath !== "assets/images/tricks/featured/placeholder/trick_placeholder.webp") {
                     unlink($mediaPath);
                 }
                 $entityManager->remove($media);
+            }
+
+            foreach($comments as $comment) {
+                $entityManager->remove($comment);
             }
 
             $entityManager->remove($trick);
@@ -406,7 +413,9 @@ class TrickController extends AbstractController {
 
         if($media) {
             $mediaPath = $media->getPath();
-            unlink($mediaPath);
+            if($media->getType() !== "embed" && $mediaPath !== "assets/images/tricks/featured/placeholder/trick_placeholder.webp") {
+                unlink($mediaPath);
+            }
             $entityManager->remove($media);
             $entityManager->flush();
 
