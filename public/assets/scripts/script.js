@@ -1,5 +1,6 @@
 /** Get the URL **/
 const currentURL = window.location.pathname;
+const windowWith = window.innerWidth;
 
 
 /** Home page **/
@@ -8,7 +9,6 @@ if (currentURL === "/") {
     const tricksArrow = document.querySelector(".tricks__arrow");
     let tricksArrowDisplayed = false;
     const btnTricks = document.querySelector(".btn__tricks");
-    const windowWith = window.innerWidth;
 
     if (btnTricks) {
         btnTricks.addEventListener("click", function () {
@@ -100,11 +100,28 @@ if (currentURL.includes("/trick") && !currentURL.includes("/edit")) {
         });
     });
 
+    // Show the medias
+    const btnMedias = document.querySelector(".btn--show__media");
+    const listMedias = document.querySelector(".trick__medias");
+    const mediaItem = document.querySelectorAll(".trick__media__item");
+    if (windowWith < 1350 && mediaItem.length > 0) {
+        btnMedias.classList.remove("hide");
+    }
+
+    btnMedias.addEventListener("click", function () {
+        btnMedias.classList.add("hide");
+        listMedias.classList.add("show--flex");
+    });
+
     // Manage the button
     const trickComment = document.querySelectorAll(".trick__comment");
     const commentNumber = trickComment.length;
     const commentButton = document.querySelector(".btn__comments");
     let commentsLoaded = 10;
+
+    if (commentNumber < 11) {
+        commentButton.classList.add("hide");
+    }
 
     commentButton.addEventListener("click", function () {
         for (let commentIndex = commentsLoaded; commentIndex < commentsLoaded + 10 && commentIndex < commentNumber; commentIndex++) {

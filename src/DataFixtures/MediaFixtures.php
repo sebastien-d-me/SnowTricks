@@ -93,10 +93,11 @@ class MediaFixtures extends Fixture implements DependentFixtureInterface
             $mediaName = strtolower(str_replace(" ", "-", $mediaPath["name"]));
             $mediaFileName = $mediaName."-".uniqid().".".$mediaPath["extension"];
 
-            copy("public/assets/images/tricks/placeholder/".$mediaPath["name"].".".$mediaPath["extension"], "public/assets/images/tricks/featured/placeholder/".$mediaFileName);
+            copy("public/assets/images/tricks/placeholder/".$mediaPath["name"].".".$mediaPath["extension"], "public/assets/images/tricks/featured/".$mediaFileName);
+            copy("public/assets/images/tricks/placeholder/trick_placeholder.webp", "public/assets/images/tricks/featured/trick_placeholder.webp");
             
             $media = new Media();
-            $media->setPath("assets/images/tricks/featured/placeholder/".$mediaFileName);
+            $media->setPath("assets/images/tricks/featured/".$mediaFileName);
             $media->setType("image");
             $media->setIdTrick($trick);
             $media->setFeatured(true);

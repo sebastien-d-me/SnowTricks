@@ -65,7 +65,7 @@ class TrickController extends AbstractController {
                 $featuredFile->move($this->getParameter("featured_directory"), $featuredFileName);
                 $featuredPath = "assets/images/tricks/featured/".$featuredFileName;
             } else {
-                $featuredPath = "assets/images/tricks/placeholder/trick_placeholder.webp";
+                $featuredPath = "assets/images/tricks/featured/placeholder/trick_placeholder.webp";
             }
 
             $media = new Media();
@@ -112,24 +112,29 @@ class TrickController extends AbstractController {
             if($mediasEmbed) {
                 $mediasEmbedList = explode("\n", $mediasEmbed);
                 foreach($mediasEmbedList as $mediaEmbedItem) {
-                    if(parse_url($mediaEmbedItem)["host"] === "www.youtube.com") {   
-                        $embedVideo = rtrim(str_replace("v=", "", parse_url($mediaEmbedItem)["query"]), "_");
-                        $embedUrl = "https://youtube.com/embed/".$embedVideo;
-                    } else if(parse_url($mediaEmbedItem)["host"] === "www.dailymotion.com") {
-                        $embedVideo = str_replace("/video/", "",  parse_url($mediaEmbedItem)["path"]);
-                        $embedUrl = "https://dailymotion.com/embed/video/".$embedVideo;
-                    } else {
+                    if(!property_exists($mediaEmbedItem, "host")) {
                         $this->addFlash("warning", "Veuillez ne prendre un lien que de Youtube et de Dailymotion.");
                         return $this->redirectToRoute("trick_create");
+                    } else {
+                        if(parse_url($mediaEmbedItem)["host"] === "www.youtube.com") {   
+                            $embedVideo = rtrim(str_replace("v=", "", parse_url($mediaEmbedItem)["query"]), "_");
+                            $embedUrl = "https://youtube.com/embed/".$embedVideo;
+                        } else if(parse_url($mediaEmbedItem)["host"] === "www.dailymotion.com") {
+                            $embedVideo = str_replace("/video/", "",  parse_url($mediaEmbedItem)["path"]);
+                            $embedUrl = "https://dailymotion.com/embed/video/".$embedVideo;
+                        } else {
+                            $this->addFlash("warning", "Veuillez ne prendre un lien que de Youtube et de Dailymotion.");
+                            return $this->redirectToRoute("trick_create");
+                        }
+
+                        $media = new Media();
+                        $media->setIdTrick($trickId);
+                        $media->setType("embed");
+                        $media->setSrc($embedUrl);
+                        $media->setFeatured(false);
+
+                        $entityManager->persist($media);
                     }
-
-                    $media = new Media();
-                    $media->setIdTrick($trickId);
-                    $media->setType("embed");
-                    $media->setSrc($embedUrl);
-                    $media->setFeatured(false);
-
-                    $entityManager->persist($media);
                 }
             }
 
@@ -285,23 +290,28 @@ class TrickController extends AbstractController {
             if($embedForm) {
                 $mediasEmbedList = explode("\n", $embedForm);
                 foreach($mediasEmbedList as $mediaEmbedItem) {
-                    if(parse_url($mediaEmbedItem)["host"] === "www.youtube.com") {   
-                        $embedVideo = rtrim(str_replace("v=", "", parse_url($mediaEmbedItem)["query"]), "_");
-                        $embedUrl = "https://youtube.com/embed/".$embedVideo;
-                    } else if(parse_url($mediaEmbedItem)["host"] === "www.dailymotion.com") {
-                        $embedVideo = str_replace("/video/", "",  parse_url($mediaEmbedItem)["path"]);
-                        $embedUrl = "https://dailymotion.com/embed/video/".$embedVideo;
-                    } else {
+                    if(!property_exists($mediaEmbedItem, "host")) {
                         $this->addFlash("warning", "Veuillez ne prendre un lien que de Youtube et de Dailymotion.");
                         return $this->redirectToRoute("trick_edit", ["trickSlug" => $trick->getSlug()]);
-                    }
+                    } else {
+                        if(parse_url($mediaEmbedItem)["host"] === "www.youtube.com") {   
+                            $embedVideo = rtrim(str_replace("v=", "", parse_url($mediaEmbedItem)["query"]), "_");
+                            $embedUrl = "https://youtube.com/embed/".$embedVideo;
+                        } else if(parse_url($mediaEmbedItem)["host"] === "www.dailymotion.com") {
+                            $embedVideo = str_replace("/video/", "",  parse_url($mediaEmbedItem)["path"]);
+                            $embedUrl = "https://dailymotion.com/embed/video/".$embedVideo;
+                        } else {
+                            $this->addFlash("warning", "Veuillez ne prendre un lien que de Youtube et de Dailymotion.");
+                            return $this->redirectToRoute("trick_edit", ["trickSlug" => $trick->getSlug()]);
+                        }
 
-                    $media = new Media();
-                    $media->setIdTrick($trickId);
-                    $media->setType("embed");
-                    $media->setSrc($embedUrl);
-                    $media->setFeatured(false);
-                    $entityManager->persist($media);
+                        $media = new Media();
+                        $media->setIdTrick($trickId);
+                        $media->setType("embed");
+                        $media->setSrc($embedUrl);
+                        $media->setFeatured(false);
+                        $entityManager->persist($media);
+                    }
                 }
             }
 
@@ -341,7 +351,9 @@ class TrickController extends AbstractController {
 
             foreach($medias as $media) {
                 $mediaPath = $media->getPath();
-                unlink($mediaPath);
+                if($mediaPath !== "assets/images/tricks/featured/placeholder/trick_placeholder.webp") {
+                    unlink($mediaPath);
+                }
                 $entityManager->remove($media);
             }
 
