@@ -13,6 +13,6 @@ Visitor -> Visitor : Fills in the form correctly
 Visitor -> System : Click on "Register"
 System -> System : Checks the values of the form
 System -> System : Save the new member in the database
-System -> System : Redirects to the login page
+System -> System : Redirects to the home page
 System --> Visitor : Displays a confirmation message
 @enduml
