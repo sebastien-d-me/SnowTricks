@@ -240,7 +240,14 @@ class TrickController extends AbstractController {
                 $featuredFileName = $slugger->slug(pathinfo($featuredForm->getClientOriginalName(), PATHINFO_FILENAME))."-".uniqid().".".$featuredForm->guessExtension();
                 $featuredForm->move($this->getParameter("featured_directory"), $featuredFileName);
                 $featuredPath = "assets/images/tricks/featured/".$featuredFileName;
-                $featured->setPath($featuredPath);
+
+                $media = $mediaRepository->findOneBy(["idTrick" => $trick->getId()]);
+                $media->setIdTrick($trick);
+                $media->setType("image");
+                $media->setPath($featuredPath);
+                $media->setFeatured(true);
+
+                $entityManager->persist($media);
             }
 
             $selectedGroup = $trickGroupRepository->findOneBy(["id" => $groupeForm]);
