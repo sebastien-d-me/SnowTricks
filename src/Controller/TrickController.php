@@ -65,7 +65,7 @@ class TrickController extends AbstractController {
                 $featuredFile->move($this->getParameter("featured_directory"), $featuredFileName);
                 $featuredPath = "assets/images/tricks/featured/".$featuredFileName;
             } else {
-                $featuredPath = "assets/images/tricks/featured/placeholder/trick_placeholder.webp";
+                $featuredPath = "assets/images/tricks/featured/trick_placeholder.webp";
             }
 
             $media = new Media();
