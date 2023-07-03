@@ -767,6 +767,9 @@ body {
     width: calc(100% - 10px);
   }
   /** Medias **/
+  .btn--hide__media {
+    margin-bottom: 20px;
+  }
   .trick__medias {
     display: none;
   }

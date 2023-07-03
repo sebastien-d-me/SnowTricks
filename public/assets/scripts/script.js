@@ -102,6 +102,7 @@ if (currentURL.includes("/trick") && !currentURL.includes("/edit")) {
 
     // Show the medias
     const btnMedias = document.querySelector(".btn--show__media");
+    const btnHideMedias = document.querySelector(".btn--hide__media");
     const listMedias = document.querySelector(".trick__medias");
     const mediaItem = document.querySelectorAll(".trick__media__item");
     if (windowWith < 1350 && mediaItem.length > 0) {
@@ -110,7 +111,14 @@ if (currentURL.includes("/trick") && !currentURL.includes("/edit")) {
 
     btnMedias.addEventListener("click", function () {
         btnMedias.classList.add("hide");
+        btnHideMedias.classList.remove("hide");
         listMedias.classList.add("show--flex");
+    });
+
+    btnHideMedias.addEventListener("click", function () {
+        btnHideMedias.classList.add("hide");
+        btnMedias.classList.remove("hide");
+        listMedias.classList.remove("show--flex");
     });
 
     // Manage the button
