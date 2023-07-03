@@ -26,7 +26,8 @@
                 <span class="message message--{{ label }}">{{ message }}</span>
             {% endfor %}
         {% endfor %}
-        <button class="btn btn--show__media hide">Voir les images et vidéos</button>
+        <button class="btn btn--show__media hide">Voir le(s) média(s)</button>
+        <button class="btn btn--hide__media hide">Cacher le(s) média(s)</button>
         <div class="trick__medias">
             {% for media in data.medias %}
                 {% if media.featured == false %}
