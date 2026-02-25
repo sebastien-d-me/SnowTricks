@@ -20,3 +20,12 @@ Develop from A to Z the SnowTricks community website
 7. Effectuez la commande : `php bin/console doctrine:fixtures:load` à la racine du projet
 8. Effectuez la commande : `php bin/console messenger:consume async` pour les mails à la racine du projet
 9. Lancez le projet avec la commande : `symfony serve`
+
+### Compétences acquises
+- Développer une application proposant les fonctionnalités attendues par le client
+- Gérer une base de données MySQL ou NoSQL avec Doctrine
+- Organiser son code pour garantir la lisibilité et la maintenabilité
+- Prendre en main le moteur de templating Twig
+- Respecter les bonnes pratiques de développement en vigueur
+- Sélectionner les langages de programmation adaptés pour le développement de l’application
+- Prendre en main le framework Symfony
